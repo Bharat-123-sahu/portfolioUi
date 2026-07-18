@@ -1,0 +1,35 @@
+.login-page {
+
+  --background: #f5f7fb;
+
+}
+
+.login-container {
+
+  height: 100%;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  padding: 20px;
+
+}
+
+ion-card {
+
+  width: 100%;
+
+  max-width: 420px;
+
+  border-radius: 16px;
+
+}
+
+ion-button {
+
+  margin-top: 24px;
+
+}
