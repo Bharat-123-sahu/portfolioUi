@@ -1,0 +1,57 @@
+<ion-content>
+
+    <div class="dashboard-container">
+
+        <app-welcome-banner
+            [userName]="'Bharat'">
+        </app-welcome-banner>
+
+        <app-metric-grid
+            [stats]="stats">
+        </app-metric-grid>
+
+        <div class="grid">
+
+            <app-widget-list
+                title="Latest Projects"
+                icon="folder-open-outline"
+                [items]="latestProjects">
+            </app-widget-list>
+
+            <app-widget-list
+                title="Latest Blogs"
+                icon="newspaper-outline"
+                [items]="latestBlogs">
+            </app-widget-list>
+
+        </div>
+
+        <div class="grid">
+
+            <app-widget-list
+                title="Recent Activities"
+                icon="time-outline"
+                [items]="recentActivities">
+            </app-widget-list>
+
+            <app-progress-card
+                [data]="storage">
+            </app-progress-card>
+
+        </div>
+
+        <div class="grid">
+
+            <app-status-card
+                [items]="systemStatus">
+            </app-status-card>
+
+            <app-quick-actions
+                [actions]="quickActions">
+            </app-quick-actions>
+
+        </div>
+
+    </div>
+
+</ion-content>

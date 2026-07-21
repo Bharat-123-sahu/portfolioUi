@@ -1,0 +1,83 @@
+<ion-card>
+
+  <ion-card-content>
+
+    <div class="upload-container">
+
+      <div class="upload-info">
+
+        <ion-icon
+          name="document-text-outline"
+          size="large">
+        </ion-icon>
+
+        <div class="details">
+
+          <h3>{{ label }}</h3>
+
+          <p *ngIf="!fileUrl">
+            No file selected
+          </p>
+
+          <p *ngIf="fileUrl">
+            {{ getFileName() }}
+          </p>
+
+        </div>
+
+      </div>
+
+      <div class="upload-actions">
+
+        <input
+          #fileInput
+          type="file"
+          hidden
+          [accept]="accept"
+          (change)="onFileSelected($event)">
+
+        <ion-button
+          fill="outline"
+          (click)="fileInput.click()"
+          [disabled]="uploading">
+
+          <ion-icon
+            slot="start"
+            name="cloud-upload-outline">
+          </ion-icon>
+
+          {{ fileUrl ? 'Replace File' : 'Choose File' }}
+
+        </ion-button>
+
+        <ion-spinner
+          *ngIf="uploading"
+          name="crescent">
+        </ion-spinner>
+
+      </div>
+
+    </div>
+
+    <div
+      class="preview"
+      *ngIf="fileUrl">
+
+      <ion-icon
+        name="checkmark-circle"
+        color="success">
+      </ion-icon>
+
+      <a
+        [href]="apiUrl + fileUrl"
+        target="_blank">
+
+        View Uploaded File
+
+      </a>
+
+    </div>
+
+  </ion-card-content>
+
+</ion-card>

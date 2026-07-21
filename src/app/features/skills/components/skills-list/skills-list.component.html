@@ -1,0 +1,76 @@
+
+  <app-page-header
+    title="Skills Management"
+    subtitle="Manage your technical and professional skills."
+    buttonText="Add Skill"
+    [showButton]="true"
+    (buttonClick)="addSkill()">
+  </app-page-header>
+
+  <ion-card>
+
+    <ion-card-content>
+
+      <app-search-toolbar
+        placeholder="Search by skill or category..."
+        (search)="searchSkills($event)">
+      </app-search-toolbar>
+
+      <app-loading
+        *ngIf="loading"
+        message="Loading skills...">
+      </app-loading>
+
+      <ng-container *ngIf="!loading">
+
+        <app-empty-state
+          *ngIf="filteredSkills.length === 0"
+          icon="code-slash-outline"
+          title="No Skills Found"
+          message="Click 'Add Skill' to create your first skill.">
+        </app-empty-state>
+
+        <app-data-table
+          *ngIf="filteredSkills.length > 0"
+          [columns]="columns"
+          [data]="paginatedSkills"
+          [showActions]="true"
+          (edit)="editSkill($event)"
+          (delete)="deleteSkill($event)">
+        </app-data-table>
+
+        <div
+          class="pagination"
+          *ngIf="filteredSkills.length > pageSize">
+
+          <ion-button
+            fill="outline"
+            (click)="previousPage()"
+            [disabled]="currentPage === 1">
+
+            Previous
+
+          </ion-button>
+
+          <span>
+
+            Page {{ currentPage }} of {{ totalPages || 1 }}
+
+          </span>
+
+          <ion-button
+            fill="outline"
+            (click)="nextPage()"
+            [disabled]="currentPage === totalPages || totalPages === 0">
+
+            Next
+
+          </ion-button>
+
+        </div>
+
+      </ng-container>
+
+    </ion-card-content>
+
+  </ion-card>

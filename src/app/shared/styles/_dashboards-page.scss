@@ -1,0 +1,31 @@
+ion-content {
+  --background: var(--ion-color-light);
+}
+
+.pagination {
+  margin-top: 24px;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--ion-color-step-50);
+  border: 1px solid var(--ion-color-step-150);
+  border-radius: 12px;
+}
+
+.page-info {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ion-color-medium);
+}
+
+@media (max-width: 768px) {
+  .pagination {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  ion-button {
+    width: 100%;
+  }
+}

@@ -1,0 +1,114 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      {{ resume ? "Edit Resume" : "Upload Resume" }}
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="close()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="resumeForm" (ngSubmit)="submit()">
+    <!-- Resume File -->
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title> Resume File </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <app-file-upload
+          folder="resume"
+          accept=".pdf,.doc,.docx"
+          [fileUrl]="resumeForm.get('resumeFile')?.value"
+          (fileUploaded)="resumeForm.patchValue({ resumeFile: $event })"
+        >
+        </app-file-upload>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Resume Details -->
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title> Resume Details </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="stacked">
+            Title
+            <ion-text color="danger">*</ion-text>
+          </ion-label>
+
+          <ion-input formControlName="title" placeholder="Professional Resume">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked"> Version </ion-label>
+
+          <ion-input formControlName="version" placeholder="v1.0"> </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked"> Description </ion-label>
+
+          <ion-textarea
+            rows="5"
+            formControlName="description"
+            placeholder="Short description about this resume..."
+          >
+          </ion-textarea>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Settings -->
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title> Settings </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="stacked"> Display Order </ion-label>
+
+          <ion-input type="number" formControlName="displayOrder"> </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label> Default Resume </ion-label>
+
+          <ion-toggle slot="end" formControlName="isDefault"> </ion-toggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label> Active </ion-label>
+
+          <ion-toggle slot="end" formControlName="isActive"> </ion-toggle>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Footer -->
+
+    <div class="form-actions">
+      <ion-button fill="outline" color="medium" (click)="close()">
+        Cancel
+      </ion-button>
+
+      <ion-button type="submit" [disabled]="resumeForm.invalid || saving">
+        <ion-spinner *ngIf="saving" slot="start" name="crescent"> </ion-spinner>
+
+        {{ resume ? "Update Resume" : "Upload Resume" }}
+      </ion-button>
+    </div>
+  </form>
+</ion-content>

@@ -1,0 +1,61 @@
+<app-widget-container
+  [loading]="loading">
+
+  <div class="stat-card">
+
+    <div class="left">
+
+      <span class="title">
+
+        {{ title }}
+
+      </span>
+
+      <h2>
+
+        {{ value }}
+
+      </h2>
+
+      <p *ngIf="subtitle">
+
+        {{ subtitle }}
+
+      </p>
+
+      <div
+        class="trend"
+        *ngIf="trend !== undefined">
+
+        <ion-icon
+          [name]="trend >= 0
+          ? 'trending-up-outline'
+          : 'trending-down-outline'">
+
+        </ion-icon>
+
+        <span>
+
+          {{ trend }}%
+
+        </span>
+
+      </div>
+
+    </div>
+
+    <div
+      class="icon"
+
+      [ngClass]="color">
+
+      <ion-icon
+        [name]="icon">
+
+      </ion-icon>
+
+    </div>
+
+  </div>
+
+</app-widget-container>

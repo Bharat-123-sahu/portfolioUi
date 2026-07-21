@@ -1,0 +1,39 @@
+<app-widget-container
+  title="Quick Actions"
+  subtitle="Frequently used shortcuts"
+  icon="flash-outline">
+
+  <div class="actions">
+
+    <button
+      type="button"
+      class="action-card"
+      *ngFor="let action of actions"
+      [disabled]="action.disabled"
+      (click)="onAction(action)">
+
+      <div
+        class="icon"
+        [style.background]="action.color || 'var(--ion-color-primary)'">
+
+        <ion-icon
+          [name]="action.icon">
+        </ion-icon>
+
+      </div>
+
+      <div class="content">
+
+        <h3>{{ action.title }}</h3>
+
+        <p *ngIf="action.subtitle">
+          {{ action.subtitle }}
+        </p>
+
+      </div>
+
+    </button>
+
+  </div>
+
+</app-widget-container>

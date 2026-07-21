@@ -1,0 +1,81 @@
+<ion-content class="ion-padding">
+
+  <app-page-header
+    title="Resume Management"
+    subtitle="Manage your resumes and downloadable CV files."
+    buttonText="Add Resume"
+    [showButton]="true"
+    (buttonClick)="addResume()">
+  </app-page-header>
+
+  <ion-card>
+
+    <ion-card-content>
+
+      <app-search-toolbar
+        placeholder="Search by title or version..."
+        (search)="searchResumes($event)">
+      </app-search-toolbar>
+
+      <app-loading
+        *ngIf="loading"
+        message="Loading resumes...">
+      </app-loading>
+
+      <ng-container *ngIf="!loading">
+
+        <app-empty-state
+          *ngIf="filteredResumes.length === 0"
+          icon="document-text-outline"
+          title="No Resume Found"
+          message="Click 'Add Resume' to upload your first resume.">
+        </app-empty-state>
+
+        <app-data-table
+          *ngIf="filteredResumes.length"
+          [columns]="columns"
+          [data]="paginatedResumes"
+          [showActions]="true"
+          (edit)="editResume($event)"
+          (delete)="deleteResume($event)">
+        </app-data-table>
+
+        <div
+          class="pagination"
+          *ngIf="filteredResumes.length > pageSize">
+
+          <ion-button
+            fill="outline"
+            size="small"
+            [disabled]="currentPage===1"
+            (click)="previousPage()">
+
+            Previous
+
+          </ion-button>
+
+          <span class="page-info">
+
+            Page {{currentPage}} of {{totalPages}}
+
+          </span>
+
+          <ion-button
+            fill="outline"
+            size="small"
+            [disabled]="currentPage===totalPages"
+            (click)="nextPage()">
+
+            Next
+
+          </ion-button>
+
+        </div>
+
+      </ng-container>
+
+    </ion-card-content>
+
+  </ion-card>
+
+</ion-content>

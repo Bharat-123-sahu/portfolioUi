@@ -1,4 +1,6 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './core/guards/auth-guard';
+// import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -6,8 +8,159 @@ export const routes: Routes = [
     redirectTo: 'login',
     pathMatch: 'full',
   },
+
   {
     path: 'login',
-    loadComponent: () => import('./features/auth/pages/login/login.page').then( m => m.LoginPage)
+    loadComponent: () =>
+      import('./features/auth/pages/login/login.page').then((m) => m.LoginPage),
   },
+
+  {
+    path: 'dashboard',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./layout/dashboard/dashboard.page').then((m) => m.DashboardPage),
+
+    children: [
+      {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full',
+      },
+
+     
+
+      {
+        path: 'hero',
+        loadComponent: () =>
+          import('./features/hero/pages/hero/hero.page').then(
+            (m) => m.HeroPage,
+          ),
+      },
+
+      {
+        path: 'about',
+        loadComponent: () =>
+          import('./features/about/pages/about/about.page').then(
+            (m) => m.AboutPage,
+          ),
+      },
+
+      {
+        path: 'skills',
+        loadComponent: () =>
+          import('./features/skills/pages/skills/skills.page').then(
+            (m) => m.SkillsPage,
+          ),
+      },
+
+      {
+        path: 'experience',
+        loadComponent: () =>
+          import('./features/experience/pages/experience/experience.page').then(
+            (m) => m.ExperiencePage,
+          ),
+      },
+
+      {
+        path: 'education',
+        loadComponent: () =>
+          import('./features/education/pages/education/education.page').then(
+            (m) => m.EducationPage,
+          ),
+      },
+
+      {
+        path: 'projects',
+        loadComponent: () =>
+          import('./features/projects/pages/projects/projects.page').then(
+            (m) => m.ProjectsPage,
+          ),
+      },
+
+      {
+        path: 'resume',
+        loadComponent: () =>
+          import('./features/resume/pages/resume/resume.page').then(
+            (m) => m.ResumePage,
+          ),
+      },
+       {
+    path: 'certificate',
+    loadComponent: () =>
+      import('./features/certificate/pages/certificate/certificate.page').then(
+        (m) => m.CertificatePage,
+      ),
+  },
+   {
+    path: 'blog',
+    loadComponent: () =>
+      import('./features/blog/pages/blog/blog.page').then((m) => m.BlogPage),
+  },
+   {
+    path: 'contact',
+    loadComponent: () =>
+      import('./features/contact/pages/contact/contact.page').then(
+        (m) => m.ContactPage,
+      ),
+  },
+   {
+    path: 'settings',
+    loadComponent: () =>
+      import('./features/settings/pages/settings/settings.page').then(
+        (m) => m.SettingsPage,
+      ),
+  },
+   {
+    path: 'social-links',
+    loadComponent: () =>
+      import('./features/social-links/pages/social-links/social-links.page').then(
+        (m) => m.SocialLinksPage,
+      ),
+  },
+   {
+    path: 'dashboard',
+    loadComponent: () => import('./features/dashboard/pages/dashboard/dashboard.page').then( m => m.DashboardPage)
+  },
+    ],
+  },
+
+  {
+    path: '**',
+    redirectTo: 'login',
+  },
+ 
+  // {
+  //   path: 'certificate',
+  //   loadComponent: () =>
+  //     import('./features/certificate/pages/certificate/certificate.page').then(
+  //       (m) => m.CertificatePage,
+  //     ),
+  // },
+  // {
+  //   path: 'blog',
+  //   loadComponent: () =>
+  //     import('./features/blog/pages/blog/blog.page').then((m) => m.BlogPage),
+  // },
+  // {
+  //   path: 'contact',
+  //   loadComponent: () =>
+  //     import('./features/contact/pages/contact/contact.page').then(
+  //       (m) => m.ContactPage,
+  //     ),
+  // },
+  // {
+  //   path: 'settings',
+  //   loadComponent: () =>
+  //     import('./features/settings/pages/settings/settings.page').then(
+  //       (m) => m.SettingsPage,
+  //     ),
+  // },
+  // {
+  //   path: 'social-links',
+  //   loadComponent: () =>
+  //     import('./features/social-links/pages/social-links/social-links.page').then(
+  //       (m) => m.SocialLinksPage,
+  //     ),
+  // },
 ];

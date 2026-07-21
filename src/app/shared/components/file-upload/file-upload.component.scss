@@ -1,0 +1,82 @@
+:host {
+  display: block;
+}
+
+.upload-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.upload-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+}
+
+.upload-info ion-icon {
+  font-size: 42px;
+  color: var(--ion-color-primary);
+}
+
+.details {
+  flex: 1;
+}
+
+.details h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.details p {
+  margin: 4px 0 0;
+  color: var(--ion-color-medium);
+  font-size: 14px;
+  word-break: break-all;
+}
+
+.upload-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.preview {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 16px;
+  border-top: 1px solid var(--ion-color-light);
+}
+
+.preview a {
+  color: var(--ion-color-primary);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.preview a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+
+  .upload-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .upload-actions {
+    justify-content: space-between;
+  }
+
+  .upload-actions ion-button {
+    flex: 1;
+  }
+
+}

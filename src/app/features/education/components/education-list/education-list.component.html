@@ -1,0 +1,81 @@
+<ion-content class="ion-padding">
+
+  <app-page-header
+    title="Education Management"
+    subtitle="Manage your education details."
+    buttonText="Add Education"
+    [showButton]="true"
+    (buttonClick)="addEducation()">
+  </app-page-header>
+
+  <ion-card>
+
+    <ion-card-content>
+
+      <app-search-toolbar
+        placeholder="Search by institute, degree, field or location..."
+        (search)="searchEducations($event)">
+      </app-search-toolbar>
+
+      <app-loading
+        *ngIf="loading"
+        message="Loading education records...">
+      </app-loading>
+
+      <ng-container *ngIf="!loading">
+
+        <app-empty-state
+          *ngIf="filteredEducations.length === 0"
+          icon="school-outline"
+          title="No Education Records"
+          message="Click 'Add Education' to create your first education record.">
+        </app-empty-state>
+
+        <app-data-table
+          *ngIf="filteredEducations.length > 0"
+          [columns]="columns"
+          [data]="paginatedEducations"
+          [showActions]="true"
+          (edit)="editEducation($event)"
+          (delete)="deleteEducation($event)">
+        </app-data-table>
+
+        <div
+          class="pagination"
+          *ngIf="filteredEducations.length > pageSize">
+
+          <ion-button
+            fill="outline"
+            size="small"
+            [disabled]="currentPage === 1"
+            (click)="previousPage()">
+
+            Previous
+
+          </ion-button>
+
+          <span class="page-info">
+
+            Page {{ currentPage }} of {{ totalPages }}
+
+          </span>
+
+          <ion-button
+            fill="outline"
+            size="small"
+            [disabled]="currentPage === totalPages"
+            (click)="nextPage()">
+
+            Next
+
+          </ion-button>
+
+        </div>
+
+      </ng-container>
+
+    </ion-card-content>
+
+  </ion-card>
+
+</ion-content>

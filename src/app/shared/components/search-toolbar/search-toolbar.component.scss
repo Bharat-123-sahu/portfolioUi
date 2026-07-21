@@ -1,0 +1,9 @@
+:host {
+  display: block;
+  margin-bottom: 20px;
+}
+
+ion-searchbar {
+  --border-radius: 12px;
+  --background: var(--ion-color-light);
+}

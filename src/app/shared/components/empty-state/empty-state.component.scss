@@ -1,0 +1,42 @@
+.empty-state {
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  padding: 60px 20px;
+
+  text-align: center;
+
+}
+
+.empty-icon {
+
+  font-size: 70px;
+
+  color: var(--ion-color-medium);
+
+  margin-bottom: 20px;
+
+}
+
+h2 {
+
+  margin: 0;
+
+  font-size: 24px;
+
+  font-weight: 700;
+
+}
+
+p {
+
+  margin-top: 10px;
+
+  color: var(--ion-color-medium);
+
+  max-width: 400px;
+
+}

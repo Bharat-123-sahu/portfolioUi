@@ -1,0 +1,204 @@
+<!-- <ion-content class="ion-padding">
+
+  <ion-card>
+
+    <ion-card-header>
+      <ion-card-title>Hero Management</ion-card-title>
+      <ion-card-subtitle>
+        Manage your portfolio hero section
+      </ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+
+      <form [formGroup]="heroForm">
+
+        ================= General Information =================
+
+        <h2>General Information</h2>
+
+        <ion-grid>
+          <ion-row>
+
+            <ion-col size="12">
+              <ion-item>
+                <ion-input
+                  label="Title"
+                  labelPlacement="stacked"
+                  formControlName="title">
+                </ion-input>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="12">
+              <ion-item>
+                <ion-input
+                  label="Subtitle"
+                  labelPlacement="stacked"
+                  formControlName="subtitle">
+                </ion-input>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="12">
+              <ion-item>
+                <ion-textarea
+                  autoGrow="true"
+                  rows="4"
+                  label="Description"
+                  labelPlacement="stacked"
+                  formControlName="description">
+                </ion-textarea>
+              </ion-item>
+            </ion-col>
+
+          </ion-row>
+        </ion-grid>
+
+        <hr>
+
+        ================= Profile Image =================
+
+        <h2>Profile Image</h2>
+
+        <ion-item lines="none">
+          <input
+            type="file"
+            accept="image/*"
+            (change)="onFileSelected($event)">
+        </ion-item>
+
+        <div
+          class="image-preview"
+          *ngIf="heroForm.get('profileImage')?.value">
+
+          <img
+            [src]="environment.apiUrl + heroForm.get('profileImage')?.value"
+            alt="Profile Image">
+
+        </div>
+
+        <hr>
+
+        ================= Social Links =================
+
+        <h2>Social Links</h2>
+
+        <ion-grid>
+          <ion-row>
+
+            <ion-col size="12" sizeMd="4">
+              <ion-item>
+                <ion-input
+                  label="GitHub URL"
+                  labelPlacement="stacked"
+                  formControlName="githubUrl">
+                </ion-input>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="12" sizeMd="4">
+              <ion-item>
+                <ion-input
+                  label="LinkedIn URL"
+                  labelPlacement="stacked"
+                  formControlName="linkedinUrl">
+                </ion-input>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="12" sizeMd="4">
+              <ion-item>
+                <ion-input
+                  label="Resume URL"
+                  labelPlacement="stacked"
+                  formControlName="resumeUrl">
+                </ion-input>
+              </ion-item>
+            </ion-col>
+
+          </ion-row>
+        </ion-grid>
+
+        <hr>
+
+        ================= Contact =================
+
+        <h2>Contact Information</h2>
+
+        <ion-grid>
+          <ion-row>
+
+            <ion-col size="12" sizeMd="4">
+              <ion-item>
+                <ion-input
+                  type="email"
+                  label="Email"
+                  labelPlacement="stacked"
+                  formControlName="email">
+                </ion-input>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="12" sizeMd="4">
+              <ion-item>
+                <ion-input
+                  type="tel"
+                  label="Phone"
+                  labelPlacement="stacked"
+                  formControlName="phone">
+                </ion-input>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="12" sizeMd="4">
+              <ion-item>
+                <ion-input
+                  label="Location"
+                  labelPlacement="stacked"
+                  formControlName="location">
+                </ion-input>
+              </ion-item>
+            </ion-col>
+
+          </ion-row>
+        </ion-grid>
+
+        <hr>
+
+        ================= Settings =================
+
+        <h2>Settings</h2>
+
+        <ion-item lines="none">
+          <ion-checkbox
+            slot="start"
+            formControlName="isActive">
+          </ion-checkbox>
+
+          <ion-label>Active</ion-label>
+        </ion-item>
+
+        <ion-button
+          expand="block"
+          size="default"
+          [disabled]="heroForm.invalid || isSubmitting"
+          (click)="submit()">
+
+          Save Hero
+
+        </ion-button>
+
+      </form>
+
+    </ion-card-content>
+
+  </ion-card>
+
+</ion-content> -->
+
+<ion-content class="ion-padding">
+
+  <app-hero-list></app-hero-list>
+
+</ion-content>

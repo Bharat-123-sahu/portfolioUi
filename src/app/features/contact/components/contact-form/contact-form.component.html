@@ -1,0 +1,305 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-title>
+      {{ contact ? 'Edit Contact' : 'Add Contact' }}
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="close()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <form
+    [formGroup]="contactForm"
+    (ngSubmit)="submit()">
+
+    <!-- Profile Image -->
+
+    <ion-card>
+
+      <ion-card-header>
+        <ion-card-title>
+          Profile Image
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <app-image-upload
+          folder="contacts"
+          [imageUrl]="contactForm.get('profileImage')?.value"
+          (imageUploaded)="contactForm.patchValue({ profileImage: $event })">
+        </app-image-upload>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- Resume -->
+
+    <ion-card>
+
+      <ion-card-header>
+        <ion-card-title>
+          Resume
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <app-file-upload
+          folder="resume"
+          accept=".pdf,.doc,.docx"
+          [fileUrl]="contactForm.get('resumeUrl')?.value"
+          (fileUploaded)="contactForm.patchValue({ resumeUrl: $event })">
+        </app-file-upload>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- Personal Information -->
+
+    <ion-card>
+
+      <ion-card-header>
+        <ion-card-title>
+          Personal Information
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <ion-item>
+          <ion-label position="stacked">Name</ion-label>
+          <ion-input formControlName="name"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Designation</ion-label>
+          <ion-input formControlName="designation"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Email</ion-label>
+          <ion-input
+            type="email"
+            formControlName="email">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Phone</ion-label>
+          <ion-input
+            type="tel"
+            formControlName="phone">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">
+            Alternate Phone
+          </ion-label>
+          <ion-input
+            type="tel"
+            formControlName="alternatePhone">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">
+            Website
+          </ion-label>
+          <ion-input
+            type="url"
+            formControlName="website">
+          </ion-input>
+        </ion-item>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- Address -->
+
+    <ion-card>
+
+      <ion-card-header>
+        <ion-card-title>
+          Address Information
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <ion-item>
+          <ion-label position="stacked">
+            Address
+          </ion-label>
+          <ion-textarea
+            rows="3"
+            formControlName="address">
+          </ion-textarea>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">
+            City
+          </ion-label>
+          <ion-input formControlName="city"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">
+            State
+          </ion-label>
+          <ion-input formControlName="state"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">
+            Country
+          </ion-label>
+          <ion-input formControlName="country"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">
+            Postal Code
+          </ion-label>
+          <ion-input formControlName="postalCode"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">
+            Google Map URL
+          </ion-label>
+          <ion-input
+            type="url"
+            formControlName="googleMapUrl">
+          </ion-input>
+        </ion-item>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- Professional Information -->
+
+    <ion-card>
+
+      <ion-card-header>
+        <ion-card-title>
+          Professional Information
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <ion-item>
+          <ion-label position="stacked">
+            Working Hours
+          </ion-label>
+          <ion-input
+            placeholder="Mon - Fri : 9 AM - 6 PM"
+            formControlName="workingHours">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+
+          <ion-label>
+            Available For Hire
+          </ion-label>
+
+          <ion-toggle
+            slot="end"
+            formControlName="availableForHire">
+          </ion-toggle>
+
+        </ion-item>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- Settings -->
+
+    <ion-card>
+
+      <ion-card-header>
+        <ion-card-title>
+          Settings
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <ion-item>
+
+          <ion-label>
+            Display Order
+          </ion-label>
+
+          <ion-input
+            type="number"
+            formControlName="displayOrder">
+          </ion-input>
+
+        </ion-item>
+
+        <ion-item>
+
+          <ion-label>
+            Active
+          </ion-label>
+
+          <ion-toggle
+            slot="end"
+            formControlName="isActive">
+          </ion-toggle>
+
+        </ion-item>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- Actions -->
+
+    <div class="form-actions">
+
+      <ion-button
+        fill="outline"
+        color="medium"
+        (click)="close()">
+
+        Cancel
+
+      </ion-button>
+
+      <ion-button
+        type="submit"
+        [disabled]="contactForm.invalid || saving">
+
+        <ion-spinner
+          *ngIf="saving"
+          slot="start">
+        </ion-spinner>
+
+        {{ contact ? 'Update Contact' : 'Save Contact' }}
+
+      </ion-button>
+
+    </div>
+
+  </form>
+
+</ion-content>

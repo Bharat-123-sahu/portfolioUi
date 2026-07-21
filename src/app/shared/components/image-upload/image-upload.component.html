@@ -1,0 +1,45 @@
+<div class="upload-container">
+
+  <label>{{ label }}</label>
+
+  <div class="preview">
+
+    <img
+      *ngIf="imageUrl"
+      [src]="imageUrl">
+
+    <div
+      *ngIf="!imageUrl"
+      class="placeholder">
+
+      <ion-icon name="image-outline"></ion-icon>
+
+    </div>
+
+  </div>
+
+  <input
+    type="file"
+    accept="image/*"
+    (change)="onFileSelected($event)">
+
+  <ion-button
+    expand="block"
+    [disabled]="uploading">
+
+    {{ uploading ? 'Uploading...' : 'Choose Image' }}
+
+  </ion-button>
+
+  <ion-button
+    *ngIf="imageUrl"
+    color="danger"
+    fill="clear"
+    expand="block"
+    (click)="removeImage()">
+
+    Remove Image
+
+  </ion-button>
+
+</div>

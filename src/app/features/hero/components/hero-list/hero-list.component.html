@@ -1,0 +1,224 @@
+<ion-card>
+
+  <ion-card-header>
+
+   <app-page-header
+  title="Hero Management"
+  subtitle="Manage portfolio hero section"
+  buttonText="Add Hero"
+  (buttonClick)="addHero()">
+</app-page-header>
+    <app-search-toolbar
+  placeholder="Search Hero..."
+  (search)="searchHeroes($event)">
+</app-search-toolbar>
+
+  </ion-card-header>
+
+  <ion-card-content>
+
+    <!-- Loading -->
+
+    <div
+      class="center"
+      *ngIf="loading">
+
+    <app-loading
+  *ngIf="loading"
+  message="Loading Hero Data...">
+</app-loading>
+
+    </div>
+
+    <!-- Empty State -->
+
+    
+
+    <div
+      class="center empty"
+      *ngIf="!loading && filteredHeroes.length  === 0">
+
+      <app-empty-state
+  *ngIf="filteredHeroes.length === 0 && !loading"
+  icon="person-outline"
+  title="No Hero Found"
+  message="Click 'Add Hero' to create your first Hero section.">
+</app-empty-state>
+
+    </div>
+
+    <!-- Hero List -->
+
+    <ion-grid
+      *ngIf="!loading && filteredHeroes.length">
+
+      <ion-row class="table-header">
+
+        <ion-col size="2">
+          Image
+        </ion-col>
+
+        <ion-col size="3">
+          Title
+        </ion-col>
+
+        <ion-col size="3">
+          Subtitle
+        </ion-col>
+
+        <ion-col size="2">
+          Status
+        </ion-col>
+
+        <ion-col size="2">
+          Actions
+        </ion-col>
+
+      </ion-row>
+
+      <ion-row
+        *ngFor="let hero of paginatedHeroes">
+
+        <ion-col size="2">
+
+          <img
+            *ngIf="hero.profileImage"
+            [src]="environment.apiUrl + hero.profileImage"
+            class="hero-image">
+
+        </ion-col>
+
+        <ion-col size="3">
+
+          {{ hero.title }}
+
+        </ion-col>
+
+        <ion-col size="3">
+
+          {{ hero.subtitle }}
+
+        </ion-col>
+
+        <ion-col size="2">
+
+          <ion-badge
+            [color]="hero.isActive ? 'success' : 'medium'">
+
+            {{ hero.isActive ? 'Active' : 'Inactive' }}
+
+          </ion-badge>
+
+        </ion-col>
+
+        <ion-col size="2">
+
+          <ion-button
+            fill="clear"
+            color="primary"
+            (click)="editHero(hero)">
+
+            <ion-icon
+              slot="icon-only"
+              name="create-outline">
+            </ion-icon>
+
+          </ion-button>
+
+          <ion-button
+            fill="clear"
+            color="danger"
+            (click)="deleteHero(hero)">
+
+            <ion-icon
+              slot="icon-only"
+              name="trash-outline">
+            </ion-icon>
+
+          </ion-button>
+
+        </ion-col>
+
+      </ion-row>
+
+    </ion-grid>
+    <div class="pagination">
+
+  <ion-button
+    fill="outline"
+    (click)="previousPage()"
+    [disabled]="currentPage === 1">
+
+    Previous
+
+  </ion-button>
+
+  <span>
+
+    Page {{ currentPage }} of {{ totalPages || 1 }}
+
+  </span>
+
+  <ion-button
+    fill="outline"
+    (click)="nextPage()"
+    [disabled]="currentPage === totalPages || totalPages === 0">
+
+    Next
+
+  </ion-button>
+
+</div>
+
+  </ion-card-content>
+  
+
+</ion-card>
+
+<!-- 
+<ion-card>
+
+  <ion-card-header>
+
+    <app-page-header
+      title="Hero Management"
+      subtitle="Manage portfolio hero section"
+      buttonText="Add Hero"
+      (buttonClick)="addHero()">
+    </app-page-header>
+
+    <app-search-toolbar
+      placeholder="Search Hero..."
+      (search)="searchHeroes($event)">
+    </app-search-toolbar>
+
+  </ion-card-header>
+
+  <ion-card-content>
+
+    Loading
+    <app-loading
+      *ngIf="loading"
+      message="Loading Hero Data...">
+    </app-loading>
+
+    Empty State
+    <app-empty-state
+      *ngIf="!loading && filteredHeroes.length === 0"
+      icon="person-outline"
+      title="No Hero Found"
+      message="Click 'Add Hero' to create your first Hero section.">
+    </app-empty-state>
+
+    Data Table
+    <app-data-table
+      *ngIf="!loading && filteredHeroes.length > 0"
+      [columns]="columns"
+      [data]="paginatedHeroes"
+      (edit)="editHero($event)"
+      (delete)="deleteHero($event)">
+    </app-data-table>
+
+  </ion-card-content>
+
+</ion-card> -->

@@ -1,0 +1,79 @@
+:host {
+    display: block;
+}
+
+ion-card {
+
+    margin: 0;
+
+    border-radius: 18px;
+
+}
+
+.banner {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 24px;
+
+}
+
+h1 {
+
+    margin: 0;
+
+    font-size: 28px;
+
+    font-weight: 700;
+
+}
+
+p {
+
+    margin-top: 8px;
+
+    color: var(--ion-color-medium);
+
+}
+
+.calendar {
+
+    width: 72px;
+
+    height: 72px;
+
+    border-radius: 18px;
+
+    background: var(--ion-color-primary);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+}
+
+.calendar ion-icon {
+
+    font-size: 34px;
+
+    color: white;
+
+}
+
+@media (max-width:768px) {
+
+    .banner {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+    }
+
+}

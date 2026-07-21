@@ -1,0 +1,13 @@
+<div class="metric-grid">
+  <app-stat-card
+    *ngFor="let stat of stats"
+    [title]="stat.title"
+    [value]="stat.value"
+    [subtitle]="stat.subtitle ?? ''"
+    [icon]="stat.icon ?? 'stats-chart-outline'"
+    [color]="stat.color ?? 'primary'"
+    [trend]="stat.trend"
+    [loading]="stat.loading ?? false"
+  >
+  </app-stat-card>
+</div>

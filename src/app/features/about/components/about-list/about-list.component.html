@@ -1,0 +1,56 @@
+<ion-content class="ion-padding">
+
+  <app-page-header
+    title="About Management"
+    subtitle="Manage your About section information."
+    buttonText="Add About"
+    [showButton]="true"
+    (buttonClick)="addAbout()">
+  </app-page-header>
+
+  <ion-card>
+
+    <ion-card-content>
+
+      <app-search-toolbar
+        placeholder="Search by heading or sub heading..."
+        (search)="searchAbout($event)">
+      </app-search-toolbar>
+
+      <app-loading
+        *ngIf="loading"
+        message="Loading about information...">
+      </app-loading>
+
+      <ng-container *ngIf="!loading">
+
+        <app-empty-state
+          *ngIf="filteredAbouts.length===0"
+          icon="document-text-outline"
+          title="No About Records"
+          message="Click 'Add About' to create your first About record.">
+        </app-empty-state>
+
+        <app-data-table
+          *ngIf="filteredAbouts.length>0"
+          [columns]="columns"
+          [data]="paginatedAbouts"
+          [showActions]="true"
+          (edit)="editAbout($event)"
+          (delete)="deleteAbout($event)">
+        </app-data-table>
+
+        <div
+          class="pagination"
+          *ngIf="filteredAbouts.length>pageSize">
+
+          ...
+        </div>
+
+      </ng-container>
+
+    </ion-card-content>
+
+  </ion-card>
+
+</ion-content>

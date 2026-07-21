@@ -1,0 +1,76 @@
+<app-widget-container
+    [title]="title"
+    [subtitle]="subtitle"
+    [icon]="icon">
+
+    <ion-list
+        *ngIf="items.length; else empty"
+        lines="none">
+
+        <ion-item
+            button
+            detail
+            *ngFor="let item of items"
+            (click)="open(item)">
+
+            <ion-avatar
+                slot="start"
+                *ngIf="item.image">
+
+                <img
+                    [src]="item.image"
+                    [alt]="item.title">
+
+            </ion-avatar>
+
+            <ion-icon
+                *ngIf="!item.image && item.icon"
+                slot="start"
+                [name]="item.icon">
+            </ion-icon>
+
+            <ion-label>
+
+                <h2>
+
+                    {{ item.title }}
+
+                </h2>
+
+                <p *ngIf="item.subtitle">
+
+                    {{ item.subtitle }}
+
+                </p>
+
+                <small *ngIf="item.date">
+
+                    {{ item.date | date:'dd MMM yyyy' }}
+
+                </small>
+
+            </ion-label>
+
+            <ion-badge
+                *ngIf="item.badge"
+                [color]="item.badgeColor || 'primary'">
+
+                {{ item.badge }}
+
+            </ion-badge>
+
+        </ion-item>
+
+    </ion-list>
+
+    <ng-template #empty>
+
+        <div class="empty">
+
+            {{ emptyMessage }}
+
+        </div>
+
+    </ng-template>
+
+</app-widget-container>

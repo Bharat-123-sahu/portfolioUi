@@ -1,0 +1,81 @@
+<ion-content class="ion-padding">
+
+  <app-page-header
+    title="Contact Management"
+    subtitle="Manage your contact information."
+    buttonText="Add Contact"
+    [showButton]="true"
+    (buttonClick)="addContact()">
+  </app-page-header>
+
+  <ion-card>
+
+    <ion-card-content>
+
+      <app-search-toolbar
+        placeholder="Search by name, designation, email or phone..."
+        (search)="searchContacts($event)">
+      </app-search-toolbar>
+
+      <app-loading
+        *ngIf="loading"
+        message="Loading contacts...">
+      </app-loading>
+
+      <ng-container *ngIf="!loading">
+
+        <app-empty-state
+          *ngIf="filteredContacts.length === 0"
+          icon="people-outline"
+          title="No Contacts Found"
+          message="Click 'Add Contact' to create your first contact.">
+        </app-empty-state>
+
+        <app-data-table
+          *ngIf="filteredContacts.length > 0"
+          [columns]="columns"
+          [data]="paginatedContacts"
+          [showActions]="true"
+          (edit)="editContact($event)"
+          (delete)="deleteContact($event)">
+        </app-data-table>
+
+        <div
+          class="pagination"
+          *ngIf="filteredContacts.length > pageSize">
+
+          <ion-button
+            fill="outline"
+            size="small"
+            [disabled]="currentPage === 1"
+            (click)="previousPage()">
+
+            Previous
+
+          </ion-button>
+
+          <span class="page-info">
+
+            Page {{ currentPage }} of {{ totalPages }}
+
+          </span>
+
+          <ion-button
+            fill="outline"
+            size="small"
+            [disabled]="currentPage === totalPages"
+            (click)="nextPage()">
+
+            Next
+
+          </ion-button>
+
+        </div>
+
+      </ng-container>
+
+    </ion-card-content>
+
+  </ion-card>
+
+</ion-content>

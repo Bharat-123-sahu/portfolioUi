@@ -1,0 +1,70 @@
+<ion-card>
+
+  <ion-card-content>
+
+    <ion-item>
+
+      <ion-input
+        [formControl]="technologyControl"
+        [placeholder]="placeholder"
+        (keyup.enter)="addTechnology()">
+      </ion-input>
+
+      <ion-button
+        slot="end"
+        fill="clear"
+        color="primary"
+        (click)="addTechnology()">
+
+        <ion-icon
+          slot="icon-only"
+          name="add-circle-outline">
+        </ion-icon>
+
+      </ion-button>
+
+    </ion-item>
+
+    <div
+      class="chips-container"
+      *ngIf="technologies.length">
+
+      <ion-chip
+        color="primary"
+        outline="true"
+        *ngFor="let technology of technologies; let i = index">
+
+        <ion-label>
+
+          {{ technology }}
+
+        </ion-label>
+
+        <ion-icon
+          name="close-circle"
+          (click)="removeTechnology(i)">
+        </ion-icon>
+
+      </ion-chip>
+
+    </div>
+
+    <div
+      class="empty-state"
+      *ngIf="!technologies.length">
+
+      <ion-icon
+        name="hardware-chip-outline">
+      </ion-icon>
+
+      <p>
+
+        No technologies added yet.
+
+      </p>
+
+    </div>
+
+  </ion-card-content>
+
+</ion-card>

@@ -1,0 +1,248 @@
+<ion-header>
+
+  <ion-toolbar>
+
+    <ion-title>
+
+      {{ socialLink ? 'Edit Social Link' : 'Add Social Link' }}
+
+    </ion-title>
+
+    <ion-buttons slot="end">
+
+      <ion-button
+        fill="clear"
+        (click)="close()">
+
+        <ion-icon name="close-outline"></ion-icon>
+
+      </ion-button>
+
+    </ion-buttons>
+
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <form
+    [formGroup]="form"
+    (ngSubmit)="submit()">
+
+    <!-- Platform -->
+
+    <ion-card>
+
+      <ion-card-header>
+
+        <ion-card-title>
+
+          Platform Information
+
+        </ion-card-title>
+
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <ion-item>
+
+          <ion-label position="stacked">
+
+            Platform
+
+          </ion-label>
+
+          <ion-select
+            formControlName="platform"
+            interface="popover">
+
+            <ion-select-option
+              *ngFor="let platform of platforms"
+              [value]="platform.value">
+
+              {{ platform.label }}
+
+            </ion-select-option>
+
+          </ion-select>
+
+        </ion-item>
+
+        <ion-item>
+
+          <ion-label position="stacked">
+
+            Platform Icon
+
+          </ion-label>
+
+          <div class="platform-preview">
+
+            <ion-icon
+              [name]="form.get('icon')?.value"
+              [style.color]="form.get('color')?.value">
+            </ion-icon>
+
+            <span>
+
+              {{ form.get('platform')?.value || 'Select Platform' }}
+
+            </span>
+
+          </div>
+
+        </ion-item>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- Profile -->
+
+    <ion-card>
+
+      <ion-card-header>
+
+        <ion-card-title>
+
+          Profile Details
+
+        </ion-card-title>
+
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <ion-item>
+
+          <ion-label position="stacked">
+
+            Username
+
+          </ion-label>
+
+          <ion-input
+            formControlName="username"
+            placeholder="@username">
+          </ion-input>
+
+        </ion-item>
+
+        <ion-item>
+
+          <ion-label position="stacked">
+
+            Profile URL
+
+          </ion-label>
+
+          <ion-input
+            type="url"
+            formControlName="url"
+            placeholder="https://...">
+          </ion-input>
+
+        </ion-item>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- Settings -->
+
+    <ion-card>
+
+      <ion-card-header>
+
+        <ion-card-title>
+
+          Settings
+
+        </ion-card-title>
+
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <ion-item>
+
+          <ion-label>
+
+            Display Order
+
+          </ion-label>
+
+          <ion-input
+            type="number"
+            formControlName="displayOrder">
+          </ion-input>
+
+        </ion-item>
+
+        <ion-item>
+
+          <ion-label>
+
+            Visible
+
+          </ion-label>
+
+          <ion-toggle
+            slot="end"
+            formControlName="isVisible">
+          </ion-toggle>
+
+        </ion-item>
+
+        <ion-item>
+
+          <ion-label>
+
+            Active
+
+          </ion-label>
+
+          <ion-toggle
+            slot="end"
+            formControlName="isActive">
+          </ion-toggle>
+
+        </ion-item>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- Actions -->
+
+    <div class="form-actions">
+
+      <ion-button
+        fill="outline"
+        color="medium"
+        (click)="close()">
+
+        Cancel
+
+      </ion-button>
+
+      <ion-button
+        type="submit"
+        [disabled]="form.invalid || saving">
+
+        <ion-spinner
+          *ngIf="saving"
+          slot="start">
+        </ion-spinner>
+
+        {{ socialLink ? 'Update Social Link' : 'Save Social Link' }}
+
+      </ion-button>
+
+    </div>
+
+  </form>
+
+</ion-content>

@@ -1,0 +1,91 @@
+:host {
+  display: block;
+}
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 12px;
+  background: var(--ion-card-background, #1e1e1e);
+  border: 1px solid var(--ion-color-step-150);
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 900px;
+}
+
+.data-table thead {
+  background: var(--ion-color-light);
+}
+
+.data-table th {
+  padding: 14px 16px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--ion-color-dark);
+  white-space: nowrap;
+  border-bottom: 1px solid var(--ion-color-step-150);
+}
+
+.data-table td {
+  padding: 14px 16px;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--ion-color-step-100);
+}
+
+.data-table tbody tr {
+  transition: background-color .25s ease;
+}
+
+.data-table tbody tr:hover {
+  background: rgba(var(--ion-color-primary-rgb), 0.05);
+}
+
+.table-image {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid var(--ion-color-step-150);
+}
+
+.action-column {
+  width: 170px;
+}
+
+.action-buttons {
+  white-space: nowrap;
+}
+
+.action-buttons ion-button {
+  margin: 0 4px 0 0;
+}
+
+.empty-row {
+  text-align: center;
+  padding: 30px;
+  color: var(--ion-color-medium);
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+
+  .data-table {
+    min-width: 700px;
+  }
+
+  .table-image {
+    width: 45px;
+    height: 45px;
+  }
+
+  .data-table th,
+  .data-table td {
+    padding: 10px;
+    font-size: 13px;
+  }
+
+}

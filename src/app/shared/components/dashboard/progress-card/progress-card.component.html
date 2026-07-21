@@ -1,0 +1,41 @@
+<app-widget-container
+    [title]="data.title"
+    [subtitle]="data.subtitle"
+    [icon]="data.icon"
+    >
+
+    <div class="progress-wrapper">
+
+        <div class="value">
+
+            <h2>
+
+                {{ data.value }}
+
+                <span *ngIf="data.unit">
+
+                    {{ data.unit }}
+
+                </span>
+
+            </h2>
+
+            <span
+                class="percentage"
+                *ngIf="data.showPercentage !== false">
+
+                {{ percentage | number:'1.0-0' }}%
+
+            </span>
+
+        </div>
+
+        <ion-progress-bar
+            [value]="percentage / 100"
+            [color]="data.color || 'primary'">
+
+        </ion-progress-bar>
+
+    </div>
+
+</app-widget-container>

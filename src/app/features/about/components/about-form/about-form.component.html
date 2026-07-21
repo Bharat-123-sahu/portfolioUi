@@ -1,0 +1,281 @@
+<ion-header>
+  <ion-toolbar color="primary">
+
+    <ion-title>
+      {{ about ? 'Edit About' : 'Add About' }}
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        Close
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <form [formGroup]="aboutForm" (ngSubmit)="submit()">
+
+    <!-- Profile Image -->
+    <ion-card>
+
+      <ion-card-header>
+        <ion-card-title>Profile Image</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <app-image-upload
+          label="Profile Image"
+          [imageUrl]="aboutForm.get('profileImage')?.value"
+          (imageUploaded)="aboutForm.patchValue({ profileImage: $event })">
+        </app-image-upload>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- About Information -->
+    <ion-card>
+
+      <ion-card-header>
+        <ion-card-title>About Information</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <ion-grid>
+
+          <ion-row>
+
+            <ion-col size="12" sizeMd="6">
+
+              <ion-item>
+
+                <ion-label position="stacked">
+                  Heading *
+                </ion-label>
+
+                <ion-input
+                  formControlName="heading">
+                </ion-input>
+
+              </ion-item>
+
+            </ion-col>
+
+            <ion-col size="12" sizeMd="6">
+
+              <ion-item>
+
+                <ion-label position="stacked">
+                  Sub Heading *
+                </ion-label>
+
+                <ion-input
+                  formControlName="subHeading">
+                </ion-input>
+
+              </ion-item>
+
+            </ion-col>
+
+            <ion-col size="12">
+
+              <ion-item>
+
+                <ion-label position="stacked">
+                  Description *
+                </ion-label>
+
+                <ion-textarea
+                  rows="6"
+                  formControlName="description">
+                </ion-textarea>
+
+              </ion-item>
+
+            </ion-col>
+
+          </ion-row>
+
+        </ion-grid>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- Statistics -->
+    <ion-card>
+
+      <ion-card-header>
+        <ion-card-title>Statistics</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <ion-grid>
+
+          <ion-row>
+
+            <ion-col size="12" sizeMd="3">
+
+              <ion-item>
+
+                <ion-label position="stacked">
+                  Years of Experience
+                </ion-label>
+
+                <ion-input
+                  type="number"
+                  formControlName="yearsOfExperience">
+                </ion-input>
+
+              </ion-item>
+
+            </ion-col>
+
+            <ion-col size="12" sizeMd="3">
+
+              <ion-item>
+
+                <ion-label position="stacked">
+                  Total Projects
+                </ion-label>
+
+                <ion-input
+                  type="number"
+                  formControlName="totalProjects">
+                </ion-input>
+
+              </ion-item>
+
+            </ion-col>
+
+            <ion-col size="12" sizeMd="3">
+
+              <ion-item>
+
+                <ion-label position="stacked">
+                  Total Clients
+                </ion-label>
+
+                <ion-input
+                  type="number"
+                  formControlName="totalClients">
+                </ion-input>
+
+              </ion-item>
+
+            </ion-col>
+
+            <ion-col size="12" sizeMd="3">
+
+              <ion-item>
+
+                <ion-label position="stacked">
+                  Certificates
+                </ion-label>
+
+                <ion-input
+                  type="number"
+                  formControlName="totalCertificates">
+                </ion-input>
+
+              </ion-item>
+
+            </ion-col>
+
+          </ion-row>
+
+        </ion-grid>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- Resume -->
+    <ion-card>
+
+      <ion-card-header>
+        <ion-card-title>
+          Resume
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <ion-item>
+
+          <ion-label position="stacked">
+            Resume URL
+          </ion-label>
+
+          <ion-input
+            formControlName="resumeUrl">
+          </ion-input>
+
+        </ion-item>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- Status -->
+    <ion-card>
+
+      <ion-card-header>
+        <ion-card-title>
+          Status
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <ion-item lines="none">
+
+          <ion-checkbox
+            slot="start"
+            formControlName="isActive">
+          </ion-checkbox>
+
+          <ion-label>
+            Active
+          </ion-label>
+
+        </ion-item>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- Actions -->
+
+    <div class="form-actions">
+
+      <ion-button
+        fill="outline"
+        color="medium"
+        type="button"
+        (click)="close()">
+
+        Cancel
+
+      </ion-button>
+
+      <ion-button
+        type="submit"
+        color="primary"
+        [disabled]="aboutForm.invalid || saving">
+
+        {{ saving ? 'Saving...' : (about ? 'Update About' : 'Save About') }}
+
+      </ion-button>
+
+    </div>
+
+  </form>
+
+</ion-content>

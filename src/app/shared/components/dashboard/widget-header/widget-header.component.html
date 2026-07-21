@@ -1,0 +1,52 @@
+<div class="widget-header">
+
+  <div class="title">
+
+    <ion-icon
+      *ngIf="icon"
+      [name]="icon">
+    </ion-icon>
+
+    <div>
+
+      <h2>
+
+        {{ title }}
+
+      </h2>
+
+      <p *ngIf="subtitle">
+
+        {{ subtitle }}
+
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="actions">
+
+    <ng-content></ng-content>
+
+    <ion-button
+      *ngIf="showRefresh"
+      fill="clear"
+      size="small"
+      (click)="onRefresh()">
+
+      <ion-spinner
+        *ngIf="refreshing"
+        name="crescent">
+      </ion-spinner>
+
+      <ion-icon
+        *ngIf="!refreshing"
+        name="refresh-outline">
+      </ion-icon>
+
+    </ion-button>
+
+  </div>
+
+</div>

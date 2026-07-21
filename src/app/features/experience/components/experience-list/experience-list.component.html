@@ -1,0 +1,81 @@
+<ion-content class="ion-padding">
+
+  <app-page-header
+    title="Experience Management"
+    subtitle="Manage your work experience information."
+    buttonText="Add Experience"
+    [showButton]="true"
+    (buttonClick)="addExperience()">
+  </app-page-header>
+
+  <ion-card>
+
+    <ion-card-content>
+
+      <app-search-toolbar
+        placeholder="Search by company, designation or location..."
+        (search)="searchExperiences($event)">
+      </app-search-toolbar>
+
+      <app-loading
+        *ngIf="loading"
+        message="Loading experience information...">
+      </app-loading>
+
+      <ng-container *ngIf="!loading">
+
+        <app-empty-state
+          *ngIf="filteredExperiences.length === 0"
+          icon="briefcase-outline"
+          title="No Experience Records"
+          message="Click 'Add Experience' to create your first experience record.">
+        </app-empty-state>
+
+        <app-data-table
+          *ngIf="filteredExperiences.length > 0"
+          [columns]="columns"
+          [data]="paginatedExperiences"
+          [showActions]="true"
+          (edit)="editExperience($event)"
+          (delete)="deleteExperience($event)">
+        </app-data-table>
+
+        <div
+          class="pagination"
+          *ngIf="filteredExperiences.length > pageSize">
+
+          <ion-button
+            fill="outline"
+            size="small"
+            [disabled]="currentPage === 1"
+            (click)="previousPage()">
+
+            Previous
+
+          </ion-button>
+
+          <span class="page-info">
+
+            Page {{ currentPage }} of {{ totalPages }}
+
+          </span>
+
+          <ion-button
+            fill="outline"
+            size="small"
+            [disabled]="currentPage === totalPages"
+            (click)="nextPage()">
+
+            Next
+
+          </ion-button>
+
+        </div>
+
+      </ng-container>
+
+    </ion-card-content>
+
+  </ion-card>
+
+</ion-content>

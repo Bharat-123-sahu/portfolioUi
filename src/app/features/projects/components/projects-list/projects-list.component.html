@@ -1,0 +1,81 @@
+<ion-content class="ion-padding">
+
+  <app-page-header
+    title="Project Management"
+    subtitle="Manage your portfolio projects."
+    buttonText="Add Project"
+    [showButton]="true"
+    (buttonClick)="addProject()">
+  </app-page-header>
+
+  <ion-card>
+
+    <ion-card-content>
+
+      <app-search-toolbar
+        placeholder="Search by title, category or description..."
+        (search)="searchProjects($event)">
+      </app-search-toolbar>
+
+      <app-loading
+        *ngIf="loading"
+        message="Loading projects...">
+      </app-loading>
+
+      <ng-container *ngIf="!loading">
+
+        <app-empty-state
+          *ngIf="filteredProjects.length === 0"
+          icon="folder-open-outline"
+          title="No Projects Found"
+          message="Click 'Add Project' to create your first project.">
+        </app-empty-state>
+
+        <app-data-table
+          *ngIf="filteredProjects.length > 0"
+          [columns]="columns"
+          [data]="paginatedProjects"
+          [showActions]="true"
+          (edit)="editProject($event)"
+          (delete)="deleteProject($event)">
+        </app-data-table>
+
+        <div
+          class="pagination"
+          *ngIf="filteredProjects.length > pageSize">
+
+          <ion-button
+            fill="outline"
+            size="small"
+            [disabled]="currentPage === 1"
+            (click)="previousPage()">
+
+            Previous
+
+          </ion-button>
+
+          <span class="page-info">
+
+            Page {{ currentPage }} of {{ totalPages }}
+
+          </span>
+
+          <ion-button
+            fill="outline"
+            size="small"
+            [disabled]="currentPage === totalPages"
+            (click)="nextPage()">
+
+            Next
+
+          </ion-button>
+
+        </div>
+
+      </ng-container>
+
+    </ion-card-content>
+
+  </ion-card>
+
+</ion-content>

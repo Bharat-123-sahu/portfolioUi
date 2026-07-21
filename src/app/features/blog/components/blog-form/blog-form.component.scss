@@ -1,0 +1,63 @@
+:host {
+  display: block;
+}
+
+ion-content {
+  --background: var(--ion-color-light);
+}
+
+ion-card {
+  margin-bottom: 20px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+ion-card-header {
+  border-bottom: 1px solid var(--ion-color-light-shade);
+}
+
+ion-card-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+ion-item {
+  --background: transparent;
+  --padding-start: 0;
+  --inner-padding-end: 0;
+  margin-bottom: 14px;
+}
+
+ion-label {
+  font-weight: 500;
+}
+
+ion-input,
+ion-select,
+ion-textarea {
+  margin-top: 6px;
+}
+
+ion-textarea {
+  min-height: 120px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin: 24px 0;
+}
+
+@media (max-width: 768px) {
+
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .form-actions ion-button {
+    width: 100%;
+  }
+
+}

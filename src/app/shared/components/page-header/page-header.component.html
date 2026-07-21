@@ -1,0 +1,25 @@
+<div class="page-header">
+
+  <div>
+
+    <h2>{{ title }}</h2>
+
+    <p>{{ subtitle }}</p>
+
+  </div>
+
+  <ion-button
+    *ngIf="showButton"
+    color="primary"
+    (click)="onButtonClick()">
+
+    <ion-icon
+      slot="start"
+      name="add-outline">
+    </ion-icon>
+
+    {{ buttonText }}
+
+  </ion-button>
+
+</div>

@@ -1,0 +1,257 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      {{ education ? 'Edit Education' : 'Add Education' }}
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="close()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <form [formGroup]="educationForm" (ngSubmit)="submit()">
+
+    <!-- Institute Logo -->
+
+    <ion-card>
+
+      <ion-card-header>
+        <ion-card-title>Institute Logo</ion-card-title>
+      </ion-card-header>
+
+      <!-- <ion-card-content>
+
+        <app-image-upload
+          folder="education"
+          [imageUrl]="educationForm.get('instituteLogo')?.value"
+          (imageUploaded)="educationForm.patchValue({ instituteLogo: $event })">
+        </app-image-upload>
+
+      </ion-card-content> -->
+
+    </ion-card>
+
+    <!-- Institute Details -->
+
+    <ion-card>
+
+      <ion-card-header>
+        <ion-card-title>Institute Details</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <ion-item>
+          <ion-label position="stacked">
+            Institute Name
+          </ion-label>
+
+          <ion-input
+            formControlName="instituteName"
+            placeholder="Enter institute name">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">
+            Degree
+          </ion-label>
+
+          <ion-input
+            formControlName="degree"
+            placeholder="B.Tech, MCA, MBA...">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">
+            Field of Study
+          </ion-label>
+
+          <ion-input
+            formControlName="fieldOfStudy"
+            placeholder="Computer Science">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">
+            Location
+          </ion-label>
+
+          <ion-input
+            formControlName="location"
+            placeholder="Indore, MP">
+          </ion-input>
+        </ion-item>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- Academic Details -->
+
+    <ion-card>
+
+      <ion-card-header>
+        <ion-card-title>Academic Details</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <ion-grid>
+
+          <ion-row>
+
+            <ion-col size="12" sizeMd="6">
+
+              <ion-item>
+
+                <ion-label position="stacked">
+                  Start Year
+                </ion-label>
+
+                <ion-input
+                  type="number"
+                  formControlName="startYear">
+                </ion-input>
+
+              </ion-item>
+
+            </ion-col>
+
+            <ion-col size="12" sizeMd="6">
+
+              <ion-item>
+
+                <ion-label position="stacked">
+                  End Year
+                </ion-label>
+
+                <ion-input
+                  type="number"
+                  formControlName="endYear">
+                </ion-input>
+
+              </ion-item>
+
+            </ion-col>
+
+          </ion-row>
+
+        </ion-grid>
+
+        <ion-item>
+
+          <ion-label position="stacked">
+            Grade / CGPA
+          </ion-label>
+
+          <ion-input
+            formControlName="grade"
+            placeholder="8.25 CGPA / 82%">
+          </ion-input>
+
+        </ion-item>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- Description -->
+
+    <ion-card>
+
+      <ion-card-header>
+        <ion-card-title>Description</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <ion-textarea
+          rows="5"
+          formControlName="description"
+          placeholder="Write about your education...">
+        </ion-textarea>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- Settings -->
+
+    <ion-card>
+
+      <ion-card-header>
+        <ion-card-title>Settings</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <ion-item>
+
+          <ion-label>
+            Display Order
+          </ion-label>
+
+          <ion-input
+            type="number"
+            formControlName="displayOrder">
+          </ion-input>
+
+        </ion-item>
+
+        <ion-item>
+
+          <ion-label>
+            Active
+          </ion-label>
+
+          <ion-toggle
+            slot="end"
+            formControlName="isActive">
+          </ion-toggle>
+
+        </ion-item>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- Actions -->
+
+    <div class="form-actions">
+
+      <ion-button
+        fill="outline"
+        color="medium"
+        (click)="close()">
+
+        Cancel
+
+      </ion-button>
+
+      <ion-button
+        type="submit"
+        [disabled]="educationForm.invalid || saving">
+
+        <ion-spinner
+          *ngIf="saving"
+          slot="start"
+          name="crescent">
+        </ion-spinner>
+
+        {{ education ? 'Update Education' : 'Save Education' }}
+
+      </ion-button>
+
+    </div>
+
+  </form>
+
+</ion-content>

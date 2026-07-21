@@ -1,0 +1,87 @@
+<ion-content class="ion-padding">
+
+  <app-page-header
+    title="Social Links"
+    subtitle="Manage your social media profiles."
+    buttonText="Add Social Link"
+    [showButton]="true"
+    (buttonClick)="addSocialLink()">
+  </app-page-header>
+
+  <ion-card>
+
+    <ion-card-content>
+
+      <!-- Search -->
+
+      <app-search-toolbar
+        placeholder="Search by platform, username or URL..."
+        (search)="search($event)">
+      </app-search-toolbar>
+
+      <!-- Loading -->
+
+      <app-loading
+        *ngIf="loading"
+        message="Loading social links...">
+      </app-loading>
+
+      <!-- Empty State -->
+
+      <app-empty-state
+        *ngIf="!loading && filteredSocialLinks.length === 0"
+        icon="share-social-outline"
+        title="No Social Links Found"
+        message="Click 'Add Social Link' to create your first social profile.">
+      </app-empty-state>
+
+      <!-- Data Table -->
+
+      <app-data-table
+        *ngIf="!loading && filteredSocialLinks.length > 0"
+        [columns]="columns"
+        [data]="paginatedSocialLinks"
+        [showActions]="true"
+        (edit)="editSocialLink($event)"
+        (delete)="deleteSocialLink($event)">
+      </app-data-table>
+
+      <!-- Pagination -->
+
+      <div
+        class="pagination"
+        *ngIf="filteredSocialLinks.length > pageSize">
+
+        <ion-button
+          fill="outline"
+          size="small"
+          [disabled]="currentPage === 1"
+          (click)="previousPage()">
+
+          Previous
+
+        </ion-button>
+
+        <span class="page-info">
+
+          Page {{ currentPage }} of {{ totalPages }}
+
+        </span>
+
+        <ion-button
+          fill="outline"
+          size="small"
+          [disabled]="currentPage === totalPages"
+          (click)="nextPage()">
+
+          Next
+
+        </ion-button>
+
+      </div>
+
+    </ion-card-content>
+
+  </ion-card>
+
+</ion-content>

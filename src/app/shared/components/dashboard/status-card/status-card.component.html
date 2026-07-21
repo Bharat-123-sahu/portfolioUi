@@ -1,0 +1,50 @@
+<app-widget-container
+    [title]="title"
+    [subtitle]="subtitle"
+    [icon]="icon">
+
+    <ion-list lines="none">
+
+        <ion-item
+            *ngFor="let item of items">
+
+            <ion-icon
+                *ngIf="item.icon"
+                slot="start"
+                [name]="item.icon">
+            </ion-icon>
+
+            <ion-label>
+
+                <h2>
+
+                    {{ item.title }}
+
+                </h2>
+
+                <p *ngIf="item.subtitle">
+
+                    {{ item.subtitle }}
+
+                </p>
+
+                <small *ngIf="item.responseTime">
+
+                    {{ item.responseTime }} ms
+
+                </small>
+
+            </ion-label>
+
+            <ion-badge
+                [color]="getStatusColor(item.status)">
+
+                {{ item.status | titlecase }}
+
+            </ion-badge>
+
+        </ion-item>
+
+    </ion-list>
+
+</app-widget-container>

@@ -1,0 +1,348 @@
+<ion-header>
+
+  <ion-toolbar>
+
+    <ion-title>
+      {{ experience ? 'Edit Experience' : 'Add Experience' }}
+    </ion-title>
+
+    <ion-buttons slot="end">
+
+      <ion-button
+        fill="clear"
+        (click)="close()">
+
+        Close
+
+      </ion-button>
+
+    </ion-buttons>
+
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <form
+    [formGroup]="experienceForm"
+    (ngSubmit)="submit()">
+
+    <!-- Company Logo -->
+
+    <ion-card>
+
+      <ion-card-header>
+
+        <ion-card-title>
+
+          Company Logo
+
+        </ion-card-title>
+
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <app-image-upload
+          label="Company Logo"
+          [imageUrl]="experienceForm.get('companyLogo')?.value"
+          folder="experience"
+          (imageUploaded)="experienceForm.patchValue({ companyLogo: $event })">
+        </app-image-upload>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- Company Information -->
+
+    <ion-card>
+
+      <ion-card-header>
+
+        <ion-card-title>
+
+          Company Information
+
+        </ion-card-title>
+
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <ion-item>
+
+          <ion-label position="stacked">
+            Company Name
+          </ion-label>
+
+          <ion-input
+            formControlName="companyName"
+            placeholder="Enter company name">
+          </ion-input>
+
+        </ion-item>
+
+        <ion-item>
+
+          <ion-label position="stacked">
+            Designation
+          </ion-label>
+
+          <ion-input
+            formControlName="designation"
+            placeholder="Enter designation">
+          </ion-input>
+
+        </ion-item>
+
+        <ion-item>
+
+          <ion-label position="stacked">
+            Employment Type
+          </ion-label>
+
+          <ion-select formControlName="employmentType">
+
+            <ion-select-option
+              *ngFor="let type of employmentTypes"
+              [value]="type">
+
+              {{ type }}
+
+            </ion-select-option>
+
+          </ion-select>
+
+        </ion-item>
+
+        <ion-item>
+
+          <ion-label position="stacked">
+            Location
+          </ion-label>
+
+          <ion-input
+            formControlName="location"
+            placeholder="City, State">
+          </ion-input>
+
+        </ion-item>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- Employment Details -->
+
+    <ion-card>
+
+      <ion-card-header>
+
+        <ion-card-title>
+
+          Employment Details
+
+        </ion-card-title>
+
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <ion-item>
+
+          <ion-label position="stacked">
+            Start Date
+          </ion-label>
+
+          <ion-datetime
+            presentation="date"
+            formControlName="startDate">
+          </ion-datetime>
+
+        </ion-item>
+
+        <ion-item>
+
+          <ion-label position="stacked">
+            End Date
+          </ion-label>
+
+          <ion-datetime
+            presentation="date"
+            formControlName="endDate"
+            [disabled]="experienceForm.get('currentlyWorking')?.value">
+          </ion-datetime>
+
+        </ion-item>
+
+        <ion-item>
+
+          <ion-checkbox
+            slot="start"
+            formControlName="currentlyWorking">
+          </ion-checkbox>
+
+          <ion-label>
+
+            Currently Working Here
+
+          </ion-label>
+
+        </ion-item>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- Description -->
+
+    <ion-card>
+
+      <ion-card-header>
+
+        <ion-card-title>
+
+          Job Description
+
+        </ion-card-title>
+
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <ion-item>
+
+          <ion-label position="stacked">
+            Description
+          </ion-label>
+
+          <ion-textarea
+            rows="6"
+            autoGrow="true"
+            formControlName="description"
+            placeholder="Describe your responsibilities and achievements">
+          </ion-textarea>
+
+        </ion-item>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- Technologies -->
+
+    <ion-card>
+
+      <ion-card-header>
+
+        <ion-card-title>
+
+          Technologies
+
+        </ion-card-title>
+
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <ion-item>
+
+          <ion-label position="stacked">
+            Technologies Used
+          </ion-label>
+
+          <ion-input
+            formControlName="technologies"
+            placeholder="Angular, Ionic, NestJS, MongoDB">
+          </ion-input>
+
+        </ion-item>
+
+        <ion-note color="medium">
+
+          Separate multiple technologies using commas.
+
+        </ion-note>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- Settings -->
+
+    <ion-card>
+
+      <ion-card-header>
+
+        <ion-card-title>
+
+          Settings
+
+        </ion-card-title>
+
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <ion-item>
+
+          <ion-label position="stacked">
+            Display Order
+          </ion-label>
+
+          <ion-input
+            type="number"
+            formControlName="displayOrder">
+          </ion-input>
+
+        </ion-item>
+
+        <ion-item>
+
+          <ion-checkbox
+            slot="start"
+            formControlName="isActive">
+          </ion-checkbox>
+
+          <ion-label>
+
+            Active
+
+          </ion-label>
+
+        </ion-item>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- Actions -->
+
+    <div class="form-actions">
+
+      <ion-button
+        fill="outline"
+        color="medium"
+        type="button"
+        (click)="close()">
+
+        Cancel
+
+      </ion-button>
+
+      <ion-button
+        color="primary"
+        type="submit"
+        [disabled]="saving">
+
+        {{ saving ? 'Saving...' : (experience ? 'Update Experience' : 'Save Experience') }}
+
+      </ion-button>
+
+    </div>
+
+  </form>
+
+</ion-content>

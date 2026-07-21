@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { TokenService } from '../../../../core/services/token.service';
+import { Router } from '@angular/router';
 import {
   IonContent,
   IonCard,
@@ -49,6 +50,7 @@ export class LoginPage {
     private fb: FormBuilder,
     private authService: AuthService,
     private tokenService: TokenService,
+    private router:Router,
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -70,6 +72,7 @@ export class LoginPage {
         console.log('Login Success');
 
         console.log(response);
+        this.router.navigate(['/dashboard']);
       },
 
       error: (error) => {

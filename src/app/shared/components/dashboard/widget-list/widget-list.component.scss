@@ -1,0 +1,65 @@
+:host {
+  display: block;
+}
+
+ion-list {
+
+  background: transparent;
+
+}
+
+ion-item {
+
+  --padding-start: 0;
+
+  --inner-padding-end: 0;
+
+}
+
+ion-avatar {
+
+  width: 44px;
+
+  height: 44px;
+
+}
+
+ion-icon[slot="start"] {
+
+  font-size: 24px;
+
+  color: var(--ion-color-primary);
+
+}
+
+ion-label h2 {
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+}
+
+ion-label p {
+
+  color: var(--ion-color-medium);
+
+  margin-top: 4px;
+
+}
+
+small {
+
+  color: var(--ion-color-medium);
+
+}
+
+.empty {
+
+  text-align: center;
+
+  padding: 40px 20px;
+
+  color: var(--ion-color-medium);
+
+}

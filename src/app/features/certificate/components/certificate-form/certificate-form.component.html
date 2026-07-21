@@ -1,0 +1,299 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-title>
+      {{ certificate ? 'Edit Certificate' : 'Add Certificate' }}
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="close()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <form [formGroup]="certificateForm" (ngSubmit)="submit()">
+
+    <!-- Certificate Image -->
+
+    <ion-card>
+
+      <ion-card-header>
+        <ion-card-title>Certificate Image</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <app-image-upload
+          folder="certificates"
+          [imageUrl]="certificateForm.get('certificateImage')?.value"
+          (imageUploaded)="certificateForm.patchValue({ certificateImage: $event })">
+        </app-image-upload>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- Certificate PDF -->
+
+    <ion-card>
+
+      <ion-card-header>
+        <ion-card-title>Certificate File</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <app-file-upload
+          folder="certificates"
+          accept=".pdf,.doc,.docx"
+          [fileUrl]="certificateForm.get('certificateFile')?.value"
+          (fileUploaded)="certificateForm.patchValue({ certificateFile: $event })">
+        </app-file-upload>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- Certificate Information -->
+
+    <ion-card>
+
+      <ion-card-header>
+        <ion-card-title>Certificate Information</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <ion-item>
+          <ion-label position="stacked">
+            Title <ion-text color="danger">*</ion-text>
+          </ion-label>
+
+          <ion-input
+            formControlName="title"
+            placeholder="Certificate Title">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">
+            Issuer <ion-text color="danger">*</ion-text>
+          </ion-label>
+
+          <ion-input
+            formControlName="issuer"
+            placeholder="Google, Microsoft, AWS...">
+          </ion-input>
+        </ion-item>
+
+        <ion-grid>
+
+          <ion-row>
+
+            <ion-col size="12" sizeMd="6">
+
+              <ion-item>
+
+                <ion-label position="stacked">
+                  Issue Date
+                </ion-label>
+
+                <ion-datetime-button
+                  datetime="issueDate">
+                </ion-datetime-button>
+
+              </ion-item>
+
+            </ion-col>
+
+            <ion-col size="12" sizeMd="6">
+
+              <ion-item>
+
+                <ion-label position="stacked">
+                  Expiry Date
+                </ion-label>
+
+                <ion-datetime-button
+                  datetime="expiryDate">
+                </ion-datetime-button>
+
+              </ion-item>
+
+            </ion-col>
+
+          </ion-row>
+
+        </ion-grid>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- Datetime Modals -->
+
+    <ion-modal keepContentsMounted="true">
+
+      <ng-template>
+
+        <ion-datetime
+          id="issueDate"
+          presentation="date"
+          formControlName="issueDate">
+        </ion-datetime>
+
+      </ng-template>
+
+    </ion-modal>
+
+    <ion-modal keepContentsMounted="true">
+
+      <ng-template>
+
+        <ion-datetime
+          id="expiryDate"
+          presentation="date"
+          formControlName="expiryDate">
+        </ion-datetime>
+
+      </ng-template>
+
+    </ion-modal>
+
+    <!-- Credential -->
+
+    <ion-card>
+
+      <ion-card-header>
+        <ion-card-title>Credential Details</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <ion-item>
+
+          <ion-label position="stacked">
+            Credential ID
+          </ion-label>
+
+          <ion-input
+            formControlName="credentialId"
+            placeholder="Credential ID">
+          </ion-input>
+
+        </ion-item>
+
+        <ion-item>
+
+          <ion-label position="stacked">
+            Credential URL
+          </ion-label>
+
+          <ion-input
+            formControlName="credentialUrl"
+            placeholder="https://">
+          </ion-input>
+
+        </ion-item>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- Description -->
+
+    <ion-card>
+
+      <ion-card-header>
+        <ion-card-title>Description</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <ion-textarea
+          rows="5"
+          formControlName="description"
+          placeholder="Write certificate details...">
+        </ion-textarea>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- Settings -->
+
+    <ion-card>
+
+      <ion-card-header>
+        <ion-card-title>Settings</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <ion-item>
+
+          <ion-label position="stacked">
+            Display Order
+          </ion-label>
+
+          <ion-input
+            type="number"
+            formControlName="displayOrder">
+          </ion-input>
+
+        </ion-item>
+
+        <ion-item>
+
+          <ion-label>
+            Active
+          </ion-label>
+
+          <ion-toggle
+            slot="end"
+            formControlName="isActive">
+          </ion-toggle>
+
+        </ion-item>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- Actions -->
+
+    <div class="form-actions">
+
+      <ion-button
+        fill="outline"
+        color="medium"
+        (click)="close()">
+
+        Cancel
+
+      </ion-button>
+
+      <ion-button
+        type="submit"
+        [disabled]="certificateForm.invalid || saving">
+
+        <ion-spinner
+          *ngIf="saving"
+          slot="start"
+          name="crescent">
+        </ion-spinner>
+
+        {{ certificate ? 'Update Certificate' : 'Save Certificate' }}
+
+      </ion-button>
+
+    </div>
+
+  </form>
+
+</ion-content>

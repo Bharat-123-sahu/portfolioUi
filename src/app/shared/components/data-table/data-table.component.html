@@ -1,0 +1,115 @@
+<div class="table-container">
+
+  <table class="data-table">
+
+    <thead>
+
+      <tr>
+
+        <th *ngFor="let column of columns; trackBy: trackByIndex">
+
+          {{ column.label }}
+
+        </th>
+
+        <th *ngIf="showActions" class="action-column">
+
+          Actions
+
+        </th>
+
+      </tr>
+
+    </thead>
+
+    <tbody>
+
+      <tr *ngFor="let row of data">
+
+        <td *ngFor="let column of columns">
+
+          <ng-container [ngSwitch]="column.type">
+
+            <!-- Image -->
+
+            <img
+              *ngSwitchCase="'image'"
+              class="table-image"
+              [src]="getImageUrl(getValue(row, column.key))"
+              [alt]="column.label">
+
+            <!-- Status Badge -->
+
+            <ion-badge
+              *ngSwitchCase="'badge'"
+              [color]="getBadgeColor(getValue(row, column.key))">
+
+              {{ getBadgeText(getValue(row, column.key)) }}
+
+            </ion-badge>
+
+            <!-- Date -->
+
+            <span *ngSwitchCase="'date'">
+
+              {{ getValue(row, column.key) | date:'dd MMM yyyy' }}
+
+            </span>
+
+            <!-- Default -->
+
+            <span *ngSwitchDefault>
+
+              {{ getValue(row, column.key) }}
+
+            </span>
+
+          </ng-container>
+
+        </td>
+
+        <td *ngIf="showActions" class="action-buttons">
+
+          <ion-button
+            fill="clear"
+            color="primary"
+            size="small"
+            (click)="onEdit(row)">
+
+            Edit
+
+          </ion-button>
+
+          <ion-button
+            fill="clear"
+            color="danger"
+            size="small"
+            (click)="onDelete(row)">
+
+            Delete
+
+          </ion-button>
+
+        </td>
+
+      </tr>
+
+      <!-- Empty State -->
+
+      <tr *ngIf="!data.length">
+
+        <td
+          [attr.colspan]="columns.length + (showActions ? 1 : 0)"
+          class="empty-row">
+
+          No records found.
+
+        </td>
+
+      </tr>
+
+    </tbody>
+
+  </table>
+
+</div>

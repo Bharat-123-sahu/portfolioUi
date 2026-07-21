@@ -1,0 +1,415 @@
+<ion-header>
+
+  <ion-toolbar>
+
+    <ion-title>
+      {{ project ? 'Edit Project' : 'Add Project' }}
+    </ion-title>
+
+    <ion-buttons slot="end">
+
+      <ion-button
+        fill="clear"
+        (click)="close()">
+
+        Close
+
+      </ion-button>
+
+    </ion-buttons>
+
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <form
+    [formGroup]="projectForm"
+    (ngSubmit)="submit()">
+
+    <!-- Thumbnail -->
+
+    <ion-card>
+
+      <ion-card-header>
+
+        <ion-card-title>
+
+          Project Thumbnail
+
+        </ion-card-title>
+
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <app-image-upload
+          label="Project Thumbnail"
+          folder="projects"
+          [imageUrl]="projectForm.get('thumbnail')?.value"
+          (imageUploaded)="projectForm.patchValue({
+            thumbnail: $event
+          })">
+        </app-image-upload>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- Gallery -->
+
+    <ion-card>
+
+      <ion-card-header>
+
+        <ion-card-title>
+
+          Project Gallery
+
+        </ion-card-title>
+
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <app-gallery-upload
+          folder="projects"
+          [images]="projectForm.get('images')?.value"
+          (imagesChange)="projectForm.patchValue({
+            images: $event
+          })">
+        </app-gallery-upload>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- Project Information -->
+
+    <ion-card>
+
+      <ion-card-header>
+
+        <ion-card-title>
+
+          Project Information
+
+        </ion-card-title>
+
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <ion-item>
+
+          <ion-label position="stacked">
+
+            Project Title
+
+          </ion-label>
+
+          <ion-input
+            formControlName="title"
+            placeholder="Enter project title">
+          </ion-input>
+
+        </ion-item>
+
+        <ion-item>
+
+          <ion-label position="stacked">
+
+            Slug
+
+          </ion-label>
+
+          <ion-input
+            formControlName="slug"
+            placeholder="project-slug">
+          </ion-input>
+
+        </ion-item>
+
+        <ion-item>
+
+          <ion-label position="stacked">
+
+            Category
+
+          </ion-label>
+
+          <ion-select
+            formControlName="category"
+            interface="popover">
+
+            <ion-select-option
+              *ngFor="let category of categories"
+              [value]="category">
+
+              {{ category }}
+
+            </ion-select-option>
+
+          </ion-select>
+
+        </ion-item>
+
+        <ion-item>
+
+          <ion-label position="stacked">
+
+            Short Description
+
+          </ion-label>
+
+          <ion-textarea
+            rows="3"
+            autoGrow="true"
+            formControlName="shortDescription"
+            placeholder="Short description">
+          </ion-textarea>
+
+        </ion-item>
+
+        <ion-item>
+
+          <ion-label position="stacked">
+
+            Description
+
+          </ion-label>
+
+          <ion-textarea
+            rows="6"
+            autoGrow="true"
+            formControlName="description"
+            placeholder="Detailed project description">
+          </ion-textarea>
+
+        </ion-item>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- Technologies -->
+
+    <ion-card>
+
+      <ion-card-header>
+
+        <ion-card-title>
+
+          Technologies
+
+        </ion-card-title>
+
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <ion-item>
+
+          <ion-label position="stacked">
+
+            Technologies Used
+
+          </ion-label>
+
+          <ion-input
+            formControlName="technologies"
+            placeholder="Angular, Ionic, NestJS, MongoDB">
+          </ion-input>
+
+        </ion-item>
+
+        <ion-note color="medium">
+
+          Separate technologies using commas.
+
+        </ion-note>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- Project Links -->
+
+    <ion-card>
+
+      <ion-card-header>
+
+        <ion-card-title>
+
+          Project Links
+
+        </ion-card-title>
+
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <ion-item>
+
+          <ion-label position="stacked">
+
+            GitHub URL
+
+          </ion-label>
+
+          <ion-input
+            type="url"
+            formControlName="githubUrl"
+            placeholder="https://github.com/...">
+          </ion-input>
+
+        </ion-item>
+
+        <ion-item>
+
+          <ion-label position="stacked">
+
+            Live Demo URL
+
+          </ion-label>
+
+          <ion-input
+            type="url"
+            formControlName="liveDemoUrl"
+            placeholder="https://...">
+          </ion-input>
+
+        </ion-item>
+
+        <ion-item>
+
+          <ion-label position="stacked">
+
+            Play Store URL
+
+          </ion-label>
+
+          <ion-input
+            type="url"
+            formControlName="playStoreUrl"
+            placeholder="https://play.google.com/...">
+          </ion-input>
+
+        </ion-item>
+
+        <ion-item>
+
+          <ion-label position="stacked">
+
+            App Store URL
+
+          </ion-label>
+
+          <ion-input
+            type="url"
+            formControlName="appStoreUrl"
+            placeholder="https://apps.apple.com/...">
+          </ion-input>
+
+        </ion-item>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- Settings -->
+
+    <ion-card>
+
+      <ion-card-header>
+
+        <ion-card-title>
+
+          Settings
+
+        </ion-card-title>
+
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <ion-item>
+
+          <ion-label>
+
+            Featured Project
+
+          </ion-label>
+
+          <ion-toggle
+            slot="end"
+            formControlName="isFeatured">
+          </ion-toggle>
+
+        </ion-item>
+
+        <ion-item>
+
+          <ion-label>
+
+            Active
+
+          </ion-label>
+
+          <ion-toggle
+            slot="end"
+            formControlName="isActive">
+          </ion-toggle>
+
+        </ion-item>
+
+        <ion-item>
+
+          <ion-label position="stacked">
+
+            Display Order
+
+          </ion-label>
+
+          <ion-input
+            type="number"
+            formControlName="displayOrder">
+          </ion-input>
+
+        </ion-item>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- Actions -->
+
+    <div class="form-actions">
+
+      <ion-button
+        type="button"
+        fill="outline"
+        color="medium"
+        (click)="close()">
+
+        Cancel
+
+      </ion-button>
+
+      <ion-button
+        type="submit"
+        color="primary"
+        [disabled]="saving">
+
+        {{ saving
+            ? 'Saving...'
+            : (project ? 'Update Project' : 'Save Project') }}
+
+      </ion-button>
+
+    </div>
+
+  </form>
+
+</ion-content>

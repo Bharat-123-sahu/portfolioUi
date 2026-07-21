@@ -1,0 +1,56 @@
+<ion-card>
+
+  <ion-card-header>
+
+    <div class="header">
+
+      <div class="title-section">
+
+        <ion-icon
+          *ngIf="icon"
+          [name]="icon">
+        </ion-icon>
+
+        <div>
+
+          <h2>
+
+            {{ title }}
+
+          </h2>
+
+          <p *ngIf="subtitle">
+
+            {{ subtitle }}
+
+          </p>
+
+        </div>
+
+      </div>
+
+      <ng-content select="[actions]"></ng-content>
+
+    </div>
+
+  </ion-card-header>
+
+  <ion-card-content>
+
+    <ng-container *ngIf="!loading">
+
+      <ng-content></ng-content>
+
+    </ng-container>
+
+    <div
+      class="loading"
+      *ngIf="loading">
+
+      <ion-spinner></ion-spinner>
+
+    </div>
+
+  </ion-card-content>
+
+</ion-card>

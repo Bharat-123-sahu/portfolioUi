@@ -1,0 +1,70 @@
+:host {
+  display: block;
+}
+
+ion-card {
+  margin: 0;
+  border-radius: 12px;
+  box-shadow: none;
+  border: 1px solid var(--ion-color-light);
+}
+
+ion-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+ion-item {
+  --background: transparent;
+  --padding-start: 0;
+  --inner-padding-end: 0;
+}
+
+.chips-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+ion-chip {
+  cursor: default;
+  transition: all .2s ease;
+}
+
+ion-chip:hover {
+  transform: translateY(-2px);
+}
+
+ion-chip ion-icon {
+  cursor: pointer;
+  margin-left: 6px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 24px 16px;
+  color: var(--ion-color-medium);
+}
+
+.empty-state ion-icon {
+  font-size: 42px;
+  margin-bottom: 10px;
+}
+
+.empty-state p {
+  margin: 0;
+  font-size: 14px;
+}
+
+@media (max-width:768px) {
+
+  .chips-container {
+    gap: 8px;
+  }
+
+  ion-chip {
+    font-size: 13px;
+  }
+
+}

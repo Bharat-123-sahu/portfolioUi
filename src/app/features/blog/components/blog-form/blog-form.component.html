@@ -1,0 +1,379 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-title>
+      {{ blog ? 'Edit Blog' : 'Add Blog' }}
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="close()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <form
+    [formGroup]="blogForm"
+    (ngSubmit)="submit()">
+
+    <!-- Featured Image -->
+
+    <ion-card>
+
+      <ion-card-header>
+        <ion-card-title>
+          Featured Image
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <app-image-upload
+          folder="blogs"
+          [imageUrl]="blogForm.get('featuredImage')?.value"
+          (imageUploaded)="blogForm.patchValue({ featuredImage: $event })">
+        </app-image-upload>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- Gallery -->
+
+    <ion-card>
+
+      <ion-card-header>
+        <ion-card-title>
+          Gallery
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <app-gallery-upload
+          folder="blogs"
+          [images]="blogForm.get('gallery')?.value"
+          (imagesUploaded)="blogForm.patchValue({ gallery: $event })">
+        </app-gallery-upload>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- Basic Information -->
+
+    <ion-card>
+
+      <ion-card-header>
+        <ion-card-title>
+          Blog Information
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <ion-item>
+
+          <ion-label position="stacked">
+            Title
+          </ion-label>
+
+          <ion-input
+            formControlName="title"
+            (ionBlur)="generateSlug()">
+          </ion-input>
+
+        </ion-item>
+
+        <ion-item>
+
+          <ion-label position="stacked">
+            Slug
+          </ion-label>
+
+          <ion-input
+            formControlName="slug">
+          </ion-input>
+
+        </ion-item>
+
+        <ion-item>
+
+          <ion-label position="stacked">
+            Short Description
+          </ion-label>
+
+          <ion-textarea
+            rows="3"
+            formControlName="shortDescription">
+          </ion-textarea>
+
+        </ion-item>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- Content -->
+
+    <ion-card>
+
+      <ion-card-header>
+        <ion-card-title>
+          Content
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <!-- Replace later with RichTextEditor -->
+
+        <ion-textarea
+          rows="12"
+          formControlName="content"
+          placeholder="Write blog content...">
+        </ion-textarea>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- Metadata -->
+
+    <ion-card>
+
+      <ion-card-header>
+        <ion-card-title>
+          Metadata
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <ion-item>
+
+          <ion-label position="stacked">
+            Category
+          </ion-label>
+
+          <ion-select
+            formControlName="category">
+
+            <ion-select-option value="Angular">
+              Angular
+            </ion-select-option>
+
+            <ion-select-option value="NodeJS">
+              Node.js
+            </ion-select-option>
+
+            <ion-select-option value="NestJS">
+              NestJS
+            </ion-select-option>
+
+            <ion-select-option value="MongoDB">
+              MongoDB
+            </ion-select-option>
+
+            <ion-select-option value="Programming">
+              Programming
+            </ion-select-option>
+
+          </ion-select>
+
+        </ion-item>
+
+        <ion-item>
+
+          <ion-label position="stacked">
+            Author
+          </ion-label>
+
+          <ion-input
+            formControlName="author">
+          </ion-input>
+
+        </ion-item>
+
+        <ion-item>
+
+          <ion-label position="stacked">
+            Reading Time (Minutes)
+          </ion-label>
+
+          <ion-input
+            type="number"
+            formControlName="readingTime">
+          </ion-input>
+
+        </ion-item>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- Tags -->
+
+    <ion-card>
+
+      <ion-card-header>
+        <ion-card-title>
+          Tags
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <app-technology-chips
+          [technologies]="blogForm.get('tags')?.value"
+          (technologiesChange)="blogForm.patchValue({ tags: $event })">
+        </app-technology-chips>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- SEO -->
+
+    <ion-card>
+
+      <ion-card-header>
+        <ion-card-title>
+          SEO
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <ion-item>
+
+          <ion-label position="stacked">
+            SEO Title
+          </ion-label>
+
+          <ion-input
+            formControlName="seoTitle">
+          </ion-input>
+
+        </ion-item>
+
+        <ion-item>
+
+          <ion-label position="stacked">
+            SEO Description
+          </ion-label>
+
+          <ion-textarea
+            rows="3"
+            formControlName="seoDescription">
+          </ion-textarea>
+
+        </ion-item>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- Settings -->
+
+    <ion-card>
+
+      <ion-card-header>
+        <ion-card-title>
+          Settings
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+
+        <ion-item>
+
+          <ion-label>
+            Display Order
+          </ion-label>
+
+          <ion-input
+            type="number"
+            formControlName="displayOrder">
+          </ion-input>
+
+        </ion-item>
+
+        <ion-item>
+
+          <ion-label>
+            Featured
+          </ion-label>
+
+          <ion-toggle
+            slot="end"
+            formControlName="isFeatured">
+          </ion-toggle>
+
+        </ion-item>
+
+        <ion-item>
+
+          <ion-label>
+            Published
+          </ion-label>
+
+          <ion-toggle
+            slot="end"
+            formControlName="isPublished">
+          </ion-toggle>
+
+        </ion-item>
+
+        <ion-item>
+
+          <ion-label>
+            Active
+          </ion-label>
+
+          <ion-toggle
+            slot="end"
+            formControlName="isActive">
+          </ion-toggle>
+
+        </ion-item>
+
+      </ion-card-content>
+
+    </ion-card>
+
+    <!-- Actions -->
+
+    <div class="form-actions">
+
+      <ion-button
+        fill="outline"
+        color="medium"
+        (click)="close()">
+
+        Cancel
+
+      </ion-button>
+
+      <ion-button
+        type="submit"
+        [disabled]="blogForm.invalid || saving">
+
+        <ion-spinner
+          *ngIf="saving"
+          slot="start">
+        </ion-spinner>
+
+        {{ blog ? 'Update Blog' : 'Publish Blog' }}
+
+      </ion-button>
+
+    </div>
+
+  </form>
+
+</ion-content>

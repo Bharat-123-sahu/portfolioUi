@@ -1,0 +1,81 @@
+<ion-content class="ion-padding">
+
+  <app-page-header
+    title="Blog Management"
+    subtitle="Create, edit and publish blog articles."
+    buttonText="Add Blog"
+    [showButton]="true"
+    (buttonClick)="addBlog()">
+  </app-page-header>
+
+  <ion-card>
+
+    <ion-card-content>
+
+      <app-search-toolbar
+        placeholder="Search by title, category or author..."
+        (search)="searchBlogs($event)">
+      </app-search-toolbar>
+
+      <app-loading
+        *ngIf="loading"
+        message="Loading blogs...">
+      </app-loading>
+
+      <ng-container *ngIf="!loading">
+
+        <app-empty-state
+          *ngIf="filteredBlogs.length === 0"
+          icon="newspaper-outline"
+          title="No Blogs Found"
+          message="Click 'Add Blog' to publish your first article.">
+        </app-empty-state>
+
+        <app-data-table
+          *ngIf="filteredBlogs.length > 0"
+          [columns]="columns"
+          [data]="paginatedBlogs"
+          [showActions]="true"
+          (edit)="editBlog($event)"
+          (delete)="deleteBlog($event)">
+        </app-data-table>
+
+        <div
+          class="pagination"
+          *ngIf="filteredBlogs.length > pageSize">
+
+          <ion-button
+            fill="outline"
+            size="small"
+            [disabled]="currentPage === 1"
+            (click)="previousPage()">
+
+            Previous
+
+          </ion-button>
+
+          <span class="page-info">
+
+            Page {{ currentPage }} of {{ totalPages }}
+
+          </span>
+
+          <ion-button
+            fill="outline"
+            size="small"
+            [disabled]="currentPage === totalPages"
+            (click)="nextPage()">
+
+            Next
+
+          </ion-button>
+
+        </div>
+
+      </ng-container>
+
+    </ion-card-content>
+
+  </ion-card>
+
+</ion-content>
