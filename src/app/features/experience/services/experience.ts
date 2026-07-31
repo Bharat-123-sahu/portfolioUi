@@ -18,7 +18,7 @@ export class ExperienceService extends BaseCrudService<Experience> {
    */
   getCurrent(): Observable<Experience[]> {
     return this.http.get<Experience[]>(
-      `${environment.apiUrl}/api/v1/admin/experiences/current`
+      `${environment.apiUrl}/api/v1/admin/experience/current`,
     );
   }
 
@@ -27,7 +27,7 @@ export class ExperienceService extends BaseCrudService<Experience> {
    */
   getActive(): Observable<Experience[]> {
     return this.http.get<Experience[]>(
-      `${environment.apiUrl}/api/v1/admin/experiences/active`
+      `${environment.apiUrl}/api/v1/admin/experience/active`,
     );
   }
 

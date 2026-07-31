@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -32,19 +32,17 @@ import { CertificateService } from '../../services/certificate';
   styleUrls: ['./certificate-form.component.scss'],
 })
 export class CertificateFormComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private certificateService = inject(CertificateService);
+  private modalController = inject(ModalController);
+  private toastController = inject(ToastController);
+
 
   @Input() certificate?: Certificate;
 
   certificateForm!: FormGroup;
 
   saving = false;
-
-  constructor(
-    private fb: FormBuilder,
-    private certificateService: CertificateService,
-    private modalController: ModalController,
-    private toastController: ToastController
-  ) {}
 
   ngOnInit(): void {
     this.initializeForm();
@@ -61,12 +59,12 @@ export class CertificateFormComponent implements OnInit {
 
       issuer: [
         this.certificate?.issuer ?? '',
-        Validators.required,
+       
       ],
 
       issueDate: [
         this.certificate?.issueDate ?? '',
-        Validators.required,
+       
       ],
 
       expiryDate: [

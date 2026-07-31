@@ -23,6 +23,10 @@ export class DataTableComponent {
 
   @Input() loading = false;
 
+  @Input() emptyTitle = 'No records found';
+
+  @Input() emptyMessage = 'Create a new item or adjust your search filters.';
+
   @Input() showActions = true;
 
   @Output() edit = new EventEmitter<any>();
@@ -75,6 +79,10 @@ export class DataTableComponent {
 
     return index;
 
+  }
+
+  skeletonRows(): number[] {
+    return Array.from({ length: 5 }, (_, index) => index);
   }
 
 }

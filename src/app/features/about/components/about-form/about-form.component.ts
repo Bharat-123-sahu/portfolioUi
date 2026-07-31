@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -31,19 +31,17 @@ import { ImageUploadComponent } from 'src/app/shared/components/image-upload/ima
   styleUrls: ['./about-form.component.scss'],
 })
 export class AboutFormComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private aboutService = inject(AboutService);
+  private modalController = inject(ModalController);
+  private toastController = inject(ToastController);
+
 
   @Input() about?: About;
 
   aboutForm!: FormGroup;
 
   saving = false;
-
-  constructor(
-    private fb: FormBuilder,
-    private aboutService: AboutService,
-    private modalController: ModalController,
-    private toastController: ToastController
-  ) {}
 
   ngOnInit(): void {
     this.initializeForm();

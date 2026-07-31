@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { IonicModule, ToastController } from '@ionic/angular';
 
 import { UploadService } from 'src/app/core/services/upload.service';
@@ -16,6 +16,9 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./file-upload.component.scss'],
 })
 export class FileUploadComponent {
+  private uploadService = inject(UploadService);
+  private toastController = inject(ToastController);
+
 
   @Input() label = 'Upload File';
 
@@ -30,11 +33,6 @@ export class FileUploadComponent {
   uploading = false;
 
   apiUrl = environment.apiUrl;
-
-  constructor(
-    private uploadService: UploadService,
-    private toastController: ToastController
-  ) {}
 
   onFileSelected(event: Event): void {
 

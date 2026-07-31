@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -34,6 +34,11 @@ import { GalleryUploadComponent } from 'src/app/shared/components/gallery-upload
   styleUrls: ['./project-form.component.scss'],
 })
 export class ProjectFormComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private projectService = inject(ProjectService);
+  private modalController = inject(ModalController);
+  private toastController = inject(ToastController);
+
 
   @Input() project?: Project;
 
@@ -51,13 +56,6 @@ export class ProjectFormComponent implements OnInit {
     'Open Source',
     'Other'
   ];
-
-  constructor(
-    private fb: FormBuilder,
-    private projectService: ProjectService,
-    private modalController: ModalController,
-    private toastController: ToastController
-  ) {}
 
   ngOnInit(): void {
     this.initializeForm();

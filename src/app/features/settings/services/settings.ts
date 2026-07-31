@@ -6,25 +6,16 @@ import { PortfolioSettings } from '../models/settings.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SettingsService extends BaseCrudService<PortfolioSettings> {
+  protected override endpoint = `${environment.apiUrl}/api/v1/admin/settings`;
 
-   protected override endpoint =
-       `${environment.apiUrl}/api/v1/admin/about`;
   getSettings(): Observable<PortfolioSettings> {
-    return this.http.get<PortfolioSettings>(
-      `${environment.apiUrl}/settings`
-    );
+    return this.http.get<PortfolioSettings>(this.endpoint);
   }
 
-  updateSettings(
-    data: Partial<PortfolioSettings>
-  ): Observable<PortfolioSettings> {
-    return this.http.put<PortfolioSettings>(
-      `${environment.apiUrl}/settings`,
-      data
-    );
+  updateSettings(data: Partial<PortfolioSettings>): Observable<PortfolioSettings> {
+    return this.http.put<PortfolioSettings>(this.endpoint, data);
   }
-
 }

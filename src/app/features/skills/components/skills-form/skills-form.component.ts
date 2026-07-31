@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -31,6 +31,11 @@ import { SkillsService } from '../../services/skills';
   styleUrls: ['./skills-form.component.scss'],
 })
 export class SkillFormComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private skillService = inject(SkillsService);
+  private modalController = inject(ModalController);
+  private toastController = inject(ToastController);
+
 
   @Input() skill?: Skill;
 
@@ -50,13 +55,6 @@ export class SkillFormComponent implements OnInit {
     'Testing',
     'Others'
   ];
-
-  constructor(
-    private fb: FormBuilder,
-    private skillService: SkillsService,
-    private modalController: ModalController,
-    private toastController: ToastController
-  ) {}
 
   ngOnInit(): void {
     this.initializeForm();

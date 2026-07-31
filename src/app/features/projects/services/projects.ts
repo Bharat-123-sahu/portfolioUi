@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { BaseCrudService } from 'src/app/core/services/base/base-crud.service';
-// import { Project } from '../models/project.model';
 import { environment } from 'src/environments/environment';
 import { Project } from '../models/project.models';
 
@@ -10,17 +9,14 @@ import { Project } from '../models/project.models';
   providedIn: 'root',
 })
 export class ProjectService extends BaseCrudService<Project> {
-
-   protected override endpoint =
-       `${environment.apiUrl}/api/v1/admin/experience`;
- 
+  protected override endpoint = `${environment.apiUrl}/api/v1/admin/projects`;
 
   /**
    * Get featured projects
    */
   getFeatured(): Observable<Project[]> {
     return this.http.get<Project[]>(
-      `${environment.apiUrl}/api/v1/admin/projects/featured`
+      `${environment.apiUrl}/api/v1/admin/projects/featured`,
     );
   }
 
@@ -29,8 +25,7 @@ export class ProjectService extends BaseCrudService<Project> {
    */
   getActive(): Observable<Project[]> {
     return this.http.get<Project[]>(
-      `${environment.apiUrl}/api/v1/admin/projects/active`
+      `${environment.apiUrl}/api/v1/admin/projects/active`,
     );
   }
-
 }

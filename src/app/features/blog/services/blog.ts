@@ -9,16 +9,24 @@ import { Blog } from '../models/blog.models';
   providedIn: 'root',
 })
 export class BlogService extends BaseCrudService<Blog> {
-  protected override endpoint = `${environment.apiUrl}/api/v1/admin/about`;
+  protected override endpoint = `${environment.apiUrl}/api/v1/admin/blogs`;
 
   getPublished(): Observable<Blog[]> {
-    return this.http.get<Blog[]>(`${environment.apiUrl}/blogs/published`);
+    return this.http.get<Blog[]>(
+      `${this.endpoint}?isPublished=true&isActive=true`,
+    );
   }
 
   generateSlug(title: string): Observable<{ slug: string }> {
-    return this.http.post<{ slug: string }>(
-      `${environment.apiUrl}/blogs/generate-slug`,
-      { title },
-    );
+    const slug = title
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, '');
+
+    return new Observable((subscriber) => {
+      subscriber.next({ slug });
+      subscriber.complete();
+    });
   }
 }

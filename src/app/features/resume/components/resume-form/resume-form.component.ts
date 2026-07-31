@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -30,19 +30,17 @@ import { ResumeService } from '../../services/resume';
   styleUrls: ['./resume-form.component.scss'],
 })
 export class ResumeFormComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private resumeService = inject(ResumeService);
+  private modalController = inject(ModalController);
+  private toastController = inject(ToastController);
+
 
   @Input() resume?: Resume;
 
   resumeForm!: FormGroup;
 
   saving = false;
-
-  constructor(
-    private fb: FormBuilder,
-    private resumeService: ResumeService,
-    private modalController: ModalController,
-    private toastController: ToastController
-  ) {}
 
   ngOnInit(): void {
     this.initializeForm();

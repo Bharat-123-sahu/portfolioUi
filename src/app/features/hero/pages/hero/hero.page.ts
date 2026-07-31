@@ -1,9 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IonButton, IonContent, IonItem } from '@ionic/angular/standalone';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HeroService } from '../../services/hero.service';
-import { Hero } from '../../models/hero.model';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
@@ -20,14 +18,18 @@ import { HeroListComponent } from '../../components/hero-list/hero-list.componen
   imports: [
     CommonModule,
     FormsModule,
-    CommonModule,
- HeroListComponent,
+    HeroListComponent,
     ReactiveFormsModule,
-
     IonicModule,
   ],
 })
-export class HeroPage {
+export class HeroPage implements OnInit {
+  private fb = inject(FormBuilder);
+  private heroService = inject(HeroService);
+  private toastController = inject(ToastController);
+  private router = inject(Router);
+  private uploadService = inject(UploadService);
+
   heroForm!: FormGroup;
 
   isSubmitting = false;
@@ -36,14 +38,6 @@ export class HeroPage {
 
   uploading = false;
   environment = environment;
-
-  constructor(
-    private fb: FormBuilder,
-    private heroService: HeroService,
-    private toastController: ToastController,
-    private router: Router,
-    private uploadService: UploadService,
-  ) {}
 
   ngOnInit(): void {
     this.initializeForm();

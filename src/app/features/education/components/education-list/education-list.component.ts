@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   AlertController,
   IonicModule,
@@ -35,6 +35,11 @@ import { EducationService } from '../../services/education';
   styleUrls: ['./education-list.component.scss'],
 })
 export class EducationListComponent implements OnInit {
+  private educationService = inject(EducationService);
+  private modalController = inject(ModalController);
+  private toastController = inject(ToastController);
+  private alertController = inject(AlertController);
+
 
   loading = false;
 
@@ -87,13 +92,6 @@ export class EducationListComponent implements OnInit {
     },
   ];
 
-  constructor(
-    private educationService: EducationService,
-    private modalController: ModalController,
-    private toastController: ToastController,
-    private alertController: AlertController
-  ) {}
-
   ngOnInit(): void {
     this.loadEducations();
   }
@@ -106,7 +104,10 @@ export class EducationListComponent implements OnInit {
 
       next: (response: any) => {
 
-        this.educations = response.education ?? response;
+        const educations =
+          response?.data?.educations ?? response?.educations ?? response;
+
+        this.educations = Array.isArray(educations) ? educations : [];
 
         this.filteredEducations = [...this.educations];
 

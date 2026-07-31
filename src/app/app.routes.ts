@@ -1,13 +1,12 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth-guard';
-// import { authGuard } from './core/guards/auth.guard';
+import { publicRoutes } from './public/public.routes';
 
 export const routes: Routes = [
-  {
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full',
-  },
+ {
+  path: '',
+  children: publicRoutes,
+},
 
   {
     path: 'login',
@@ -24,11 +23,11 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'home',
-        pathMatch: 'full',
+        loadComponent: () =>
+          import('./features/dashboard/pages/dashboard/dashboard.page').then(
+            (m) => m.DashboardPage,
+          ),
       },
-
-     
 
       {
         path: 'hero',
@@ -85,82 +84,47 @@ export const routes: Routes = [
             (m) => m.ResumePage,
           ),
       },
-       {
-    path: 'certificate',
-    loadComponent: () =>
-      import('./features/certificate/pages/certificate/certificate.page').then(
-        (m) => m.CertificatePage,
-      ),
-  },
-   {
-    path: 'blog',
-    loadComponent: () =>
-      import('./features/blog/pages/blog/blog.page').then((m) => m.BlogPage),
-  },
-   {
-    path: 'contact',
-    loadComponent: () =>
-      import('./features/contact/pages/contact/contact.page').then(
-        (m) => m.ContactPage,
-      ),
-  },
-   {
-    path: 'settings',
-    loadComponent: () =>
-      import('./features/settings/pages/settings/settings.page').then(
-        (m) => m.SettingsPage,
-      ),
-  },
-   {
-    path: 'social-links',
-    loadComponent: () =>
-      import('./features/social-links/pages/social-links/social-links.page').then(
-        (m) => m.SocialLinksPage,
-      ),
-  },
-   {
-    path: 'dashboard',
-    loadComponent: () => import('./features/dashboard/pages/dashboard/dashboard.page').then( m => m.DashboardPage)
-  },
+      {
+        path: 'certificate',
+        loadComponent: () =>
+          import('./features/certificate/pages/certificate/certificate.page').then(
+            (m) => m.CertificatePage,
+          ),
+      },
+      {
+        path: 'blog',
+        loadComponent: () =>
+          import('./features/blog/pages/blog/blog.page').then(
+            (m) => m.BlogPage,
+          ),
+      },
+      {
+        path: 'contact',
+        loadComponent: () =>
+          import('./features/contact/pages/contact/contact.page').then(
+            (m) => m.ContactPage,
+          ),
+      },
+      {
+        path: 'settings',
+        loadComponent: () =>
+          import('./features/settings/pages/settings/settings.page').then(
+            (m) => m.SettingsPage,
+          ),
+      },
+      {
+        path: 'social-links',
+        loadComponent: () =>
+          import('./features/social-links/pages/social-links/social-links.page').then(
+            (m) => m.SocialLinksPage,
+          ),
+      },
     ],
   },
 
-  {
-    path: '**',
-    redirectTo: 'login',
-  },
- 
-  // {
-  //   path: 'certificate',
-  //   loadComponent: () =>
-  //     import('./features/certificate/pages/certificate/certificate.page').then(
-  //       (m) => m.CertificatePage,
-  //     ),
-  // },
-  // {
-  //   path: 'blog',
-  //   loadComponent: () =>
-  //     import('./features/blog/pages/blog/blog.page').then((m) => m.BlogPage),
-  // },
-  // {
-  //   path: 'contact',
-  //   loadComponent: () =>
-  //     import('./features/contact/pages/contact/contact.page').then(
-  //       (m) => m.ContactPage,
-  //     ),
-  // },
-  // {
-  //   path: 'settings',
-  //   loadComponent: () =>
-  //     import('./features/settings/pages/settings/settings.page').then(
-  //       (m) => m.SettingsPage,
-  //     ),
-  // },
-  // {
-  //   path: 'social-links',
-  //   loadComponent: () =>
-  //     import('./features/social-links/pages/social-links/social-links.page').then(
-  //       (m) => m.SocialLinksPage,
-  //     ),
-  // },
+ {
+  path: '**',
+  redirectTo: '',
+}
+
 ];

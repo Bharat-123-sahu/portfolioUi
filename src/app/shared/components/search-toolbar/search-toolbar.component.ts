@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { SearchbarCustomEvent } from '@ionic/angular';
 import { IonicModule } from '@ionic/angular';
 
 @Component({
@@ -16,10 +17,10 @@ export class SearchToolbarComponent {
 
   @Input() placeholder = 'Search...';
 
-  @Output() search = new EventEmitter<string>();
+  @Output() searchChanged = new EventEmitter<string>();
 
-  onSearch(event: any): void {
-    this.search.emit(event.detail.value || '');
+  onSearch(event: SearchbarCustomEvent): void {
+    this.searchChanged.emit(event.detail.value || '');
   }
 
 }

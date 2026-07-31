@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   AlertController,
   IonicModule,
@@ -35,6 +35,10 @@ import { ResumeService } from '../../services/resume';
   styleUrls: ['./resume-list.component.scss'],
 })
 export class ResumeListComponent implements OnInit {
+  private resumeService = inject(ResumeService);
+  private modalController = inject(ModalController);
+  private toastController = inject(ToastController);
+  private alertController = inject(AlertController);
 
   loading = false;
 
@@ -76,26 +80,19 @@ export class ResumeListComponent implements OnInit {
     },
   ];
 
-  constructor(
-    private resumeService: ResumeService,
-    private modalController: ModalController,
-    private toastController: ToastController,
-    private alertController: AlertController
-  ) {}
-
   ngOnInit(): void {
     this.loadResumes();
   }
 
   loadResumes(): void {
-
     this.loading = true;
 
     this.resumeService.getAll().subscribe({
-
       next: (response: any) => {
+        const resumes =
+          response?.data?.resumes ?? response?.resumes ?? response;
 
-        this.resumes = response.data ?? response;
+        this.resumes = Array.isArray(resumes) ? resumes : [];
 
         this.filteredResumes = [...this.resumes];
 
@@ -104,90 +101,62 @@ export class ResumeListComponent implements OnInit {
         this.updatePagination();
 
         this.loading = false;
-
       },
 
       error: () => {
-
         this.loading = false;
-
-      }
-
+      },
     });
-
   }
 
   searchResumes(keyword: string): void {
-
     keyword = keyword.toLowerCase();
 
     if (!keyword) {
-
       this.filteredResumes = [...this.resumes];
-
     } else {
-
-      this.filteredResumes = this.resumes.filter(item =>
-
-        item.title.toLowerCase().includes(keyword) ||
-
-        item.version.toLowerCase().includes(keyword)
-
+      this.filteredResumes = this.resumes.filter(
+        (item) =>
+          item.title.toLowerCase().includes(keyword) ||
+          item.version.toLowerCase().includes(keyword),
       );
-
     }
 
     this.currentPage = 1;
 
     this.updatePagination();
-
   }
 
   updatePagination(): void {
-
-    this.totalPages = Math.ceil(
-      this.filteredResumes.length / this.pageSize
-    );
+    this.totalPages = Math.ceil(this.filteredResumes.length / this.pageSize);
 
     const start = (this.currentPage - 1) * this.pageSize;
 
     this.paginatedResumes = this.filteredResumes.slice(
       start,
-      start + this.pageSize
+      start + this.pageSize,
     );
-
   }
 
   previousPage(): void {
-
     if (this.currentPage > 1) {
-
       this.currentPage--;
 
       this.updatePagination();
-
     }
-
   }
 
   nextPage(): void {
-
     if (this.currentPage < this.totalPages) {
-
       this.currentPage++;
 
       this.updatePagination();
-
     }
-
   }
 
   async addResume(): Promise<void> {
-
     const modal = await this.modalController.create({
-
       component: ResumeFormComponent,
-
     });
 
     await modal.present();
@@ -195,25 +164,17 @@ export class ResumeListComponent implements OnInit {
     const { data } = await modal.onDidDismiss();
 
     if (data?.refresh) {
-
       this.loadResumes();
-
     }
-
   }
 
   async editResume(resume: Resume): Promise<void> {
-
     const modal = await this.modalController.create({
-
       component: ResumeFormComponent,
 
       componentProps: {
-
         resume,
-
       },
-
     });
 
     await modal.present();
@@ -221,65 +182,45 @@ export class ResumeListComponent implements OnInit {
     const { data } = await modal.onDidDismiss();
 
     if (data?.refresh) {
-
       this.loadResumes();
-
     }
-
   }
 
   async deleteResume(resume: Resume): Promise<void> {
-
     const alert = await this.alertController.create({
-
       header: 'Delete Resume',
 
       message: `Delete <strong>${resume.title}</strong>?`,
 
       buttons: [
-
         'Cancel',
 
         {
-
           text: 'Delete',
 
           role: 'destructive',
 
           handler: () => {
-
             this.resumeService.delete(resume._id!).subscribe({
-
               next: async () => {
-
                 const toast = await this.toastController.create({
-
                   message: 'Resume deleted successfully.',
 
                   color: 'success',
 
                   duration: 2000,
-
                 });
 
                 await toast.present();
 
                 this.loadResumes();
-
-              }
-
+              },
             });
-
-          }
-
-        }
-
-      ]
-
+          },
+        },
+      ],
     });
 
     await alert.present();
-
   }
-
 }

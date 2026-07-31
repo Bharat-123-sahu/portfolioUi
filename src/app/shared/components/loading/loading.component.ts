@@ -16,4 +16,10 @@ export class LoadingComponent {
 
   @Input() message = 'Loading...';
 
+  @Input() rows = 4;
+
+  skeletonRows(): number[] {
+    return Array.from({ length: this.rows }, (_, index) => index);
+  }
+
 }

@@ -10,7 +10,7 @@
 </app-page-header>
     <app-search-toolbar
   placeholder="Search Hero..."
-  (search)="searchHeroes($event)">
+  (searchChanged)="searchHeroes($event)">
 </app-search-toolbar>
 
   </ion-card-header>
@@ -82,9 +82,9 @@
         <ion-col size="2">
 
           <img
-            *ngIf="hero.profileImage"
-            [src]="environment.apiUrl + hero.profileImage"
-            class="hero-image">
+  *ngIf="hero.profileImage"
+  [src]="environment.apiUrl + hero.profileImage"
+  class="hero-image">
 
         </ion-col>
 
@@ -189,7 +189,7 @@
 
     <app-search-toolbar
       placeholder="Search Hero..."
-      (search)="searchHeroes($event)">
+      (searchChanged)="searchHeroes($event)">
     </app-search-toolbar>
 
   </ion-card-header>

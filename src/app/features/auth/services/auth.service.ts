@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -10,9 +10,9 @@ import { LoginResponse } from '../model/login-response.model';
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly API = `${environment.apiUrl}/api/v1/admin/auth`;
+  private http = inject(HttpClient);
 
-  constructor(private http: HttpClient) {}
+  private readonly API = `${environment.apiUrl}/api/v1/admin/auth`;
 
   login(payload: LoginRequest): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.API}/login`, payload);

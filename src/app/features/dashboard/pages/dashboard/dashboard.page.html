@@ -6,51 +6,75 @@
             [userName]="'Bharat'">
         </app-welcome-banner>
 
-        <app-metric-grid
-            [stats]="stats">
-        </app-metric-grid>
+        <app-loading
+            *ngIf="loading"
+            message="Loading dashboard..."
+            [rows]="6">
+        </app-loading>
 
-        <div class="grid">
+        <app-empty-state
+            *ngIf="!loading && errorMessage"
+            icon="alert-circle-outline"
+            color="danger"
+            title="Dashboard unavailable"
+            [message]="errorMessage"
+            actionText="Retry"
+            (action)="loadDashboard()">
+        </app-empty-state>
 
-            <app-widget-list
-                title="Latest Projects"
-                icon="folder-open-outline"
-                [items]="latestProjects">
-            </app-widget-list>
+        <ng-container *ngIf="!loading && !errorMessage">
 
-            <app-widget-list
-                title="Latest Blogs"
-                icon="newspaper-outline"
-                [items]="latestBlogs">
-            </app-widget-list>
+            <app-metric-grid
+                [stats]="stats">
+            </app-metric-grid>
 
-        </div>
+            <div class="grid">
 
-        <div class="grid">
+                <app-widget-list
+                    title="Latest Projects"
+                    icon="folder-open-outline"
+                    emptyMessage="No projects have been added yet."
+                    [items]="latestProjects">
+                </app-widget-list>
 
-            <app-widget-list
-                title="Recent Activities"
-                icon="time-outline"
-                [items]="recentActivities">
-            </app-widget-list>
+                <app-widget-list
+                    title="Latest Blogs"
+                    icon="newspaper-outline"
+                    emptyMessage="No blog posts have been added yet."
+                    [items]="latestBlogs">
+                </app-widget-list>
 
-            <app-progress-card
-                [data]="storage">
-            </app-progress-card>
+            </div>
 
-        </div>
+            <div class="grid">
 
-        <div class="grid">
+                <app-widget-list
+                    title="Recent Activities"
+                    icon="time-outline"
+                    emptyMessage="No recent activity to show."
+                    [items]="recentActivities">
+                </app-widget-list>
 
-            <app-status-card
-                [items]="systemStatus">
-            </app-status-card>
+                <app-progress-card
+                    *ngIf="storage"
+                    [data]="storage">
+                </app-progress-card>
 
-            <app-quick-actions
-                [actions]="quickActions">
-            </app-quick-actions>
+            </div>
 
-        </div>
+            <div class="grid">
+
+                <app-status-card
+                    [items]="systemStatus">
+                </app-status-card>
+
+                <app-quick-actions
+                    [actions]="quickActions">
+                </app-quick-actions>
+
+            </div>
+
+        </ng-container>
 
     </div>
 

@@ -2,11 +2,20 @@
 
   <ion-icon
     [name]="icon"
+    [color]="color"
     class="empty-icon">
   </ion-icon>
 
   <h2>{{ title }}</h2>
 
   <p>{{ message }}</p>
+
+  <ion-button
+    *ngIf="actionText"
+    fill="outline"
+    size="small"
+    (click)="action.emit()">
+    {{ actionText }}
+  </ion-button>
 
 </div>

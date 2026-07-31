@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -33,6 +33,10 @@ import { SettingsService } from '../../services/settings';
   styleUrls: ['./settings-form.component.scss']
 })
 export class SettingsFormComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private settingsService = inject(SettingsService);
+  private toastController = inject(ToastController);
+
 
   settingsForm!: FormGroup;
 
@@ -41,12 +45,6 @@ export class SettingsFormComponent implements OnInit {
   saving = false;
 
   settings?: PortfolioSettings;
-
-  constructor(
-    private fb: FormBuilder,
-    private settingsService: SettingsService,
-    private toastController: ToastController
-  ) {}
 
   ngOnInit(): void {
 

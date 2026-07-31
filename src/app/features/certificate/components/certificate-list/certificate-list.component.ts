@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   AlertController,
   IonicModule,
@@ -35,6 +35,11 @@ import { CertificateService } from '../../services/certificate';
   styleUrls: ['./certificate-list.component.scss'],
 })
 export class CertificateListComponent implements OnInit {
+  private certificateService = inject(CertificateService);
+  private modalController = inject(ModalController);
+  private toastController = inject(ToastController);
+  private alertController = inject(AlertController);
+
 
   loading = false;
 
@@ -80,13 +85,6 @@ export class CertificateListComponent implements OnInit {
     },
   ];
 
-  constructor(
-    private certificateService: CertificateService,
-    private modalController: ModalController,
-    private toastController: ToastController,
-    private alertController: AlertController
-  ) {}
-
   ngOnInit(): void {
     this.loadCertificates();
   }
@@ -99,7 +97,10 @@ export class CertificateListComponent implements OnInit {
 
       next: (response: any) => {
 
-        this.certificates = response.data ?? response;
+        const certificates =
+          response?.data?.certificates ?? response?.certificates ?? response;
+
+        this.certificates = Array.isArray(certificates) ? certificates : [];
 
         this.filteredCertificates = [...this.certificates];
 

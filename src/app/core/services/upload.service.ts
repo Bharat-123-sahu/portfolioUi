@@ -17,7 +17,7 @@ export class UploadService {
 
   private http = inject(HttpClient);
 
-  private apiUrl = `${environment.apiUrl}/admin/upload`;
+  private apiUrl = `${environment.apiUrl}/api/v1/admin/upload`;
 
   upload(file: File, folder: string): Observable<UploadResponse> {
 

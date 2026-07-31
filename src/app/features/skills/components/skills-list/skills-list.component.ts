@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   AlertController,
   IonicModule,
@@ -35,6 +35,11 @@ import { SkillFormComponent } from '../skills-form/skills-form.component';
   styleUrls: ['./skills-list.component.scss'],
 })
 export class SkillListComponent implements OnInit {
+  private skillService = inject(SkillsService);
+  private modalController = inject(ModalController);
+  private toastController = inject(ToastController);
+  private alertController = inject(AlertController);
+
 
   loading = false;
 
@@ -84,13 +89,6 @@ export class SkillListComponent implements OnInit {
     },
   ];
 
-  constructor(
-    private skillService: SkillsService,
-    private modalController: ModalController,
-    private toastController: ToastController,
-    private alertController: AlertController
-  ) {}
-
   ngOnInit(): void {
     this.loadSkills();
   }
@@ -103,7 +101,9 @@ export class SkillListComponent implements OnInit {
 
       next: (response: any) => {
 
-        this.skills = response.skills ?? response;
+        const skills = response?.data?.skills ?? response?.skills ?? response;
+
+        this.skills = Array.isArray(skills) ? skills : [];
 
         this.filteredSkills = [...this.skills];
 

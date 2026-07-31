@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -32,19 +32,17 @@ import { ContactService } from '../../services/contact';
   styleUrls: ['./contact-form.component.scss']
 })
 export class ContactFormComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private contactService = inject(ContactService);
+  private modalController = inject(ModalController);
+  private toastController = inject(ToastController);
+
 
   @Input() contact?: Contact;
 
   contactForm!: FormGroup;
 
   saving = false;
-
-  constructor(
-    private fb: FormBuilder,
-    private contactService: ContactService,
-    private modalController: ModalController,
-    private toastController: ToastController
-  ) {}
 
   ngOnInit(): void {
     this.initializeForm();

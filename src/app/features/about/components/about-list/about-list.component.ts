@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   AlertController,
   IonicModule,
@@ -35,6 +35,11 @@ import { DataTableComponent } from 'src/app/shared/components/data-table/data-ta
   styleUrls: ['./about-list.component.scss'],
 })
 export class AboutListComponent implements OnInit {
+  private aboutService = inject(AboutService);
+  private modalController = inject(ModalController);
+  private toastController = inject(ToastController);
+  private alertController = inject(AlertController);
+
 
   loading = false;
 
@@ -85,13 +90,6 @@ export class AboutListComponent implements OnInit {
     },
   ];
 
-  constructor(
-    private aboutService: AboutService,
-    private modalController: ModalController,
-    private toastController: ToastController,
-    private alertController: AlertController
-  ) {}
-
   ngOnInit(): void {
     this.loadAbouts();
   }
@@ -104,10 +102,9 @@ export class AboutListComponent implements OnInit {
 
       next: (response: any) => {
 
-        console.log('About Response:', response);
+        const abouts = response?.data?.abouts ?? response?.abouts ?? response;
 
-        // Change this according to your API response
-        this.abouts = response.data ?? response.abouts ?? response;
+        this.abouts = Array.isArray(abouts) ? abouts : [];
 
         this.filteredAbouts = [...this.abouts];
 

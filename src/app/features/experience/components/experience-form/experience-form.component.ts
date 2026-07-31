@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -31,6 +31,11 @@ import { ExperienceService } from '../../services/experience';
   styleUrls: ['./experience-form.component.scss'],
 })
 export class ExperienceFormComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private experienceService = inject(ExperienceService);
+  private modalController = inject(ModalController);
+  private toastController = inject(ToastController);
+
 
   @Input() experience?: Experience;
 
@@ -47,13 +52,6 @@ export class ExperienceFormComponent implements OnInit {
     'Remote',
     'Hybrid'
   ];
-
-  constructor(
-    private fb: FormBuilder,
-    private experienceService: ExperienceService,
-    private modalController: ModalController,
-    private toastController: ToastController
-  ) {}
 
   ngOnInit(): void {
     this.initializeForm();

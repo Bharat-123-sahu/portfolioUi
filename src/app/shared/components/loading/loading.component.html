@@ -1,6 +1,21 @@
 <div class="loading-container">
 
-  <ion-spinner name="crescent"></ion-spinner>
+  <div class="skeleton-header">
+    <ion-skeleton-text animated></ion-skeleton-text>
+    <ion-skeleton-text animated></ion-skeleton-text>
+  </div>
+
+  <div class="skeleton-list">
+    <div
+      class="skeleton-row"
+      *ngFor="let row of skeletonRows()">
+      <ion-skeleton-text animated class="avatar"></ion-skeleton-text>
+      <div class="line-group">
+        <ion-skeleton-text animated class="line wide"></ion-skeleton-text>
+        <ion-skeleton-text animated class="line"></ion-skeleton-text>
+      </div>
+    </div>
+  </div>
 
   <h3>{{ message }}</h3>
 

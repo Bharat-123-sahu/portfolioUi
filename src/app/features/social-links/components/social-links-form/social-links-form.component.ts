@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -19,6 +19,11 @@ import { SocialLinkService } from '../../services/social-links';
   styleUrls: ['./social-links-form.component.scss'],
 })
 export class SocialLinkFormComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private socialLinkService = inject(SocialLinkService);
+  private modalController = inject(ModalController);
+  private toastController = inject(ToastController);
+
   SOCIAL_PLATFORMS = [
     {
       value: 'linkedin',
@@ -112,13 +117,6 @@ export class SocialLinkFormComponent implements OnInit {
   saving = false;
 
   platforms = this.SOCIAL_PLATFORMS;
-
-  constructor(
-    private fb: FormBuilder,
-    private socialLinkService: SocialLinkService,
-    private modalController: ModalController,
-    private toastController: ToastController,
-  ) {}
 
   ngOnInit(): void {
     this.initializeForm();

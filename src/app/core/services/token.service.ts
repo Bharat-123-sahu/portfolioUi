@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { environment } from '../../../environments/environment';
 import { StorageService } from '../storage/storage.service';
@@ -7,9 +7,9 @@ import { StorageService } from '../storage/storage.service';
   providedIn: 'root',
 })
 export class TokenService {
-  private readonly TOKEN_KEY = environment.tokenKey;
+  private storageService = inject(StorageService);
 
-  constructor(private storageService: StorageService) {}
+  private readonly TOKEN_KEY = environment.tokenKey;
 
   setToken(token: string): void {
     this.storageService.set(this.TOKEN_KEY, token);

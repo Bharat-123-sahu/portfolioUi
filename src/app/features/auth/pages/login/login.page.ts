@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { TokenService } from '../../../../core/services/token.service';
 import { Router } from '@angular/router';
@@ -44,14 +44,14 @@ import {
   ],
 })
 export class LoginPage {
+  private fb = inject(FormBuilder);
+  private authService = inject(AuthService);
+  private tokenService = inject(TokenService);
+  private router = inject(Router);
+
   loginForm: FormGroup;
 
-  constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private tokenService: TokenService,
-    private router:Router,
-  ) {
+  constructor() {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
@@ -66,12 +66,17 @@ export class LoginPage {
 
     this.authService.login(this.loginForm.value).subscribe({
       next: (response: any) => {
-        console.log('response', response.data);
-        this.tokenService.setToken(response.data.accessToken);
+        const accessToken =
+          response?.data?.accessToken ??
+          response?.accessToken ??
+          response?.data?.data?.accessToken;
 
-        console.log('Login Success');
+        if (!accessToken) {
+          console.error('Login response did not include an access token.');
+          return;
+        }
 
-        console.log(response);
+        this.tokenService.setToken(accessToken);
         this.router.navigate(['/dashboard']);
       },
 

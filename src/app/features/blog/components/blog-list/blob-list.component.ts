@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   AlertController,
   IonicModule,
@@ -34,6 +34,11 @@ import { BlogFormComponent } from '../blog-form/blob-form.component';
   styleUrls: ['./blog-list.component.scss'],
 })
 export class BlogListComponent implements OnInit {
+  private blogService = inject(BlogService);
+  private modalController = inject(ModalController);
+  private toastController = inject(ToastController);
+  private alertController = inject(AlertController);
+
   loading = false;
 
   blogs: Blog[] = [];
@@ -88,13 +93,6 @@ export class BlogListComponent implements OnInit {
     },
   ];
 
-  constructor(
-    private blogService: BlogService,
-    private modalController: ModalController,
-    private toastController: ToastController,
-    private alertController: AlertController,
-  ) {}
-
   ngOnInit(): void {
     this.loadBlogs();
   }
@@ -104,7 +102,9 @@ export class BlogListComponent implements OnInit {
 
     this.blogService.getAll().subscribe({
       next: (response: any) => {
-        this.blogs = response.data ?? response;
+        const blogs = response?.data?.blogs ?? response?.blogs ?? response;
+
+        this.blogs = Array.isArray(blogs) ? blogs : [];
 
         this.filteredBlogs = [...this.blogs];
 

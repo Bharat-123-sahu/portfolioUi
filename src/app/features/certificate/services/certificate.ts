@@ -9,18 +9,12 @@ import { Certificate } from '../models/certificate.models';
   providedIn: 'root',
 })
 export class CertificateService extends BaseCrudService<Certificate> {
-
-    protected override endpoint =
-        `${environment.apiUrl}/api/v1/admin/about`;
-  
+  protected override endpoint = `${environment.apiUrl}/api/v1/admin/certificates`;
 
   /**
    * Get active certificates
    */
   getActive(): Observable<Certificate[]> {
-    return this.http.get<Certificate[]>(
-      `${environment.apiUrl}/certificates/active`
-    );
+    return this.http.get<Certificate[]>(`${this.endpoint}?isActive=true`);
   }
-
 }

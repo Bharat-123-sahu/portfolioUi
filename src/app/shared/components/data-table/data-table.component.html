@@ -24,7 +24,19 @@
 
     <tbody>
 
-      <tr *ngFor="let row of data">
+      <ng-container *ngIf="loading">
+        <tr *ngFor="let row of skeletonRows()">
+          <td *ngFor="let column of columns">
+            <ion-skeleton-text animated class="table-skeleton"></ion-skeleton-text>
+          </td>
+
+          <td *ngIf="showActions" class="action-buttons">
+            <ion-skeleton-text animated class="action-skeleton"></ion-skeleton-text>
+          </td>
+        </tr>
+      </ng-container>
+
+      <tr *ngFor="let row of loading ? [] : data">
 
         <td *ngFor="let column of columns">
 
@@ -96,13 +108,15 @@
 
       <!-- Empty State -->
 
-      <tr *ngIf="!data.length">
+      <tr *ngIf="!loading && !data.length">
 
         <td
           [attr.colspan]="columns.length + (showActions ? 1 : 0)"
           class="empty-row">
 
-          No records found.
+          <ion-icon name="folder-open-outline"></ion-icon>
+          <strong>{{ emptyTitle }}</strong>
+          <span>{{ emptyMessage }}</span>
 
         </td>
 

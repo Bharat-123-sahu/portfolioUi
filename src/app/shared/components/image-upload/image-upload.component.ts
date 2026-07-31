@@ -1,95 +1,123 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+  inject,
+} from '@angular/core';
+
 import { IonicModule, ToastController } from '@ionic/angular';
+
+import { environment } from 'src/environments/environment';
 import { UploadService } from 'src/app/core/services/upload.service';
 
 @Component({
   selector: 'app-image-upload',
   standalone: true,
-  imports: [
-    CommonModule,
-    IonicModule
-  ],
+  imports: [CommonModule, IonicModule],
   templateUrl: './image-upload.component.html',
-  styleUrls: ['./image-upload.component.scss']
+  styleUrls: ['./image-upload.component.scss'],
 })
 export class ImageUploadComponent {
-@Input() folder = 'general';
-  @Input() imageUrl = '';
+  private uploadService = inject(UploadService);
+  private toastController = inject(ToastController);
+
+  @ViewChild('fileInput')
+  fileInput!: ElementRef<HTMLInputElement>;
+
+  @Input() folder = 'general';
 
   @Input() label = 'Upload Image';
+
+  @Input() imageUrl = '';
 
   @Output() imageUploaded = new EventEmitter<string>();
 
   uploading = false;
 
-  constructor(
-    private uploadService: UploadService,
-    private toastController: ToastController
-  ) {}
+  get previewUrl(): string {
+    if (!this.imageUrl) return '';
 
-  async onFileSelected(event: any): Promise<void> {
+    if (this.imageUrl.startsWith('http')) {
+      return this.imageUrl;
+    }
 
-    const file = event.target.files[0];
+    return environment.apiUrl + this.imageUrl;
+  }
 
-    if (!file) {
+  openFilePicker() {
+    this.fileInput.nativeElement.click();
+  }
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (!input.files?.length) {
       return;
     }
 
-    if (!file.type.startsWith('image/')) {
-      this.showToast('Only image files are allowed.');
+    const file = input.files[0];
+
+    const allowedTypes = [
+      'image/jpeg',
+      'image/png',
+      'image/jpg',
+      'image/webp',
+    ];
+
+    if (!allowedTypes.includes(file.type)) {
+      this.showToast('Only JPG, PNG and WEBP images are allowed.');
+      input.value = '';
       return;
     }
 
     if (file.size > 2 * 1024 * 1024) {
       this.showToast('Maximum file size is 2 MB.');
+      input.value = '';
       return;
     }
 
     this.uploading = true;
 
     this.uploadService.upload(file, this.folder).subscribe({
-
       next: (response: any) => {
+        this.uploading = false;
 
         this.imageUrl = response.fileUrl;
 
-        this.imageUploaded.emit(this.imageUrl);
+        this.imageUploaded.emit(response.fileUrl);
 
-        this.uploading = false;
-
+        input.value = '';
       },
 
-      error: () => {
-
+      error: async (err) => {
         this.uploading = false;
 
-        this.showToast('Image upload failed.');
+        input.value = '';
 
-      }
-
+        await this.showToast(
+          err?.error?.message || 'Image upload failed.',
+        );
+      },
     });
-
   }
 
-  removeImage(): void {
-
+  removeImage() {
     this.imageUrl = '';
 
     this.imageUploaded.emit('');
-
   }
 
-  private async showToast(message: string): Promise<void> {
-
+  private async showToast(message: string) {
     const toast = await this.toastController.create({
       message,
-      duration: 2000,
-      color: 'danger'
+      duration: 2500,
+      color: 'danger',
     });
 
     await toast.present();
-
   }
-
 }

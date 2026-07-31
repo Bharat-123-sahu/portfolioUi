@@ -68,7 +68,33 @@
   text-align: center;
   padding: 30px;
   color: var(--ion-color-medium);
-  font-style: italic;
+}
+
+.empty-row ion-icon,
+.empty-row strong,
+.empty-row span {
+  display: block;
+}
+
+.empty-row ion-icon {
+  margin: 0 auto 8px;
+  font-size: 34px;
+}
+
+.empty-row strong {
+  color: var(--ion-color-dark);
+  margin-bottom: 4px;
+}
+
+.table-skeleton {
+  height: 18px;
+  border-radius: 6px;
+}
+
+.action-skeleton {
+  width: 112px;
+  height: 30px;
+  border-radius: 6px;
 }
 
 @media (max-width: 768px) {

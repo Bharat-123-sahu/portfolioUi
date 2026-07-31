@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -34,18 +34,16 @@ import { BlogService } from '../../services/blog';
   styleUrls: ['./blog-form.component.scss'],
 })
 export class BlogFormComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private blogService = inject(BlogService);
+  private modalController = inject(ModalController);
+  private toastController = inject(ToastController);
+
   @Input() blog?: Blog;
 
   blogForm!: FormGroup;
 
   saving = false;
-
-  constructor(
-    private fb: FormBuilder,
-    private blogService: BlogService,
-    private modalController: ModalController,
-    private toastController: ToastController,
-  ) {}
 
   ngOnInit(): void {
     this.initializeForm();

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   AlertController,
   IonicModule,
@@ -35,6 +35,11 @@ import { ContactService } from '../../services/contact';
   styleUrls: ['./contact-list.component.scss'],
 })
 export class ContactListComponent implements OnInit {
+  private contactService = inject(ContactService);
+  private modalController = inject(ModalController);
+  private toastController = inject(ToastController);
+  private alertController = inject(AlertController);
+
 
   loading = false;
 
@@ -84,13 +89,6 @@ export class ContactListComponent implements OnInit {
     },
   ];
 
-  constructor(
-    private contactService: ContactService,
-    private modalController: ModalController,
-    private toastController: ToastController,
-    private alertController: AlertController
-  ) {}
-
   ngOnInit(): void {
     this.loadContacts();
   }
@@ -103,7 +101,10 @@ export class ContactListComponent implements OnInit {
 
       next: (response: any) => {
 
-        this.contacts = response.data ?? response;
+        const contacts =
+          response?.data?.contacts ?? response?.contacts ?? response;
+
+        this.contacts = Array.isArray(contacts) ? contacts : [];
 
         this.filteredContacts = [...this.contacts];
 

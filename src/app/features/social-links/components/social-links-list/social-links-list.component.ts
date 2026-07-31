@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   AlertController,
   IonicModule,
@@ -36,6 +36,11 @@ import { SocialLinkFormComponent } from '../social-links-form/social-links-form.
   styleUrls: ['./social-links-list.component.scss']
 })
 export class SocialLinkListComponent implements OnInit {
+  private socialLinkService = inject(SocialLinkService);
+  private modalController = inject(ModalController);
+  private toastController = inject(ToastController);
+  private alertController = inject(AlertController);
+
 
   loading = false;
 
@@ -84,13 +89,6 @@ export class SocialLinkListComponent implements OnInit {
 
   ];
 
-  constructor(
-    private socialLinkService: SocialLinkService,
-    private modalController: ModalController,
-    private toastController: ToastController,
-    private alertController: AlertController
-  ) {}
-
   ngOnInit(): void {
 
     this.loadSocialLinks();
@@ -105,7 +103,10 @@ export class SocialLinkListComponent implements OnInit {
 
       next: (response: any) => {
 
-        this.socialLinks = response.data ?? response;
+        const socialLinks =
+          response?.data?.socialLinks ?? response?.socialLinks ?? response;
+
+        this.socialLinks = Array.isArray(socialLinks) ? socialLinks : [];
 
         this.filteredSocialLinks = [...this.socialLinks];
 

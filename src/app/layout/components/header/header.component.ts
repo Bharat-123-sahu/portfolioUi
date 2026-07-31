@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   IonHeader,
@@ -11,6 +11,8 @@ import {
 
 import { menuOutline, logOutOutline, personCircleOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
+import { Router } from '@angular/router';
+import { TokenService } from 'src/app/core/services/token.service';
 
 @Component({
   selector: 'app-header',
@@ -28,6 +30,8 @@ import { addIcons } from 'ionicons';
   ],
 })
 export class HeaderComponent {
+  private readonly router = inject(Router);
+  private readonly tokenService = inject(TokenService);
 
   constructor() {
     addIcons({
@@ -38,6 +42,7 @@ export class HeaderComponent {
   }
 
   logout() {
-    console.log('Logout clicked');
+    this.tokenService.removeToken();
+    this.router.navigate(['/login']);
   }
 }

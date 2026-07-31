@@ -19,7 +19,7 @@ export class EducationService extends BaseCrudService<Education> {
    */
   getActive(): Observable<Education[]> {
     return this.http.get<Education[]>(
-      `${environment.apiUrl}/educations/active`
+      `${environment.apiUrl}/api/v1/admin/education/active`,
     );
   }
 

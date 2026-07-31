@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 
 @Component({
@@ -19,5 +19,11 @@ export class EmptyStateComponent {
   @Input() title = 'No Data Found';
 
   @Input() message = 'There is nothing to display.';
+
+  @Input() actionText = '';
+
+  @Input() color = 'medium';
+
+  @Output() action = new EventEmitter<void>();
 
 }

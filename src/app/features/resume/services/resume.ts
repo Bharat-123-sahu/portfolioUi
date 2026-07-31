@@ -10,14 +10,9 @@ import { Resume } from '../models/resume.models';
   providedIn: 'root',
 })
 export class ResumeService extends BaseCrudService<Resume> {
-
-protected override endpoint =
-      `${environment.apiUrl}/api/v1/admin/about`;
+  protected override endpoint = `${environment.apiUrl}/api/v1/admin/resumes`;
 
   getDefaultResume(): Observable<Resume> {
-    return this.http.get<Resume>(
-      `${environment.apiUrl}/resumes/default`
-    );
+    return this.http.get<Resume>(`${this.endpoint}/default`);
   }
-
 }

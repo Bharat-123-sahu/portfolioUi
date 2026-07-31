@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   AlertController,
   IonicModule,
@@ -36,6 +36,11 @@ import { ExperienceService } from '../../services/experience';
   styleUrls: ['./experience-list.component.scss'],
 })
 export class ExperienceListComponent implements OnInit {
+  private experienceService = inject(ExperienceService);
+  private modalController = inject(ModalController);
+  private toastController = inject(ToastController);
+  private alertController = inject(AlertController);
+
 
   loading = false;
 
@@ -85,13 +90,6 @@ export class ExperienceListComponent implements OnInit {
     },
   ];
 
-  constructor(
-    private experienceService: ExperienceService,
-    private modalController: ModalController,
-    private toastController: ToastController,
-    private alertController: AlertController
-  ) {}
-
   ngOnInit(): void {
     this.loadExperiences();
   }
@@ -104,7 +102,10 @@ export class ExperienceListComponent implements OnInit {
 
       next: (response: any) => {
 
-        this.experiences = response.experiences ?? response;
+        const experiences =
+          response?.data?.experiences ?? response?.experiences ?? response;
+
+        this.experiences = Array.isArray(experiences) ? experiences : [];
 
         this.filteredExperiences = [...this.experiences];
 

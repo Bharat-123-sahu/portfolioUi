@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -30,6 +30,12 @@ import { environment } from 'src/environments/environment';
   ],
 })
 export class HeroFormComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private heroService = inject(HeroService);
+  private uploadService = inject(UploadService);
+  private toastController = inject(ToastController);
+  private modalController = inject(ModalController);
+
   @Input() hero?: Hero;
 
   heroForm!: FormGroup;
@@ -41,14 +47,6 @@ export class HeroFormComponent implements OnInit {
   selectedFile?: File;
 
   environment = environment;
-
-  constructor(
-    private fb: FormBuilder,
-    private heroService: HeroService,
-    private uploadService: UploadService,
-    private toastController: ToastController,
-    private modalController: ModalController
-  ) {}
 
   ngOnInit(): void {
     this.initializeForm();

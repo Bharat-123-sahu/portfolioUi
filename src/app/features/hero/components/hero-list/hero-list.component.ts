@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { SearchToolbarComponent } from 'src/app/shared/components/search-toolbar/search-toolbar.component';
 import { PageHeaderComponent } from 'src/app/shared/components/page-header/page-header.component';
 import { EmptyStateComponent } from 'src/app/shared/components/empty-state/empty-state.component';
@@ -31,6 +31,11 @@ import { TableColumn } from 'src/app/shared/models/table-column.model';
   imports: [CommonModule, IonicModule,SearchToolbarComponent,PageHeaderComponent,EmptyStateComponent,LoadingComponent],
 })
 export class HeroListComponent implements OnInit {
+private heroService = inject(HeroService);
+private modalController = inject(ModalController);
+private toastController = inject(ToastController);
+private alertController = inject(AlertController);
+
 
 columns: TableColumn[] = [
 
@@ -73,12 +78,7 @@ totalPages = 0;
 
   environment = environment;
 
-  constructor(
-    private heroService: HeroService,
-    private modalController: ModalController,
-    private toastController: ToastController,
-    private alertController: AlertController,
-  ) {
+  constructor() {
     addIcons({
       addOutline,
       createOutline,
@@ -97,7 +97,14 @@ totalPages = 0;
       next: (response: any) => {
         this.loading = false;
 
-        this.heroes = response.heros ?? response;
+        const heroes =
+          response?.data?.heros ??
+          response?.data?.heroes ??
+          response?.heros ??
+          response?.heroes ??
+          response;
+
+        this.heroes = Array.isArray(heroes) ? heroes : [];
         this.filteredHeroes = [...this.heroes];
         this.currentPage = 1;
 
