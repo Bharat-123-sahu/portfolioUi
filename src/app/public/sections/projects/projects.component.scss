@@ -1,0 +1,101 @@
+.project {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-height: 100%;
+  padding: 0.78rem;
+}
+
+.project--featured {
+  margin: 0;
+  grid-column: span 2;
+}
+
+.project__body {
+  display: flex;
+  min-height: 12rem;
+  flex-direction: column;
+  padding: 0.9rem 0.35rem 0.25rem;
+}
+
+.project h3 {
+  display: -webkit-box;
+  min-height: 3.2rem;
+  margin: 0.78rem 0 0.5rem;
+  overflow: hidden;
+  font-size: clamp(1.08rem, 1.45vw, 1.42rem);
+  font-weight: 850;
+  line-height: 1.2;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.project p {
+  display: -webkit-box;
+  min-height: 2.8rem;
+  margin: 0;
+  overflow: hidden;
+  color: var(--lux-muted);
+  font-size: 0.93rem;
+  line-height: 1.55;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.9rem 0 0;
+}
+
+.projects__grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 2rem;
+}
+
+.project .lux-media {
+  aspect-ratio: 16 / 9.4;
+}
+
+.project--featured .lux-media {
+  aspect-ratio: 16 / 7.8;
+}
+
+.project .lux-actions,
+.project__actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  margin-top: auto;
+  padding-top: 0.85rem;
+}
+
+.project__actions ion-button {
+  --border-radius: 999px;
+  --color: #fff;
+  --background: rgba(255, 255, 255, 0.08);
+  --background-hover: rgba(103, 232, 249, 0.16);
+  width: 2.55rem;
+  height: 2.55rem;
+  margin: 0;
+}
+
+@media (max-width: 899px) {
+  .projects__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .project--featured {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 599px) {
+  .projects__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .project--featured {
+    grid-column: auto;
+  }
+}

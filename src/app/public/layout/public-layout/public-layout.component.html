@@ -1,7 +1,11 @@
-<app-navbar></app-navbar>
+<ion-content class="public-content" [fullscreen]="true">
+  <div class="public-shell">
+    <app-navbar></app-navbar>
 
-<main class="main-content">
-  <router-outlet></router-outlet>
-</main>
+    <main class="main-content">
+      <router-outlet></router-outlet>
+    </main>
 
-<app-footer></app-footer>
+    <app-footer></app-footer>
+  </div>
+</ion-content>

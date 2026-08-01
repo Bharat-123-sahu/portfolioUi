@@ -1,3 +1,83 @@
-<p>
-  projects works!
-</p>
+<section id="projects" class="projects lux-section" aria-labelledby="projects-title">
+  <div class="lux-container">
+    <p class="lux-kicker"><ion-icon name="rocket-outline"></ion-icon>Projects</p>
+    <h2 id="projects-title" class="lux-title">Product-grade builds with cinematic polish.</h2>
+    <p class="lux-subtitle">Featured active projects, production links, source links, and technology stacks.</p>
+
+    @if (loading()) {
+      <div class="lux-state"><ion-spinner name="crescent"></ion-spinner></div>
+    } @else if (error()) {
+      <div class="lux-state">Projects could not be loaded.</div>
+    } @else if (projects().length) {
+      <div class="lux-grid projects__grid">
+        @if (featured(); as project) {
+          <article class="project project--featured lux-card">
+            <div class="lux-media">
+              <img [src]="imageUrl(project)" [alt]="project.title" loading="lazy" decoding="async">
+            </div>
+            <div class="project__body">
+              <span class="lux-chip">Featured | {{ project.category }}</span>
+              <h3>{{ project.title }}</h3>
+              <p>{{ project.shortDescription || project.description }}</p>
+              <div class="chips">
+                @for (tech of project.technologies.slice(0, 4); track tech) {
+                  <span class="lux-chip">{{ tech }}</span>
+                }
+              </div>
+              <div class="project__actions">
+                @if (project.liveDemoUrl) {
+                  <ion-button fill="clear" aria-label="Open live demo" (click)="open(project.liveDemoUrl)">
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </ion-button>
+                }
+                @if (project.githubUrl) {
+                  <ion-button fill="clear" aria-label="Open GitHub" (click)="open(project.githubUrl)">
+                    <ion-icon name="logo-github"></ion-icon>
+                  </ion-button>
+                }
+                <ion-button fill="clear" aria-label="View project details" [routerLink]="['/projects', project.slug]">
+                  <ion-icon name="arrow-forward-outline"></ion-icon>
+                </ion-button>
+              </div>
+            </div>
+          </article>
+        }
+
+        @for (project of gallery(); track project._id ?? project.slug) {
+          <article class="project lux-card">
+            <div class="lux-media">
+              <img [src]="imageUrl(project)" [alt]="project.title" loading="lazy" decoding="async">
+            </div>
+            <div class="project__body">
+              <span class="lux-chip">{{ project.category }}</span>
+              <h3>{{ project.title }}</h3>
+              <p>{{ project.shortDescription }}</p>
+              <div class="chips">
+                @for (tech of project.technologies.slice(0, 4); track tech) {
+                  <span class="lux-chip">{{ tech }}</span>
+                }
+              </div>
+              <div class="project__actions">
+                @if (project.liveDemoUrl) {
+                  <ion-button fill="clear" aria-label="Open live demo" (click)="open(project.liveDemoUrl)">
+                    <ion-icon name="eye-outline"></ion-icon>
+                  </ion-button>
+                }
+                @if (project.githubUrl) {
+                  <ion-button fill="clear" aria-label="Open GitHub" (click)="open(project.githubUrl)">
+                    <ion-icon name="logo-github"></ion-icon>
+                  </ion-button>
+                }
+                <ion-button fill="clear" aria-label="View project details" [routerLink]="['/projects', project.slug]">
+                  <ion-icon name="arrow-forward-outline"></ion-icon>
+                </ion-button>
+              </div>
+            </div>
+          </article>
+        }
+      </div>
+    } @else {
+      <div class="lux-state">No active projects found.</div>
+    }
+  </div>
+</section>

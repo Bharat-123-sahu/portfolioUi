@@ -1,0 +1,90 @@
+.contact__grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.72fr);
+  gap: clamp(1rem, 2.4vw, 1.5rem);
+  margin-top: 2.1rem;
+}
+
+.contact__form {
+  display: grid;
+  gap: 1.05rem;
+  padding: clamp(1rem, 2.4vw, 1.45rem);
+}
+
+ion-input,
+ion-textarea {
+  --background: rgba(255, 255, 255, 0.07);
+  --border-radius: 1rem;
+  --color: #fff;
+  --highlight-color-focused: var(--lux-cyan);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 1rem;
+  transition: border-color 240ms ease, background 240ms ease;
+}
+
+ion-input.ion-focused,
+ion-textarea.ion-focused {
+  border-color: rgba(103, 232, 249, 0.42);
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.contact__error {
+  margin: 0;
+  color: var(--lux-rose);
+  font-weight: 800;
+}
+
+.contact__info {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.contact__info article,
+.contact__map {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 1.05rem;
+  color: var(--lux-muted);
+  text-decoration: none;
+}
+
+.contact__info article,
+.contact__map {
+  transition: transform 280ms ease, border-color 280ms ease;
+}
+
+.contact__info article:hover,
+.contact__map:hover {
+  border-color: rgba(103, 232, 249, 0.28);
+  transform: translateY(-3px);
+}
+
+.contact__info h3 {
+  margin: 0;
+  color: #fff;
+}
+
+.contact__info p {
+  margin: 0.25rem 0 0.8rem;
+}
+
+.contact__info ion-icon,
+.contact__map ion-icon {
+  color: var(--lux-cyan);
+  font-size: 1.25rem;
+}
+
+@media (max-width: 860px) {
+  .contact__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .contact__form ion-button {
+    width: 100%;
+  }
+}

@@ -1,3 +1,51 @@
-<p>
-  blog works!
-</p>
+<section id="blogs" class="blog lux-section" aria-labelledby="blog-title">
+  <div class="lux-container">
+    <p class="lux-kicker"><ion-icon name="newspaper-outline"></ion-icon>Blog</p>
+    <h2 id="blog-title" class="lux-title">Clear thinking for ambitious frontend products.</h2>
+    <p class="lux-subtitle">Field notes on UX, frontend architecture, and polished product delivery.</p>
+
+    @if (loading()) {
+      <div class="lux-state"><ion-spinner name="crescent"></ion-spinner></div>
+    } @else if (error()) {
+      <div class="lux-state">Blogs could not be loaded.</div>
+    } @else if (blogs().length) {
+      <div class="lux-grid blog__grid">
+        @if (featured(); as post) {
+          <article class="post post--featured lux-card" [routerLink]="['/blogs', post.slug]" tabindex="0">
+            <div class="lux-media">
+              <img [src]="imageUrl(post)" [alt]="post.title" loading="lazy" decoding="async">
+            </div>
+            <div class="post__body">
+              <span class="lux-chip">Featured | {{ post.category }}</span>
+              <h3>{{ post.title }}</h3>
+              <p>{{ post.shortDescription }}</p>
+              <div class="post-meta">
+                <span>{{ post.author }}</span>
+                <span><ion-icon name="time-outline"></ion-icon>{{ post.readingTime }} min</span>
+              </div>
+            </div>
+          </article>
+        }
+
+        @for (post of latest(); track post._id ?? post.slug) {
+          <article class="post lux-card" [routerLink]="['/blogs', post.slug]" tabindex="0">
+            <div class="lux-media">
+              <img [src]="imageUrl(post)" [alt]="post.title" loading="lazy" decoding="async">
+            </div>
+            <div class="post__body">
+              <span class="lux-chip">{{ post.category }}</span>
+              <h3>{{ post.title }}</h3>
+              <p>{{ post.shortDescription }}</p>
+              <div class="post-meta">
+                <span>{{ post.author }}</span>
+                <span><ion-icon name="time-outline"></ion-icon>{{ post.readingTime }} min</span>
+              </div>
+            </div>
+          </article>
+        }
+      </div>
+    } @else {
+      <div class="lux-state">No active published blogs found.</div>
+    }
+  </div>
+</section>

@@ -1,0 +1,162 @@
+<section class="detail lux-section lux-aurora" aria-labelledby="blog-title">
+  <div class="lux-container">
+    @if (loading()) {
+      <div class="lux-state detail__state">
+        <ion-spinner name="crescent"></ion-spinner>
+      </div>
+    } @else if (error()) {
+      <div class="lux-state detail__state">
+        <div>
+          <p class="lux-kicker"><ion-icon name="newspaper-outline"></ion-icon>Blog unavailable</p>
+          <h1>We could not load this article.</h1>
+          <ion-button class="lux-button ghost" routerLink="/blogs">
+            <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+            Back to blogs
+          </ion-button>
+        </div>
+      </div>
+    } @else if (blog(); as post) {
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a routerLink="/">Home</a>
+        <ion-icon name="arrow-forward-outline"></ion-icon>
+        <a routerLink="/blogs">Blogs</a>
+        <ion-icon name="arrow-forward-outline"></ion-icon>
+        <span>{{ post.title }}</span>
+      </nav>
+
+      <header class="detail__hero lux-card">
+        <div class="detail__hero-copy">
+          <p class="lux-kicker"><ion-icon name="newspaper-outline"></ion-icon>{{ post.category }}</p>
+          <h1 id="blog-title" class="lux-title lux-gradient-text">{{ post.title }}</h1>
+          <p class="lux-subtitle">{{ post.shortDescription }}</p>
+
+          <div class="post-meta">
+            @if (post.author) {
+              <span><ion-icon name="person-outline"></ion-icon>{{ post.author }}</span>
+            }
+            @if (post.publishedDate) {
+              <span><ion-icon name="calendar-outline"></ion-icon>{{ post.publishedDate | date: 'mediumDate' }}</span>
+            }
+            @if (post.readingTime) {
+              <span><ion-icon name="time-outline"></ion-icon>{{ post.readingTime }} min read</span>
+            }
+          </div>
+
+          <div class="detail__actions">
+            <ion-button class="lux-button primary" (click)="share()">
+              <ion-icon slot="start" name="share-social-outline"></ion-icon>
+              Share
+            </ion-button>
+            <ion-button class="lux-button ghost" (click)="copyLink()">
+              <ion-icon slot="start" name="copy-outline"></ion-icon>
+              {{ copied() ? 'Copied' : 'Copy Link' }}
+            </ion-button>
+          </div>
+        </div>
+
+        @if (blogImage(post)) {
+          <div class="detail__hero-media">
+            <img [src]="blogImage(post)" [alt]="post.title" decoding="async">
+          </div>
+        }
+      </header>
+
+      <div class="detail__layout">
+        <article class="detail__main">
+          @if (gallery().length) {
+            <section class="detail__panel">
+              <div class="detail__section-head">
+                <p class="lux-kicker"><ion-icon name="grid-outline"></ion-icon>Gallery</p>
+                <span>{{ gallery().length }} visuals</span>
+              </div>
+              <div class="gallery-slider" aria-label="Blog gallery">
+                @for (image of gallery(); track image) {
+                  <figure class="gallery-slide">
+                    <img [src]="image" [alt]="post.title + ' visual'" loading="lazy" decoding="async">
+                  </figure>
+                }
+              </div>
+            </section>
+          }
+
+          <section class="detail__panel content-panel">
+            <p class="lux-kicker"><ion-icon name="book-outline"></ion-icon>Article</p>
+            @if (post.content) {
+              <div class="rich-content" [innerHTML]="post.content"></div>
+            } @else {
+              <div class="lux-state">No article content has been added yet.</div>
+            }
+          </section>
+
+          <section class="detail__panel">
+            <div class="detail__section-head">
+              <p class="lux-kicker"><ion-icon name="newspaper-outline"></ion-icon>Related Blogs</p>
+            </div>
+            @if (related().length) {
+              <div class="related-grid">
+                @for (blog of related(); track blog._id ?? blog.slug) {
+                  <a class="related-card lux-card" [routerLink]="['/blogs', blog.slug]">
+                    <img [src]="blogImage(blog)" [alt]="blog.title" loading="lazy" decoding="async">
+                    <span>{{ blog.category }}</span>
+                    <strong>{{ blog.title }}</strong>
+                  </a>
+                }
+              </div>
+            } @else {
+              <div class="lux-state">No related blogs found.</div>
+            }
+          </section>
+
+          <nav class="detail-nav" aria-label="Blog navigation">
+            @if (previous(); as previousBlog) {
+              <a class="detail-nav__item lux-card" [routerLink]="['/blogs', previousBlog.slug]">
+                <ion-icon name="arrow-back-outline"></ion-icon>
+                <span>Previous</span>
+                <strong>{{ previousBlog.title }}</strong>
+              </a>
+            }
+            @if (next(); as nextBlog) {
+              <a class="detail-nav__item detail-nav__item--next lux-card" [routerLink]="['/blogs', nextBlog.slug]">
+                <ion-icon name="arrow-forward-outline"></ion-icon>
+                <span>Next</span>
+                <strong>{{ nextBlog.title }}</strong>
+              </a>
+            }
+          </nav>
+        </article>
+
+        <aside class="detail__sidebar" aria-label="Article summary">
+          <div class="sidebar-card lux-card">
+            <p class="lux-kicker"><ion-icon name="link-outline"></ion-icon>Details</p>
+            <dl class="sidebar-list">
+              @if (post.author) {
+                <div><dt>Author</dt><dd>{{ post.author }}</dd></div>
+              }
+              @if (post.publishedDate) {
+                <div><dt>Published</dt><dd>{{ post.publishedDate | date: 'mediumDate' }}</dd></div>
+              }
+              @if (post.readingTime) {
+                <div><dt>Reading Time</dt><dd>{{ post.readingTime }} min</dd></div>
+              }
+            </dl>
+          </div>
+
+          <div class="sidebar-card lux-card">
+            <p class="lux-kicker"><ion-icon name="grid-outline"></ion-icon>Tags</p>
+            @if (post.tags.length) {
+              <div class="chips">
+                @for (tag of post.tags; track tag) {
+                  <span class="lux-chip">{{ tag }}</span>
+                }
+              </div>
+            } @else {
+              <p class="sidebar-muted">No tags listed.</p>
+            }
+          </div>
+        </aside>
+      </div>
+    } @else {
+      <div class="lux-state detail__state">No blog details found.</div>
+    }
+  </div>
+</section>

@@ -1,3 +1,43 @@
-<p>
-  certificates works!
-</p>
+<section id="certificates" class="certificates lux-section" aria-labelledby="certificates-title">
+  <div class="lux-container">
+    <p class="lux-kicker"><ion-icon name="ribbon-outline"></ion-icon>Certificates</p>
+    <h2 id="certificates-title" class="lux-title">Verified learning, sharpened through real delivery.</h2>
+
+    @if (loading()) {
+      <div class="lux-state"><ion-spinner name="crescent"></ion-spinner></div>
+    } @else if (error()) {
+      <div class="lux-state">Certificates could not be loaded.</div>
+    } @else if (certificates().length) {
+      <div class="lux-grid certificates__grid">
+        @for (item of certificates(); track item._id ?? item.credentialId) {
+          <article class="certificate lux-card">
+            <div class="lux-media">
+              <img [src]="imageUrl(item)" [alt]="item.title" loading="lazy" decoding="async">
+            </div>
+            <div class="certificate__body">
+              <span class="lux-chip">{{ item.issuer }}</span>
+              <h3>{{ item.title }}</h3>
+              <p>{{ item.description }}</p>
+              <p class="certificate__date">Issued {{ item.issueDate | date:'MMM y' }}</p>
+              <div class="lux-actions">
+                @if (item.credentialUrl) {
+                  <ion-button class="lux-button ghost" fill="outline" (click)="open(item.credentialUrl)">
+                    Verify
+                  </ion-button>
+                }
+                @if (item.certificateFile) {
+                  <ion-button class="lux-button primary" (click)="open(item.certificateFile)">
+                    <ion-icon slot="start" name="download-outline"></ion-icon>
+                    Download
+                  </ion-button>
+                }
+              </div>
+            </div>
+          </article>
+        }
+      </div>
+    } @else {
+      <div class="lux-state">No active certificates found.</div>
+    }
+  </div>
+</section>

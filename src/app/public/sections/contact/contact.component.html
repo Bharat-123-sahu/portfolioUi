@@ -1,3 +1,51 @@
-<p>
-  contact works!
-</p>
+<section id="contact" class="contact lux-section lux-aurora" aria-labelledby="contact-title">
+  <div class="lux-container">
+    <p class="lux-kicker"><ion-icon name="paper-plane-outline"></ion-icon>Contact</p>
+    <h2 id="contact-title" class="lux-title">Have a serious product to ship? Let's make it feel inevitable.</h2>
+
+    @if (loading()) {
+      <div class="lux-state"><ion-spinner name="crescent"></ion-spinner></div>
+    } @else if (error()) {
+      <div class="lux-state">Contact content could not be loaded.</div>
+    } @else if (contact(); as item) {
+      <div class="contact__grid">
+        <form class="contact__form lux-card" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+          <ion-input label="Name" labelPlacement="stacked" formControlName="name" autocomplete="name"></ion-input>
+          <ion-input label="Email" labelPlacement="stacked" type="email" formControlName="email" autocomplete="email"></ion-input>
+          <ion-textarea label="Message" labelPlacement="stacked" rows="6" formControlName="message"></ion-textarea>
+          @if (submitted() && form.invalid) {
+            <p class="contact__error">Please complete all fields with valid details.</p>
+          }
+          <ion-button class="lux-button primary" type="submit">
+            <ion-icon slot="start" name="paper-plane-outline"></ion-icon>
+            Send Message
+          </ion-button>
+        </form>
+
+        <aside class="contact__info">
+          <article class="lux-card">
+            <div>
+              <h3>{{ item.name }}</h3>
+              <p>{{ item.designation }}</p>
+              @if (item.availableForHire) {
+                <span class="lux-chip">Available for hire</span>
+              }
+            </div>
+          </article>
+          <article class="lux-card"><ion-icon name="mail-outline"></ion-icon><a [href]="'mailto:' + item.email">{{ item.email }}</a></article>
+          <article class="lux-card"><ion-icon name="call-outline"></ion-icon><a [href]="'tel:' + item.phone">{{ item.phone }}</a></article>
+          <article class="lux-card"><ion-icon name="location-outline"></ion-icon><span>{{ item.city }}, {{ item.country }}</span></article>
+          <article class="lux-card"><ion-icon name="time-outline"></ion-icon><span>{{ item.workingHours }}</span></article>
+          @if (item.googleMapUrl) {
+            <a class="contact__map lux-card" [href]="item.googleMapUrl" target="_blank" rel="noreferrer">
+              <ion-icon name="globe-outline"></ion-icon>
+              Open Google Map
+            </a>
+          }
+        </aside>
+      </div>
+    } @else {
+      <div class="lux-state">No active contact record found.</div>
+    }
+  </div>
+</section>

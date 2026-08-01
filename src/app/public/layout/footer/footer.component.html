@@ -1,3 +1,48 @@
-<p>
-  footer works!
-</p>
+<footer class="footer lux-aurora">
+  <div class="footer__inner lux-container">
+    <section>
+      <p class="lux-kicker">Available worldwide</p>
+      <h2>Design-led Angular products with performance in the details.</h2>
+      <div class="lux-actions">
+        <ion-button class="lux-button primary" routerLink="/contact">
+          <ion-icon slot="start" name="mail-outline"></ion-icon>
+          Start a Project
+        </ion-button>
+        <ion-button class="lux-button ghost" fill="outline" (click)="scrollTop()" aria-label="Back to top">
+          <ion-icon slot="start" name="arrow-up-outline"></ion-icon>
+          Back To Top
+        </ion-button>
+      </div>
+    </section>
+
+    <section class="footer__links">
+      <div>
+        <h3>Navigation</h3>
+        @for (link of quickLinks; track link.label) {
+          <a [routerLink]="link.path" [fragment]="link.fragment">{{ link.label }}</a>
+        }
+      </div>
+
+      <div>
+        <h3>Social</h3>
+        @for (link of socialLinks(); track link._id ?? link.url) {
+          <a [href]="link.url" target="_blank" rel="noreferrer">{{ link.platform }}</a>
+        } @empty {
+          <span>Profiles coming soon</span>
+        }
+      </div>
+
+      <div class="newsletter">
+        <h3>Newsletter</h3>
+        <div class="newsletter__box">
+          <ion-input type="email" aria-label="Email address" placeholder="you@company.com"></ion-input>
+          <ion-button fill="clear" aria-label="Subscribe">
+            <ion-icon name="send-outline"></ion-icon>
+          </ion-button>
+        </div>
+      </div>
+    </section>
+
+    <p class="footer__fine">Copyright {{ year }} Portfolio. Crafted with Angular, Ionic, and unreasonable taste.</p>
+  </div>
+</footer>

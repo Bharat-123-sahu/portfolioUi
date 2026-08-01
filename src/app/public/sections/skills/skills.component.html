@@ -1,3 +1,50 @@
-<p>
-  skills works!
-</p>
+<section id="skills" class="skills lux-section" aria-labelledby="skills-title">
+  <div class="lux-container">
+    <p class="lux-kicker"><ion-icon name="layers-outline"></ion-icon>Skills</p>
+    <h2 id="skills-title" class="lux-title">A refined toolkit for building fast, memorable interfaces.</h2>
+    <p class="lux-subtitle">Featured technologies grouped by category, rendered from active backend records.</p>
+
+    @if (loading()) {
+      <div class="lux-state"><ion-spinner name="crescent"></ion-spinner></div>
+    } @else if (error()) {
+      <div class="lux-state">Skills could not be loaded.</div>
+    } @else if (skills().length) {
+      <div class="skills__filters" role="tablist" aria-label="Skill categories">
+        @for (category of categories(); track category) {
+          <ion-button
+            size="small"
+            class="lux-button"
+            [class.skills__filter--active]="activeCategory() === category"
+            fill="clear"
+            (click)="activeCategory.set(category)">
+            {{ category }}
+          </ion-button>
+        }
+      </div>
+
+      <div class="lux-grid skills__grid">
+        @for (skill of filteredSkills(); track skill._id ?? skill.slug) {
+          <article class="skill lux-card">
+            <div class="skill__icon">
+              @if (skill.icon) {
+                <img [src]="skill.icon" [alt]="skill.name" loading="lazy">
+              } @else {
+                <ion-icon name="code-slash-outline"></ion-icon>
+              }
+            </div>
+            <div>
+              <h3>{{ skill.name }}</h3>
+              <span>{{ skill.category }}</span>
+            </div>
+            <div class="skill__bar" [attr.aria-label]="skill.name + ' proficiency ' + skill.percentage + '%'">
+              <i [style.width.%]="skill.percentage"></i>
+            </div>
+            <strong>{{ skill.percentage }}%</strong>
+          </article>
+        }
+      </div>
+    } @else {
+      <div class="lux-state">No active skills found.</div>
+    }
+  </div>
+</section>

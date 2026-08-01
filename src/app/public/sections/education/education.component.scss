@@ -1,0 +1,55 @@
+.edu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 330px), 1fr));
+  gap: 1.1rem;
+  margin-top: 2.1rem;
+}
+
+.edu {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.15rem;
+  padding: clamp(1rem, 2vw, 1.35rem);
+}
+
+.edu__logo {
+  display: grid;
+  width: 3.4rem;
+  height: 3.4rem;
+  place-items: center;
+  border: 1px solid rgba(248, 213, 107, 0.16);
+  border-radius: 1.05rem;
+  background: rgba(248, 213, 107, 0.12);
+  color: var(--lux-gold);
+}
+
+.edu__logo img {
+  width: 2rem;
+  height: 2rem;
+  object-fit: contain;
+}
+
+.edu h3 {
+  margin: 0.9rem 0 0.35rem;
+  font-size: clamp(1.18rem, 1.6vw, 1.4rem);
+  line-height: 1.16;
+}
+
+.edu p {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+  margin: 0.55rem 0;
+  color: var(--lux-muted);
+  line-height: 1.65;
+}
+
+.edu__school {
+  color: #fff !important;
+}
+
+@media (max-width: 520px) {
+  .edu {
+    grid-template-columns: 1fr;
+  }
+}

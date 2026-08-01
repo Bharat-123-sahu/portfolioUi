@@ -1,3 +1,44 @@
-<p>
-  experience works!
-</p>
+<section id="experience" class="experience lux-section" aria-labelledby="experience-title">
+  <div class="lux-container">
+    <p class="lux-kicker"><ion-icon name="business-outline"></ion-icon>Experience</p>
+    <h2 id="experience-title" class="lux-title">A timeline of product teams, launches, and technical ownership.</h2>
+
+    @if (loading()) {
+      <div class="lux-state"><ion-spinner name="crescent"></ion-spinner></div>
+    } @else if (error()) {
+      <div class="lux-state">Experience could not be loaded.</div>
+    } @else if (experiences().length) {
+      <div class="timeline">
+        @for (item of experiences(); track item._id ?? item.companyName) {
+          <article class="timeline__item lux-card">
+            <div class="timeline__logo">
+              @if (item.companyLogo) {
+                <img [src]="logoUrl(item)" [alt]="item.companyName" loading="lazy">
+              } @else {
+                <ion-icon name="business-outline"></ion-icon>
+              }
+            </div>
+            <div>
+              <span class="lux-chip">{{ item.employmentType }}</span>
+              <h3>{{ item.designation }}</h3>
+              <p class="timeline__company">{{ item.companyName }} | {{ item.location }}</p>
+              <p class="timeline__date">
+                <ion-icon name="calendar-outline"></ion-icon>
+                {{ item.startDate | date:'MMM y' }} -
+                {{ item.currentlyWorking ? 'Present' : (item.endDate | date:'MMM y') }}
+              </p>
+              <p>{{ item.description }}</p>
+              <div class="timeline__tech">
+                @for (tech of item.technologies; track tech) {
+                  <span class="lux-chip">{{ tech }}</span>
+                }
+              </div>
+            </div>
+          </article>
+        }
+      </div>
+    } @else {
+      <div class="lux-state">No active experience found.</div>
+    }
+  </div>
+</section>

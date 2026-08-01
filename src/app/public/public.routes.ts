@@ -26,10 +26,26 @@ export const publicRoutes: Routes = [
       },
 
       {
+        path: 'projects/:slug',
+        loadComponent: () =>
+          import('./pages/project-detail/project-detail.component').then(
+            (m) => m.ProjectDetailComponent
+          ),
+      },
+
+      {
         path: 'blogs',
         loadComponent: () =>
           import('./pages/blogs/blogs.component').then(
             (m) => m.BlogsComponent
+          ),
+      },
+
+      {
+        path: 'blogs/:slug',
+        loadComponent: () =>
+          import('./pages/blog-detail/blog-detail.component').then(
+            (m) => m.BlogDetailComponent
           ),
       },
 

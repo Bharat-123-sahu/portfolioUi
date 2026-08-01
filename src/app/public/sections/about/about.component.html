@@ -1,3 +1,36 @@
-<p>
-  about works!
-</p>
+<section id="about" class="about lux-section" aria-labelledby="about-title">
+  <div class="lux-container">
+    @if (loading()) {
+      <div class="lux-state"><ion-spinner name="crescent"></ion-spinner></div>
+    } @else if (error()) {
+      <div class="lux-state">About content could not be loaded.</div>
+    } @else if (about(); as item) {
+      <div class="about__grid">
+        <div class="about__media">
+          <img [src]="imageUrl(item)" [alt]="item.heading" loading="lazy" decoding="async">
+        </div>
+
+        <div>
+          <p class="lux-kicker"><ion-icon name="sparkles-outline"></ion-icon>About</p>
+          <h2 id="about-title" class="lux-title">{{ item.heading }}</h2>
+          <p class="about__lead">{{ item.subHeading }}</p>
+          <p class="lux-subtitle">{{ item.description }}</p>
+
+          <div class="about__stats" aria-label="Portfolio statistics">
+            <article class="lux-card"><strong>{{ item.yearsOfExperience }}+</strong><span>Years</span></article>
+            <article class="lux-card"><strong>{{ item.totalProjects }}+</strong><span>Projects</span></article>
+            <article class="lux-card"><strong>{{ item.totalClients }}+</strong><span>Clients</span></article>
+            <article class="lux-card"><strong>{{ item.totalCertificates }}+</strong><span>Certificates</span></article>
+          </div>
+
+          <ion-button class="lux-button primary" (click)="downloadResume(item.resumeUrl)">
+            <ion-icon slot="start" name="download-outline"></ion-icon>
+            Download Resume
+          </ion-button>
+        </div>
+      </div>
+    } @else {
+      <div class="lux-state">No active about record found.</div>
+    }
+  </div>
+</section>

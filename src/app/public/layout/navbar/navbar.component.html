@@ -1,3 +1,31 @@
-<p>
-  navbar works!
-</p>
+<header class="nav" [class.nav--scrolled]="scrolled()">
+  <a class="brand" routerLink="/" fragment="home" aria-label="Go to home" (click)="close()">
+    <span class="brand__mark"><ion-icon name="sparkles-outline"></ion-icon></span>
+    <span class="brand__text">Portfolio</span>
+  </a>
+
+  <nav class="nav__links" [class.nav__links--open]="isOpen()" aria-label="Primary navigation">
+    @for (item of navItems; track item.label) {
+      <a
+        [routerLink]="item.path"
+        [fragment]="item.fragment"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: item.path === '/' && !item.fragment }"
+        (click)="close()">
+        {{ item.label }}
+      </a>
+    }
+  </nav>
+
+  <ion-button class="nav__cta lux-button primary" routerLink="/contact">
+    Hire Me
+  </ion-button>
+
+  <ion-button
+    class="nav__toggle"
+    fill="clear"
+    aria-label="Toggle navigation"
+    (click)="isOpen.set(!isOpen())">
+    <ion-icon [name]="isOpen() ? 'close-outline' : 'menu-outline'"></ion-icon>
+  </ion-button>
+</header>

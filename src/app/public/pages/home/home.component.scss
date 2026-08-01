@@ -1,0 +1,19 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+section {
+  width: 100%;
+}
+.lux-page {
+  background:
+    radial-gradient(circle at 80% 8%, rgba(190, 242, 100, 0.09), transparent 26rem),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
+}

@@ -1,0 +1,133 @@
+.hero {
+  display: grid;
+  min-height: 100svh;
+  align-items: center;
+  padding-top: clamp(7rem, 12vw, 9.5rem);
+  padding-bottom: clamp(4.5rem, 7vw, 6.5rem);
+}
+
+.hero__grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(280px, 0.72fr);
+  gap: clamp(2.5rem, 7vw, 6.8rem);
+  align-items: center;
+}
+
+.hero__copy {
+  max-width: 760px;
+}
+
+.hero__copy,
+.hero__portrait {
+  animation: lux-rise 800ms ease both;
+}
+
+.hero__meta,
+.hero__socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin: 1.45rem 0;
+}
+
+.hero__meta span,
+.hero__meta button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 2.25rem;
+  padding: 0 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--lux-muted);
+  font: inherit;
+}
+
+.hero__meta button {
+  cursor: pointer;
+}
+
+.hero__meta button:hover {
+  border-color: rgba(103, 232, 249, 0.36);
+  color: #fff;
+}
+
+.hero__portrait {
+  display: grid;
+  place-items: center;
+  animation-delay: 120ms;
+}
+
+.hero__ring {
+  width: min(27rem, 78vw);
+  aspect-ratio: 1;
+  padding: 0.6rem;
+  border-radius: 35% 65% 55% 45%;
+  background: linear-gradient(135deg, var(--lux-cyan), var(--lux-gold), var(--lux-rose));
+  box-shadow: 0 28px 90px rgba(103, 232, 249, 0.14), 0 30px 90px rgba(0, 0, 0, 0.5);
+  animation: float-portrait 7s ease-in-out infinite;
+}
+
+.hero__ring img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 0.65rem solid rgba(5, 6, 10, 0.86);
+  border-radius: inherit;
+}
+
+.hero__socials ion-button,
+.hero__scroll {
+  --color: #fff;
+  --background: rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
+}
+
+.hero__scroll {
+  position: absolute;
+  right: 50%;
+  bottom: 1.5rem;
+  display: grid;
+  width: 2.8rem;
+  height: 2.8rem;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #fff;
+  transform: translateX(50%);
+  animation: bounce 1.8s ease-in-out infinite;
+}
+
+@keyframes float-portrait {
+  50% { transform: translateY(-1rem) rotate(2deg); border-radius: 55% 45% 35% 65%; }
+}
+
+@keyframes bounce {
+  50% { transform: translate(50%, 0.45rem); }
+}
+
+@media (max-width: 840px) {
+  .hero {
+    min-height: auto;
+  }
+
+  .hero__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero__portrait {
+    justify-content: start;
+  }
+
+  .hero__ring {
+    width: min(20rem, 72vw);
+  }
+}
+
+@media (max-width: 520px) {
+  .hero__scroll {
+    display: none;
+  }
+}
