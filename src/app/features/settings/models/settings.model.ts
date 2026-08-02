@@ -17,8 +17,6 @@ export interface PortfolioSettings extends BaseModel {
   secondaryColor: string;
   accentColor: string;
 
-  // Hero
-  defaultProfileImage: string;
   defaultResume: string;
 
   // Contact

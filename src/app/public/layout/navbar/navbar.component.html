@@ -1,7 +1,13 @@
 <header class="nav" [class.nav--scrolled]="scrolled()">
   <a class="brand" routerLink="/" fragment="home" aria-label="Go to home" (click)="close()">
-    <span class="brand__mark"><ion-icon name="sparkles-outline"></ion-icon></span>
-    <span class="brand__text">Portfolio</span>
+    <span class="brand__mark">
+      @if (logoUrl()) {
+        <img [src]="logoUrl()" [alt]="siteTitle()" loading="eager" decoding="async">
+      } @else {
+        <ion-icon name="sparkles-outline"></ion-icon>
+      }
+    </span>
+    <span class="brand__text">{{ siteTitle() }}</span>
   </a>
 
   <nav class="nav__links" [class.nav__links--open]="isOpen()" aria-label="Primary navigation">
@@ -16,6 +22,10 @@
       </a>
     }
   </nav>
+
+  <ion-button class="theme-toggle" fill="clear" [attr.aria-label]="'Switch public theme to ' + (theme() === 'dark' ? 'light' : 'dark')" (click)="toggleTheme()">
+    <ion-icon [name]="theme() === 'dark' ? 'sunny-outline' : 'moon-outline'"></ion-icon>
+  </ion-button>
 
   <ion-button class="nav__cta lux-button primary" routerLink="/contact">
     Hire Me

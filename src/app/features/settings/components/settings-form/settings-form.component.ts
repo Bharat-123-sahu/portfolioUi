@@ -13,10 +13,10 @@ import {
 
 import { PortfolioSettings } from '../../models/settings.model';
 
-import { ImageUploadComponent } from 'src/app/shared/components/image-upload/image-upload.component';
 import { FileUploadComponent } from 'src/app/shared/components/file-upload/file-upload.component';
 import { TechnologyChipsComponent } from 'src/app/shared/components/technology-chips/technology-chips.component';
 import { SettingsService } from '../../services/settings';
+import { ImageUploadComponent } from 'src/app/shared/components/image-upload/image-upload.component';
 
 @Component({
   selector: 'app-settings-form',
@@ -94,10 +94,6 @@ export class SettingsFormComponent implements OnInit {
 
       accentColor: [
         '#2dd36f'
-      ],
-
-      defaultProfileImage: [
-        ''
       ],
 
       defaultResume: [
@@ -193,9 +189,11 @@ export class SettingsFormComponent implements OnInit {
 
       next: (settings) => {
 
-        this.settings = settings;
+        this.settings = settings ?? undefined;
 
-        this.settingsForm.patchValue(settings);
+        if (settings) {
+          this.settingsForm.patchValue(settings);
+        }
 
         this.loading = false;
 
@@ -223,8 +221,10 @@ export class SettingsFormComponent implements OnInit {
 
     this.saving = true;
 
+    const payload = this.normalizePayload(this.settingsForm.value);
+
     this.settingsService
-      .updateSettings(this.settingsForm.value)
+      .updateSettings(payload)
       .subscribe({
 
         next: async () => {
@@ -265,6 +265,18 @@ export class SettingsFormComponent implements OnInit {
 
       });
 
+  }
+
+  private normalizePayload(value: PortfolioSettings): Partial<PortfolioSettings> {
+    const payload = { ...value };
+
+    for (const key of ['supportEmail', 'contactEmail'] as const) {
+      if (typeof payload[key] === 'string') {
+        payload[key] = payload[key].trim() as any;
+      }
+    }
+
+    return payload;
   }
 
 }

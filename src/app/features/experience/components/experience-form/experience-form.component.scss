@@ -3,29 +3,32 @@
 }
 
 ion-content {
-  --background: #f8fafc;
+  --background: var(--admin-bg);
 }
 
 form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 1rem;
 }
 
 ion-card {
   margin: 0;
-  border-radius: 14px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--admin-border);
+  border-radius: 1.15rem;
+  background: var(--admin-surface-strong);
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.09);
 }
 
 ion-card-header {
   padding-bottom: 8px;
-  border-bottom: 1px solid #eceff3;
+  border-bottom: 1px solid var(--admin-border);
 }
 
 ion-card-title {
   font-size: 1.1rem;
-  font-weight: 600;
+  font-weight: 800;
+  color: var(--admin-text);
 }
 
 ion-card-content {
@@ -38,13 +41,22 @@ ion-item {
   --padding-start: 0;
   --inner-padding-end: 0;
   --background: transparent;
+  --color: var(--admin-text);
 }
 
 ion-input,
 ion-textarea,
 ion-select,
-ion-datetime {
+ion-input[type="date"] {
   margin-top: 6px;
+}
+
+ion-input[type="date"] {
+  min-height: 3rem;
+  --padding-start: 0.75rem;
+  --padding-end: 0.75rem;
+  border: 1px solid var(--admin-border);
+  border-radius: 0.9rem;
 }
 
 ion-note {
@@ -63,6 +75,9 @@ ion-note {
 
 .form-actions ion-button {
   min-width: 150px;
+  --border-radius: 999px;
+  font-weight: 750;
+  text-transform: none;
 }
 
 ion-checkbox {

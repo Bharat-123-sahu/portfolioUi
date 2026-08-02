@@ -10,30 +10,13 @@
       <div class="lux-state">Blogs could not be loaded.</div>
     } @else if (blogs().length) {
       <div class="lux-grid blog__grid">
-        @if (featured(); as post) {
-          <article class="post post--featured lux-card" [routerLink]="['/blogs', post.slug]" tabindex="0">
-            <div class="lux-media">
-              <img [src]="imageUrl(post)" [alt]="post.title" loading="lazy" decoding="async">
-            </div>
-            <div class="post__body">
-              <span class="lux-chip">Featured | {{ post.category }}</span>
-              <h3>{{ post.title }}</h3>
-              <p>{{ post.shortDescription }}</p>
-              <div class="post-meta">
-                <span>{{ post.author }}</span>
-                <span><ion-icon name="time-outline"></ion-icon>{{ post.readingTime }} min</span>
-              </div>
-            </div>
-          </article>
-        }
-
-        @for (post of latest(); track post._id ?? post.slug) {
+        @for (post of blogs(); track post._id ?? post.slug) {
           <article class="post lux-card" [routerLink]="['/blogs', post.slug]" tabindex="0">
             <div class="lux-media">
               <img [src]="imageUrl(post)" [alt]="post.title" loading="lazy" decoding="async">
             </div>
             <div class="post__body">
-              <span class="lux-chip">{{ post.category }}</span>
+              <span class="lux-chip">{{ post.isFeatured ? 'Featured | ' : '' }}{{ post.category }}</span>
               <h3>{{ post.title }}</h3>
               <p>{{ post.shortDescription }}</p>
               <div class="post-meta">

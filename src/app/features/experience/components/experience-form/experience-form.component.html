@@ -156,10 +156,10 @@
             Start Date
           </ion-label>
 
-          <ion-datetime
-            presentation="date"
+          <ion-input
+            type="date"
             formControlName="startDate">
-          </ion-datetime>
+          </ion-input>
 
         </ion-item>
 
@@ -169,11 +169,10 @@
             End Date
           </ion-label>
 
-          <ion-datetime
-            presentation="date"
-            formControlName="endDate"
-            [disabled]="experienceForm.get('currentlyWorking')?.value">
-          </ion-datetime>
+          <ion-input
+            type="date"
+            formControlName="endDate">
+          </ion-input>
 
         </ion-item>
 

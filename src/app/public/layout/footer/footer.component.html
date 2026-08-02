@@ -2,7 +2,7 @@
   <div class="footer__inner lux-container">
     <section>
       <p class="lux-kicker">Available worldwide</p>
-      <h2>Design-led Angular products with performance in the details.</h2>
+      <h2>{{ siteDescription() }}</h2>
       <div class="lux-actions">
         <ion-button class="lux-button primary" routerLink="/contact">
           <ion-icon slot="start" name="mail-outline"></ion-icon>
@@ -43,6 +43,6 @@
       </div>
     </section>
 
-    <p class="footer__fine">Copyright {{ year }} Portfolio. Crafted with Angular, Ionic, and unreasonable taste.</p>
+    <p class="footer__fine">Copyright {{ year }} {{ siteTitle() }}. Crafted with Angular and Ionic.</p>
   </div>
 </footer>

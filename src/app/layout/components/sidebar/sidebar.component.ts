@@ -1,12 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  IonContent,
-  IonList,
-  IonItem,
-  IonLabel,
-  IonIcon,
-} from '@ionic/angular/standalone';
+import { IonList, IonItem, IonLabel, IonIcon } from '@ionic/angular/standalone';
 
 import { RouterModule } from '@angular/router';
 
@@ -19,6 +13,10 @@ import {
   folderOpenOutline,
   documentTextOutline,
   settingsOutline,
+  newspaperOutline,
+  callOutline,
+  ribbonOutline,
+  shareSocialOutline,
 } from 'ionicons/icons';
 
 import { addIcons } from 'ionicons';
@@ -28,15 +26,7 @@ import { addIcons } from 'ionicons';
   standalone: true,
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
-  imports: [
-    CommonModule,
-    RouterModule,
-    IonContent,
-    IonList,
-    IonItem,
-    // IonLabel,
-    // IonIcon,
-  ],
+  imports: [CommonModule, RouterModule, IonList, IonItem, IonLabel, IonIcon],
 })
 export class SidebarComponent {
   menuItems = [
@@ -44,10 +34,6 @@ export class SidebarComponent {
     { title: 'Hero', icon: 'person-outline', route: '/dashboard/hero' },
     { title: 'About', icon: 'person-outline', route: '/dashboard/about' },
     { title: 'Skills', icon: 'code-slash-outline', route: '/dashboard/skills' },
-    { title: 'Blog', icon: 'code-slash-outline', route: '/dashboard/blog' },
-    { title: 'Contact', icon: 'code-slash-outline', route: '/dashboard/contact' },
-    { title: 'Certificate', icon: 'code-slash-outline', route: '/dashboard/certificate' },
-    { title: 'Social Links', icon: 'code-slash-outline', route: '/dashboard/social-links' },
     {
       title: 'Experience',
       icon: 'briefcase-outline',
@@ -68,6 +54,18 @@ export class SidebarComponent {
       icon: 'document-text-outline',
       route: '/dashboard/resume',
     },
+    { title: 'Blog', icon: 'newspaper-outline', route: '/dashboard/blog' },
+    {
+      title: 'Certificate',
+      icon: 'ribbon-outline',
+      route: '/dashboard/certificate',
+    },
+    { title: 'Contact', icon: 'call-outline', route: '/dashboard/contact' },
+    {
+      title: 'Social Links',
+      icon: 'share-social-outline',
+      route: '/dashboard/social-links',
+    },
     {
       title: 'Settings',
       icon: 'settings-outline',
@@ -85,6 +83,10 @@ export class SidebarComponent {
       folderOpenOutline,
       documentTextOutline,
       settingsOutline,
+      newspaperOutline,
+      callOutline,
+      ribbonOutline,
+      shareSocialOutline,
     });
   }
 }

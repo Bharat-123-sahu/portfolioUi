@@ -1,27 +1,22 @@
-<p>sidebar works!</p>
-<ion-content>
-  <ion-list>
-    <ion-item routerLink="/dashboard"> Dashboard </ion-item>
-    <!-- <ion-item routerLink="/dashboard/home"> Home </ion-item> -->
+<aside class="admin-sidebar" aria-label="Admin navigation">
+  <div class="sidebar-brand">
+    <div class="brand-mark">P</div>
+    <div>
+      <strong>Portfolio CMS</strong>
+      <span>Creative control room</span>
+    </div>
+  </div>
 
-    <ion-item routerLink="/dashboard/hero"> Hero </ion-item>
-
-    <ion-item routerLink="/dashboard/about"> About </ion-item>
-
-    <ion-item routerLink="/dashboard/skills"> Skills </ion-item>
-
-    <ion-item routerLink="/dashboard/experience"> Experience </ion-item>
-
-    <ion-item routerLink="/dashboard/education"> Education </ion-item>
-
-    <ion-item routerLink="/dashboard/projects"> Projects </ion-item>
-
-    <ion-item routerLink="/dashboard/resume"> Resume </ion-item>
-    <ion-item routerLink="/dashboard/blog"> Blog </ion-item>
-    <ion-item routerLink="/dashboard/certificate"> Certificate </ion-item>
-    <ion-item routerLink="/dashboard/contact"> Contact Us </ion-item>
-    <ion-item routerLink="/dashboard/social-links"> Social Links </ion-item>
-
-    <ion-item routerLink="/dashboard/settings"> Settings </ion-item>
+  <ion-list lines="none" class="sidebar-menu">
+    <ion-item
+      *ngFor="let item of menuItems"
+      detail="false"
+      [routerLink]="item.route"
+      routerLinkActive="is-active"
+      [routerLinkActiveOptions]="{ exact: item.route === '/dashboard' }"
+    >
+      <ion-icon slot="start" [name]="item.icon"></ion-icon>
+      <ion-label>{{ item.title }}</ion-label>
+    </ion-item>
   </ion-list>
-</ion-content>
+</aside>

@@ -1,0 +1,125 @@
+:host {
+  display: block;
+  width: 18rem;
+  min-width: 18rem;
+  height: 100%;
+  min-height: 0;
+}
+
+.admin-sidebar {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow-y: auto;
+  border-right: 1px solid var(--admin-border);
+  background:
+    radial-gradient(circle at 20% 0%, rgba(56, 128, 255, 0.2), transparent 15rem),
+    linear-gradient(180deg, var(--admin-surface), rgba(255, 255, 255, 0.035));
+  backdrop-filter: blur(22px);
+}
+
+.sidebar-brand {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  padding: 1.25rem 1rem 1rem;
+}
+
+.brand-mark {
+  display: grid;
+  width: 2.65rem;
+  height: 2.65rem;
+  place-items: center;
+  border-radius: 0.95rem;
+  background: linear-gradient(135deg, var(--ion-color-primary), var(--ion-color-tertiary));
+  color: #fff;
+  font-weight: 900;
+  box-shadow: 0 16px 34px rgba(56, 128, 255, 0.28);
+}
+
+.sidebar-brand strong,
+.sidebar-brand span {
+  display: block;
+}
+
+.sidebar-brand strong {
+  color: var(--admin-text);
+  font-size: 1rem;
+}
+
+.sidebar-brand span {
+  color: var(--admin-muted);
+  font-size: 0.78rem;
+}
+
+.sidebar-menu {
+  flex: 1;
+  padding: 0.25rem 0.75rem 1rem;
+  background: transparent;
+}
+
+.sidebar-menu ion-item {
+  --min-height: 2.85rem;
+  --padding-start: 0.8rem;
+  --inner-padding-end: 0.8rem;
+  --background: transparent;
+  --color: var(--admin-muted);
+  margin: 0.18rem 0;
+  border-radius: 0.95rem;
+  font-weight: 750;
+}
+
+.sidebar-menu ion-item:hover,
+.sidebar-menu ion-item.is-active {
+  --background: rgba(56, 128, 255, 0.12);
+  --color: var(--admin-text);
+}
+
+:host-context(html[data-admin-theme="dark"]) .sidebar-menu ion-item:hover,
+:host-context(html[data-admin-theme="dark"]) .sidebar-menu ion-item.is-active {
+  --background: rgba(96, 165, 250, 0.18);
+}
+
+.sidebar-menu ion-icon {
+  color: currentColor;
+  font-size: 1.12rem;
+}
+
+@media (max-width: 900px) {
+  :host {
+    width: 5.4rem;
+    min-width: 5.4rem;
+  }
+
+  .sidebar-brand {
+    justify-content: center;
+    padding-inline: 0.5rem;
+  }
+
+  .sidebar-brand div:last-child,
+  .sidebar-menu ion-label {
+    display: none;
+  }
+
+  .sidebar-menu {
+    padding-inline: 0.55rem;
+  }
+
+  .sidebar-menu ion-item {
+    --padding-start: 0;
+    --inner-padding-end: 0;
+    justify-content: center;
+  }
+
+  .sidebar-menu ion-icon {
+    margin-inline: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  :host {
+    width: 4.75rem;
+    min-width: 4.75rem;
+  }
+}

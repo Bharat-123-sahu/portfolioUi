@@ -1,5 +1,22 @@
-<ion-header>
+<ion-header class="admin-header">
   <ion-toolbar>
-    <ion-title>Portfolio CMS</ion-title>
+    <ion-title>
+      <span>Portfolio CMS</span>
+      <small>Admin workspace</small>
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button fill="clear" [attr.aria-label]="'Switch admin theme to ' + (theme() === 'dark' ? 'light' : 'dark')" (click)="toggleTheme()">
+        <ion-icon slot="icon-only" [name]="theme() === 'dark' ? 'sunny-outline' : 'moon-outline'"></ion-icon>
+      </ion-button>
+      <ion-button fill="clear" routerLink="/">
+        <ion-icon slot="start" name="person-circle-outline"></ion-icon>
+        Portfolio
+      </ion-button>
+      <ion-button fill="clear" color="danger" (click)="logout()">
+        <ion-icon slot="start" name="log-out-outline"></ion-icon>
+        Logout
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>

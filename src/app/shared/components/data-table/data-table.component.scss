@@ -5,9 +5,11 @@
 .table-container {
   width: 100%;
   overflow-x: auto;
-  border-radius: 12px;
-  background: var(--ion-card-background, #1e1e1e);
-  border: 1px solid var(--ion-color-step-150);
+  border: 1px solid var(--admin-border);
+  border-radius: 1.2rem;
+  background: var(--admin-surface);
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
+  backdrop-filter: blur(18px);
 }
 
 .data-table {
@@ -17,23 +19,24 @@
 }
 
 .data-table thead {
-  background: var(--ion-color-light);
+  background: rgba(56, 128, 255, 0.08);
 }
 
 .data-table th {
   padding: 14px 16px;
   text-align: left;
-  font-weight: 600;
+  font-weight: 800;
   font-size: 14px;
-  color: var(--ion-color-dark);
+  color: var(--admin-text);
   white-space: nowrap;
-  border-bottom: 1px solid var(--ion-color-step-150);
+  border-bottom: 1px solid var(--admin-border);
 }
 
 .data-table td {
   padding: 14px 16px;
   vertical-align: middle;
-  border-bottom: 1px solid var(--ion-color-step-100);
+  color: var(--admin-muted);
+  border-bottom: 1px solid var(--admin-border);
 }
 
 .data-table tbody tr {
@@ -41,15 +44,15 @@
 }
 
 .data-table tbody tr:hover {
-  background: rgba(var(--ion-color-primary-rgb), 0.05);
+  background: rgba(56, 128, 255, 0.06);
 }
 
 .table-image {
   width: 60px;
   height: 60px;
   object-fit: cover;
-  border-radius: 10px;
-  border: 1px solid var(--ion-color-step-150);
+  border-radius: 0.85rem;
+  border: 1px solid var(--admin-border);
 }
 
 .action-column {
@@ -67,7 +70,7 @@
 .empty-row {
   text-align: center;
   padding: 30px;
-  color: var(--ion-color-medium);
+  color: var(--admin-muted);
 }
 
 .empty-row ion-icon,
@@ -82,7 +85,7 @@
 }
 
 .empty-row strong {
-  color: var(--ion-color-dark);
+  color: var(--admin-text);
   margin-bottom: 4px;
 }
 

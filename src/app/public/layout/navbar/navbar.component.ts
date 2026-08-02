@@ -1,4 +1,4 @@
-import { Component, HostListener, signal } from '@angular/core';
+import { Component, HostListener, computed, inject, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import {
   IonButton,
@@ -8,8 +8,12 @@ import { addIcons } from 'ionicons';
 import {
   closeOutline,
   menuOutline,
+  moonOutline,
   sparklesOutline,
+  sunnyOutline,
 } from 'ionicons/icons';
+import { ThemeService } from 'src/app/core/services/theme.service';
+import { assetUrl } from '../../public.utils';
 
 @Component({
   selector: 'app-navbar',
@@ -24,8 +28,14 @@ import {
   ],
 })
 export class NavbarComponent {
+  private readonly themeService = inject(ThemeService);
+
   readonly isOpen = signal(false);
   readonly scrolled = signal(false);
+  readonly theme = computed(() => this.themeService.publicTheme());
+  readonly settings = computed(() => this.themeService.publicSettings());
+  readonly siteTitle = computed(() => this.settings()?.siteTitle || 'Portfolio');
+  readonly logoUrl = computed(() => assetUrl(this.settings()?.logo));
 
   readonly navItems = [
     { label: 'Home', path: '/', fragment: 'home' },
@@ -37,7 +47,7 @@ export class NavbarComponent {
   ];
 
   constructor() {
-    addIcons({ closeOutline, menuOutline, sparklesOutline });
+    addIcons({ closeOutline, menuOutline, moonOutline, sparklesOutline, sunnyOutline });
   }
 
   @HostListener('window:scroll')
@@ -47,6 +57,10 @@ export class NavbarComponent {
 
   close(): void {
     this.isOpen.set(false);
+  }
+
+  toggleTheme(): void {
+    this.themeService.toggle('public');
   }
 
 }

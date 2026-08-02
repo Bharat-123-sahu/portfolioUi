@@ -1,9 +1,13 @@
 :host {
   display: block;
-  margin-bottom: 20px;
+  margin-bottom: 1rem;
 }
 
 ion-searchbar {
-  --border-radius: 12px;
-  --background: var(--ion-color-light);
+  --border-radius: 1rem;
+  --background: var(--admin-surface);
+  --color: var(--admin-text);
+  --placeholder-color: var(--admin-muted);
+  padding-inline: 0;
+  filter: drop-shadow(0 12px 28px rgba(15, 23, 42, 0.08));
 }

@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
   IonButton,
@@ -37,8 +37,6 @@ export class ProjectsComponent {
   readonly projects = signal<Project[]>([]);
   readonly loading = signal(true);
   readonly error = signal(false);
-  readonly featured = computed(() => this.projects().find((project) => project.isFeatured) ?? this.projects()[0]);
-  readonly gallery = computed(() => this.projects().filter((project) => project !== this.featured()));
 
   constructor() {
     addIcons({ arrowForwardOutline, eyeOutline, globeOutline, logoGithub, rocketOutline });

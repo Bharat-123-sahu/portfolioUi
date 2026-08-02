@@ -1,0 +1,58 @@
+:host {
+  display: block;
+}
+
+.admin-header ion-toolbar {
+  --background: var(--admin-surface-strong);
+  --border-width: 0;
+  --min-height: 4.25rem;
+  --padding-start: 1.25rem;
+  --padding-end: 1rem;
+  border-bottom: 1px solid var(--admin-border);
+  color: var(--admin-text);
+  backdrop-filter: blur(20px);
+}
+
+ion-title span,
+ion-title small {
+  display: block;
+}
+
+ion-title span {
+  font-size: 1.05rem;
+  font-weight: 850;
+}
+
+ion-title small {
+  margin-top: 0.1rem;
+  color: var(--admin-muted);
+  font-size: 0.76rem;
+  font-weight: 600;
+}
+
+ion-button {
+  --border-radius: 999px;
+  --color: var(--admin-clear-button);
+  font-weight: 750;
+  text-transform: none;
+}
+
+.admin-header ion-button[color="danger"] {
+  --color: #ef4444;
+}
+
+@media (max-width: 640px) {
+  .admin-header ion-toolbar {
+    --padding-start: 0.8rem;
+    --padding-end: 0.4rem;
+  }
+
+  ion-button {
+    font-size: 0;
+  }
+
+  ion-button ion-icon {
+    margin: 0;
+    font-size: 1.25rem;
+  }
+}

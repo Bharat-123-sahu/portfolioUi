@@ -36,14 +36,6 @@
             (imageUploaded)="settingsForm.patchValue({ logo: $event })">
           </app-image-upload>
 
-          <br>
-
-          <app-image-upload
-            folder="settings/favicon"
-            [imageUrl]="settingsForm.get('favicon')?.value"
-            (imageUploaded)="settingsForm.patchValue({ favicon: $event })">
-          </app-image-upload>
-
         </ion-card-content>
 
       </ion-card>
@@ -160,14 +152,6 @@
         </ion-card-header>
 
         <ion-card-content>
-
-          <app-image-upload
-            folder="settings/profile"
-            [imageUrl]="settingsForm.get('defaultProfileImage')?.value"
-            (imageUploaded)="settingsForm.patchValue({ defaultProfileImage: $event })">
-          </app-image-upload>
-
-          <br>
 
           <app-file-upload
             folder="resume"

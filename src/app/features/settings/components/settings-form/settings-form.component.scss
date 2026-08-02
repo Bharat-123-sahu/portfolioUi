@@ -4,7 +4,7 @@
 }
 
 ion-content {
-  --background: var(--ion-color-light);
+  --background: var(--admin-bg);
 }
 
 form {
@@ -14,17 +14,20 @@ form {
 
 ion-card {
   margin-bottom: 20px;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--admin-border);
+  border-radius: 1.15rem;
+  background: var(--admin-surface-strong);
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.09);
 }
 
 ion-card-header {
-  border-bottom: 1px solid var(--ion-color-light-shade);
+  border-bottom: 1px solid var(--admin-border);
 }
 
 ion-card-title {
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 800;
+  color: var(--admin-text);
 }
 
 ion-card-content {
@@ -33,13 +36,14 @@ ion-card-content {
 
 ion-item {
   --background: transparent;
+  --color: var(--admin-text);
   --padding-start: 0;
   --inner-padding-end: 0;
   margin-bottom: 16px;
 }
 
 ion-label {
-  font-weight: 500;
+  font-weight: 700;
 }
 
 ion-input,
@@ -67,6 +71,9 @@ app-technology-chips {
 
 .form-actions ion-button {
   min-width: 220px;
+  --border-radius: 999px;
+  font-weight: 800;
+  text-transform: none;
 }
 
 .loading-card {

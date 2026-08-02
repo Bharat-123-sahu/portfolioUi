@@ -10,48 +10,15 @@
       <div class="lux-state">Projects could not be loaded.</div>
     } @else if (projects().length) {
       <div class="lux-grid projects__grid">
-        @if (featured(); as project) {
-          <article class="project project--featured lux-card">
-            <div class="lux-media">
-              <img [src]="imageUrl(project)" [alt]="project.title" loading="lazy" decoding="async">
-            </div>
-            <div class="project__body">
-              <span class="lux-chip">Featured | {{ project.category }}</span>
-              <h3>{{ project.title }}</h3>
-              <p>{{ project.shortDescription || project.description }}</p>
-              <div class="chips">
-                @for (tech of project.technologies.slice(0, 4); track tech) {
-                  <span class="lux-chip">{{ tech }}</span>
-                }
-              </div>
-              <div class="project__actions">
-                @if (project.liveDemoUrl) {
-                  <ion-button fill="clear" aria-label="Open live demo" (click)="open(project.liveDemoUrl)">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </ion-button>
-                }
-                @if (project.githubUrl) {
-                  <ion-button fill="clear" aria-label="Open GitHub" (click)="open(project.githubUrl)">
-                    <ion-icon name="logo-github"></ion-icon>
-                  </ion-button>
-                }
-                <ion-button fill="clear" aria-label="View project details" [routerLink]="['/projects', project.slug]">
-                  <ion-icon name="arrow-forward-outline"></ion-icon>
-                </ion-button>
-              </div>
-            </div>
-          </article>
-        }
-
-        @for (project of gallery(); track project._id ?? project.slug) {
+        @for (project of projects(); track project._id ?? project.slug) {
           <article class="project lux-card">
             <div class="lux-media">
               <img [src]="imageUrl(project)" [alt]="project.title" loading="lazy" decoding="async">
             </div>
             <div class="project__body">
-              <span class="lux-chip">{{ project.category }}</span>
+              <span class="lux-chip">{{ project.isFeatured ? 'Featured | ' : '' }}{{ project.category }}</span>
               <h3>{{ project.title }}</h3>
-              <p>{{ project.shortDescription }}</p>
+              <p>{{ project.shortDescription || project.description }}</p>
               <div class="chips">
                 @for (tech of project.technologies.slice(0, 4); track tech) {
                   <span class="lux-chip">{{ tech }}</span>

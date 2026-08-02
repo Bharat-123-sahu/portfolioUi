@@ -1,8 +1,6 @@
-import { DatePipe } from '@angular/common';
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
-  IonButton,
   IonIcon,
   IonSpinner,
 } from '@ionic/angular/standalone';
@@ -32,8 +30,6 @@ export class BlogComponent {
   readonly blogs = signal<Blog[]>([]);
   readonly loading = signal(true);
   readonly error = signal(false);
-  readonly featured = computed(() => this.blogs().find((blog) => blog.isFeatured) ?? this.blogs()[0]);
-  readonly latest = computed(() => this.blogs().filter((blog) => blog !== this.featured()));
 
   constructor() {
     addIcons({ arrowForwardOutline, newspaperOutline, timeOutline });

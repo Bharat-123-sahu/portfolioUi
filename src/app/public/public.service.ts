@@ -12,6 +12,7 @@ import { Certificate } from '../features/certificate/models/certificate.models';
 import { Contact } from '../features/contact/models/contact.model';
 import { Resume } from '../features/resume/models/resume.models';
 import { SocialLink } from '../features/social-links/models/social-link.model';
+import { PortfolioSettings } from '../features/settings/models/settings.model';
 
 @Injectable({
   providedIn: 'root',
@@ -71,5 +72,9 @@ export class PublicService {
 
   getSocialLinks() {
     return this.http.get<SocialLink[]>(`${this.api}/social-links`);
+  }
+
+  getSettings() {
+    return this.http.get<PortfolioSettings>(`${this.api}/settings`);
   }
 }

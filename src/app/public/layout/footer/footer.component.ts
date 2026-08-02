@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
   IonButton,
@@ -18,6 +18,7 @@ import { finalize } from 'rxjs';
 import { PublicService } from '../../public.service';
 import { SocialLink } from 'src/app/features/social-links/models/social-link.model';
 import { activeOnly, sortByDisplayOrder, unwrapCollection } from '../../public.utils';
+import { ThemeService } from 'src/app/core/services/theme.service';
 
 @Component({
   selector: 'app-footer',
@@ -33,10 +34,14 @@ import { activeOnly, sortByDisplayOrder, unwrapCollection } from '../../public.u
 })
 export class FooterComponent {
   private readonly publicService = inject(PublicService);
+  private readonly themeService = inject(ThemeService);
 
   readonly year = new Date().getFullYear();
   readonly loading = signal(true);
   readonly socialLinks = signal<SocialLink[]>([]);
+  readonly settings = computed(() => this.themeService.publicSettings());
+  readonly siteTitle = computed(() => this.settings()?.siteTitle || 'Portfolio');
+  readonly siteDescription = computed(() => this.settings()?.siteDescription || 'Design-led Angular products with performance in the details.');
 
   readonly quickLinks = [
     { label: 'Home', path: '/', fragment: 'home' },

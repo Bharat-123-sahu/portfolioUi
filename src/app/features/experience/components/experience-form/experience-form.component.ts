@@ -82,12 +82,12 @@ export class ExperienceFormComponent implements OnInit {
       ],
 
       startDate: [
-        this.experience?.startDate ?? '',
+        this.toDateString(this.experience?.startDate) ?? '',
         Validators.required,
       ],
 
       endDate: [
-        this.experience?.endDate ?? '',
+        this.toDateString(this.experience?.endDate) ?? '',
       ],
 
       currentlyWorking: [
@@ -120,16 +120,20 @@ export class ExperienceFormComponent implements OnInit {
     this.experienceForm
       .get('currentlyWorking')
       ?.valueChanges.subscribe(value => {
+        const endDate = this.experienceForm.get('endDate');
 
         if (value) {
-
-          this.experienceForm.patchValue({
-            endDate: null,
-          });
-
+          endDate?.reset('');
+          endDate?.disable({ emitEvent: false });
+        } else {
+          endDate?.enable({ emitEvent: false });
         }
 
       });
+
+    if (this.experienceForm.get('currentlyWorking')?.value) {
+      this.experienceForm.get('endDate')?.disable({ emitEvent: false });
+    }
 
   }
 
@@ -145,12 +149,23 @@ export class ExperienceFormComponent implements OnInit {
 
     this.saving = true;
 
+    const formValue = this.experienceForm.getRawValue();
+    const endDate = this.toIsoDate(formValue.endDate);
+
     const payload = {
 
-      ...this.experienceForm.value,
+      ...formValue,
 
-      technologies: this.experienceForm.value.technologies
-        ? this.experienceForm.value.technologies
+      startDate: this.toIsoDate(formValue.startDate),
+
+      endDate: formValue.currentlyWorking
+        ? null
+        : endDate || undefined,
+
+      displayOrder: Number(formValue.displayOrder) || 0,
+
+      technologies: formValue.technologies
+        ? formValue.technologies
             .split(',')
             .map((item: string) => item.trim())
             .filter(Boolean)
@@ -221,6 +236,32 @@ export class ExperienceFormComponent implements OnInit {
 
     this.modalController.dismiss();
 
+  }
+
+  private toDateString(value: string | Date | null | undefined): string | null {
+    if (!value) {
+      return null;
+    }
+
+    if (value instanceof Date) {
+      return value.toISOString().slice(0, 10);
+    }
+
+    return String(value).slice(0, 10);
+  }
+
+  private toIsoDate(value: string | Date | null | undefined): string | null {
+    if (!value) {
+      return null;
+    }
+
+    if (value instanceof Date) {
+      return value.toISOString();
+    }
+
+    const date = new Date(String(value));
+
+    return Number.isNaN(date.getTime()) ? null : date.toISOString();
   }
 
 }

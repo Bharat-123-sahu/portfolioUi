@@ -56,7 +56,55 @@
   --lux-shadow-soft: 0 12px 40px rgba(0, 0, 0, 0.28);
   --ion-background-color: var(--lux-bg);
   --ion-text-color: var(--lux-text);
+  --admin-bg: #eef3fb;
+  --admin-surface: rgba(255, 255, 255, 0.86);
+  --admin-surface-strong: #ffffff;
+  --admin-border: rgba(15, 23, 42, 0.1);
+  --admin-text: #101828;
+  --admin-muted: #667085;
   color-scheme: dark;
+}
+
+html[data-public-theme="light"] {
+  --lux-bg: #f7f9fc;
+  --lux-bg-2: #eef4fb;
+  --lux-card: rgba(255, 255, 255, 0.72);
+  --lux-card-strong: rgba(255, 255, 255, 0.9);
+  --lux-stroke: rgba(15, 23, 42, 0.12);
+  --lux-text: #0f172a;
+  --lux-muted: rgba(15, 23, 42, 0.72);
+  --lux-soft: rgba(15, 23, 42, 0.5);
+  --ion-background-color: var(--lux-bg);
+  --ion-text-color: var(--lux-text);
+  color-scheme: light;
+}
+
+html[data-public-theme="dark"] {
+  color-scheme: dark;
+}
+
+html[data-admin-theme="dark"] {
+  --admin-bg: #070b12;
+  --admin-surface: rgba(17, 24, 39, 0.82);
+  --admin-surface-strong: #111827;
+  --admin-border: rgba(255, 255, 255, 0.1);
+  --admin-text: #f8fafc;
+  --admin-muted: rgba(248, 250, 252, 0.62);
+  --admin-button-text: #ffffff;
+  --admin-clear-button: #dbeafe;
+  --admin-field-bg: rgba(255, 255, 255, 0.055);
+}
+
+html[data-admin-theme="light"] {
+  --admin-bg: #eef3fb;
+  --admin-surface: rgba(255, 255, 255, 0.86);
+  --admin-surface-strong: #ffffff;
+  --admin-border: rgba(15, 23, 42, 0.1);
+  --admin-text: #101828;
+  --admin-muted: #667085;
+  --admin-button-text: #ffffff;
+  --admin-clear-button: #1d4ed8;
+  --admin-field-bg: rgba(255, 255, 255, 0.8);
 }
 
 html {
@@ -73,6 +121,207 @@ body {
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+}
+
+html[data-public-theme="light"] body {
+  background:
+    radial-gradient(circle at 12% -8%, rgba(56, 128, 255, 0.16), transparent 33rem),
+    radial-gradient(circle at 86% 9%, rgba(248, 213, 107, 0.18), transparent 30rem),
+    linear-gradient(135deg, #f7f9fc 0%, #eef4fb 48%, #ffffff 100%);
+}
+
+html[data-public-theme="light"] .public-shell {
+  background:
+    linear-gradient(180deg, rgba(15, 23, 42, 0.03), transparent 24rem),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.035) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(15, 23, 42, 0.025) 1px, transparent 1px),
+    var(--lux-bg);
+  background-size: auto, 72px 72px, 72px 72px, auto;
+}
+
+html[data-public-theme="light"] .nav {
+  background: rgba(255, 255, 255, 0.72);
+  border-color: rgba(15, 23, 42, 0.12);
+  box-shadow: 0 18px 60px rgba(15, 23, 42, 0.13);
+}
+
+html[data-public-theme="light"] .nav__links a,
+html[data-public-theme="light"] .brand__text,
+html[data-public-theme="light"] .theme-toggle,
+html[data-public-theme="light"] .nav__toggle {
+  color: #0f172a;
+  --color: #0f172a;
+}
+
+html[data-public-theme="light"] .lux-card,
+html[data-public-theme="light"] .detail__panel,
+html[data-public-theme="light"] .sidebar-card {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.55)),
+    rgba(255, 255, 255, 0.74);
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.13);
+}
+
+html[data-public-theme="light"] .hero__ring img {
+  border-color: rgba(255, 255, 255, 0.88);
+}
+
+html[data-public-theme="light"] .lux-gradient-text {
+  background: linear-gradient(115deg, #0f172a 8%, var(--lux-cyan), #b45309, #0f172a);
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+html[data-public-theme="light"] .lux-chip,
+html[data-public-theme="light"] .hero__meta span,
+html[data-public-theme="light"] .hero__meta button,
+html[data-public-theme="light"] .sidebar-list dd,
+html[data-public-theme="light"] .related-card,
+html[data-public-theme="light"] .detail-nav__item,
+html[data-public-theme="light"] .rich-content,
+html[data-public-theme="light"] .rich-content :is(h1, h2, h3),
+html[data-public-theme="light"] .rich-content :is(blockquote) {
+  color: var(--lux-text);
+}
+
+html[data-public-theme="light"] .lux-button.ghost,
+html[data-public-theme="light"] .hero__socials ion-button,
+html[data-public-theme="light"] .hero__scroll,
+html[data-public-theme="light"] .project__actions ion-button {
+  --color: var(--lux-text);
+}
+
+body.admin-route {
+  --ion-color-primary: #2563eb;
+  --ion-color-primary-rgb: 37, 99, 235;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #1d4ed8;
+  --ion-color-primary-tint: #3b82f6;
+  --ion-color-secondary: #0f766e;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-tertiary: #7c3aed;
+  --ion-color-tertiary-contrast: #ffffff;
+  --ion-background-color: var(--admin-bg);
+  --ion-text-color: var(--admin-text);
+  background: var(--admin-bg);
+  color: var(--admin-text);
+  color-scheme: light;
+  overflow: hidden;
+}
+
+html[data-admin-theme="dark"] body.admin-route {
+  color-scheme: dark;
+}
+
+// .dashboard-content router-outlet {
+//   display: none;
+// }
+
+// .dashboard-content > :not(router-outlet) {
+//   display: block;
+//   width: 100%;
+//   min-width: 0;
+//   min-height: 0;
+// }
+
+// .dashboard-content ion-content,
+// .dashboard-content ion-content::part(background),
+body.admin-route ion-modal ion-content,
+body.admin-route ion-modal ion-content::part(background) {
+  --background: transparent;
+  background: transparent;
+}
+
+// .dashboard-content ion-content {
+//   position: static;
+//   height: auto;
+//   min-height: 0;
+//   contain: none;
+//   overflow: visible;
+// }
+
+// .dashboard-content ion-content::part(scroll) {
+//   position: static;
+//   display: block;
+//   overflow: visible;
+//   min-height: 0;
+//   padding: 0;
+// }
+
+// .dashboard-content ion-content.ion-padding::part(scroll) {
+//   padding: 0;
+// }
+
+// .dashboard-content :is(ion-grid, ion-row, ion-col, ion-card, ion-list, form, table) {
+//   max-width: 100%;
+// }
+
+// .dashboard-content ion-grid {
+//   width: 100%;
+//   padding-inline: 0;
+// }
+
+body.admin-route ion-card {
+  --background: var(--admin-surface-strong);
+  color: var(--admin-text);
+  border: 1px solid var(--admin-border);
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
+}
+
+body.admin-route ion-card-title,
+body.admin-route ion-card-subtitle,
+body.admin-route ion-label,
+body.admin-route ion-input,
+body.admin-route ion-textarea,
+body.admin-route ion-select,
+body.admin-route ion-note,
+body.admin-route ion-item {
+  color: var(--admin-text);
+  --color: var(--admin-text);
+  --placeholder-color: var(--admin-muted);
+}
+
+body.admin-route ion-card-subtitle,
+body.admin-route ion-note {
+  color: var(--admin-muted);
+  --color: var(--admin-muted);
+}
+
+body.admin-route ion-item {
+  --background: var(--admin-field-bg);
+  --border-color: var(--admin-border);
+  --highlight-color-focused: var(--ion-color-primary);
+  border-radius: 0.85rem;
+  margin-block: 0.45rem;
+}
+
+body.admin-route ion-list {
+  background: transparent;
+}
+
+body.admin-route ion-button {
+  --border-radius: 999px;
+  font-weight: 750;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+body.admin-route ion-button[fill="clear"],
+body.admin-route ion-button[fill="outline"] {
+  --color: var(--admin-clear-button);
+  --border-color: rgba(56, 128, 255, 0.32);
+}
+
+body.admin-route ion-button[color="danger"] {
+  --color: #ef4444;
+}
+
+body.admin-route ion-toggle,
+body.admin-route ion-checkbox {
+  --track-background: rgba(100, 116, 139, 0.28);
+  --border-color: var(--admin-border);
 }
 
 img {
