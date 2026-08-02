@@ -33,3 +33,16 @@ ion-button {
   margin-top: 24px;
 
 }
+
+.login-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+.login-actions ion-text {
+  color: #4f46e5;
+  cursor: pointer;
+  font-size: 0.92rem;
+  font-weight: 600;
+}

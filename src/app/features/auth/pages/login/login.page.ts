@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { TokenService } from '../../../../core/services/token.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import {
   IonContent,
   IonCard,
@@ -13,7 +13,7 @@ import {
   IonButton,
   IonItem,
   IonLabel,
-  IonIcon,
+  IonText,
 } from '@ionic/angular/standalone';
 
 import {
@@ -39,7 +39,8 @@ import {
     IonButton,
     IonItem,
     IonLabel,
-    // IonIcon,
+    IonText,
+    RouterLink,
     ReactiveFormsModule,
   ],
 })
@@ -70,13 +71,17 @@ export class LoginPage {
           response?.data?.accessToken ??
           response?.accessToken ??
           response?.data?.data?.accessToken;
+        const refreshToken =
+          response?.data?.refreshToken ??
+          response?.refreshToken ??
+          response?.data?.data?.refreshToken;
 
         if (!accessToken) {
           console.error('Login response did not include an access token.');
           return;
         }
 
-        this.tokenService.setToken(accessToken);
+        this.tokenService.setTokens(accessToken, refreshToken);
         this.router.navigate(['/dashboard']);
       },
 

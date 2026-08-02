@@ -213,9 +213,16 @@
             Resume URL
           </ion-label>
 
-          <ion-input
-            formControlName="resumeUrl">
-          </ion-input>
+           <ion-card-content>
+
+        <app-file-upload
+          folder="resumes"
+          accept=".pdf,.doc,.docx"
+          [fileUrl]="aboutForm.get('resumeUrl')?.value"
+          (fileUploaded)="aboutForm.patchValue({ resumeUrl: $event })">
+        </app-file-upload>
+
+      </ion-card-content>
 
         </ion-item>
 

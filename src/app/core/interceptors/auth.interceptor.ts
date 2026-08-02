@@ -7,7 +7,8 @@ import {
 
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, throwError } from 'rxjs';
+import { catchError, switchMap, throwError } from 'rxjs';
+import { AuthService } from 'src/app/features/auth/services/auth.service';
 import { TokenService } from '../services/token.service';
 
 export const authInterceptor: HttpInterceptorFn = (
@@ -16,10 +17,17 @@ export const authInterceptor: HttpInterceptorFn = (
 ) => {
   const tokenService = inject(TokenService);
   const router = inject(Router);
+  const authService = inject(AuthService);
 
   const token = tokenService.getToken();
+  const isPublicAuthEndpoint =
+    req.url.includes('/auth/login') ||
+    req.url.includes('/auth/forgot-password') ||
+    req.url.includes('/auth/verify-otp') ||
+    req.url.includes('/auth/reset-password') ||
+    req.url.includes('/auth/refresh-token');
 
-  if (!token || req.url.includes('/auth/login')) {
+  if (!token || isPublicAuthEndpoint) {
     return next(req);
   }
 
@@ -32,8 +40,44 @@ export const authInterceptor: HttpInterceptorFn = (
   return next(authRequest).pipe(
     catchError((error: unknown) => {
       if (error instanceof HttpErrorResponse && error.status === 401) {
-        tokenService.removeToken();
-        router.navigate(['/login']);
+        const refreshToken = tokenService.getRefreshToken();
+
+        if (!refreshToken) {
+          tokenService.clearAuth();
+          router.navigate(['/login']);
+
+          return throwError(() => error);
+        }
+
+        return authService.refreshToken({ refreshToken }).pipe(
+          switchMap((response) => {
+            const accessToken = response.data?.accessToken;
+            const nextRefreshToken = response.data?.refreshToken;
+
+            if (!accessToken) {
+              tokenService.clearAuth();
+              router.navigate(['/login']);
+
+              return throwError(() => error);
+            }
+
+            tokenService.setTokens(accessToken, nextRefreshToken);
+
+            return next(
+              req.clone({
+                setHeaders: {
+                  Authorization: `Bearer ${accessToken}`,
+                },
+              }),
+            );
+          }),
+          catchError((refreshError) => {
+            tokenService.clearAuth();
+            router.navigate(['/login']);
+
+            return throwError(() => refreshError);
+          }),
+        );
       }
 
       return throwError(() => error);

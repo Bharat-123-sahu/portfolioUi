@@ -90,11 +90,21 @@
     </ion-item>
 
     <ion-item>
-      <ion-input
-        label="Resume URL"
-        labelPlacement="stacked"
-        formControlName="resumeUrl">
-      </ion-input>
+     
+          <ion-label position="stacked">
+            Resume URL
+          </ion-label>
+
+           <ion-card-content>
+
+        <app-file-upload
+          folder="resumes"
+          accept=".pdf,.doc,.docx"
+          [fileUrl]="heroForm.get('resumeUrl')?.value"
+          (fileUploaded)="heroForm.patchValue({ resumeUrl: $event })">
+        </app-file-upload>
+
+      </ion-card-content>
     </ion-item>
 
     <hr>

@@ -1,0 +1,54 @@
+<ion-content class="auth-shell" [fullscreen]="true">
+  <div class="premium-bg">
+    <span class="blob blob-a"></span>
+    <span class="blob blob-b"></span>
+    <span class="blob blob-c"></span>
+  </div>
+
+  <main class="auth-stage">
+    <section class="auth-card">
+      <a class="back-link" routerLink="/login/forgot-password">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        Change email
+      </a>
+
+      <div class="brand-orb">
+        <ion-icon name="key-outline"></ion-icon>
+      </div>
+
+      <p class="eyebrow">Secure verification</p>
+      <h1>Enter OTP</h1>
+      <p class="subtitle">We sent a 6 digit code to {{ email }}.</p>
+
+      <div class="otp-grid" (paste)="onPaste($event)">
+        <ion-input
+          #otpBox
+          *ngFor="let digit of digits; let i = index"
+          inputmode="numeric"
+          maxlength="1"
+          [value]="digits[i]"
+          (ionInput)="onInput(i, $event)"
+          (keydown)="onKeydown(i, $event)"
+        ></ion-input>
+      </div>
+
+      <ion-text color="danger" *ngIf="errorMessage">
+        <small>{{ errorMessage }}</small>
+      </ion-text>
+
+      <div class="otp-meta">
+        <span [class.expired]="secondsRemaining === 0">{{ timerLabel }}</span>
+        <button type="button" (click)="resend()" [disabled]="secondsRemaining > 0 || resending">
+          <ion-icon name="refresh-outline"></ion-icon>
+          <span *ngIf="!resending">Resend OTP</span>
+          <span *ngIf="resending">Sending</span>
+        </button>
+      </div>
+
+      <ion-button expand="block" type="button" [disabled]="loading || otp.length !== 6" (click)="verify()">
+        <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
+        <span *ngIf="!loading">Verify OTP</span>
+      </ion-button>
+    </section>
+  </main>
+</ion-content>

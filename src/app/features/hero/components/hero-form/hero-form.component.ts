@@ -17,6 +17,7 @@ import { Hero } from '../../models/hero.model';
 import { HeroService } from '../../services/hero.service';
 import { UploadService } from 'src/app/core/services/upload.service';
 import { environment } from 'src/environments/environment';
+import { FileUploadComponent } from "src/app/shared/components/file-upload/file-upload.component";
 
 @Component({
   selector: 'app-hero-form',
@@ -27,7 +28,8 @@ import { environment } from 'src/environments/environment';
     CommonModule,
     ReactiveFormsModule,
     IonicModule,
-  ],
+    FileUploadComponent
+],
 })
 export class HeroFormComponent implements OnInit {
   private fb = inject(FormBuilder);

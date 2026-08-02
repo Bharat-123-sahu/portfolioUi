@@ -13,6 +13,27 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/auth/pages/login/login.page').then((m) => m.LoginPage),
   },
+  {
+    path: 'login/forgot-password',
+    loadComponent: () =>
+      import(
+        './features/auth/pages/forgot-password/forgot-password.page'
+      ).then((m) => m.ForgotPasswordPage),
+  },
+  {
+    path: 'login/verify-otp',
+    loadComponent: () =>
+      import('./features/auth/pages/verify-otp/verify-otp.page').then(
+        (m) => m.VerifyOtpPage,
+      ),
+  },
+  {
+    path: 'login/reset-password',
+    loadComponent: () =>
+      import('./features/auth/pages/reset-password/reset-password.page').then(
+        (m) => m.ResetPasswordPage,
+      ),
+  },
 
   {
     path: 'dashboard',
@@ -104,6 +125,13 @@ export const routes: Routes = [
           import('./features/contact/pages/contact/contact.page').then(
             (m) => m.ContactPage,
           ),
+      },
+      {
+        path: 'settings/change-password',
+        loadComponent: () =>
+          import(
+            './features/auth/pages/change-password/change-password.page'
+          ).then((m) => m.ChangePasswordPage),
       },
       {
         path: 'settings',

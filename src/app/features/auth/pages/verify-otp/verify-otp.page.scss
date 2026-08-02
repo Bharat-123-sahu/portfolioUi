@@ -1,0 +1,67 @@
+@use '../forgot-password/forgot-password.page.scss' as *;
+
+.otp-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 10px;
+  margin: 18px 0 12px;
+}
+
+.otp-grid ion-input {
+  --background: rgba(255, 255, 255, 0.09);
+  --color: #f8fafc;
+  --padding-start: 0;
+  --padding-end: 0;
+  min-width: 0;
+  height: 58px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 18px;
+  text-align: center;
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+
+.otp-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 18px;
+  color: #cbd5e1;
+}
+
+.otp-meta span {
+  font-weight: 800;
+}
+
+.otp-meta .expired {
+  color: #fda4af;
+}
+
+.otp-meta button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 0;
+  background: transparent;
+  color: #67e8f9;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 800;
+}
+
+.otp-meta button:disabled {
+  color: #64748b;
+  cursor: not-allowed;
+}
+
+@media (max-width: 420px) {
+  .otp-grid {
+    gap: 7px;
+  }
+
+  .otp-grid ion-input {
+    height: 50px;
+    border-radius: 14px;
+  }
+}

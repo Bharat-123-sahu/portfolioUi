@@ -17,6 +17,7 @@ import {
   callOutline,
   ribbonOutline,
   shareSocialOutline,
+  shieldCheckmarkOutline,
 } from 'ionicons/icons';
 
 import { addIcons } from 'ionicons';
@@ -71,6 +72,11 @@ export class SidebarComponent {
       icon: 'settings-outline',
       route: '/dashboard/settings',
     },
+    {
+      title: 'Security',
+      icon: 'shield-checkmark-outline',
+      route: '/dashboard/settings/change-password',
+    },
   ];
 
   constructor() {
@@ -87,6 +93,7 @@ export class SidebarComponent {
       callOutline,
       ribbonOutline,
       shareSocialOutline,
+      shieldCheckmarkOutline,
     });
   }
 }

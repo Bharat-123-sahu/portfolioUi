@@ -17,6 +17,7 @@ import { About } from '../../models/about.model';
 import { AboutService } from '../../services/about';
 
 import { ImageUploadComponent } from 'src/app/shared/components/image-upload/image-upload.component';
+import { FileUploadComponent } from "src/app/shared/components/file-upload/file-upload.component";
 
 @Component({
   selector: 'app-about-form',
@@ -26,7 +27,8 @@ import { ImageUploadComponent } from 'src/app/shared/components/image-upload/ima
     ReactiveFormsModule,
     IonicModule,
     ImageUploadComponent,
-  ],
+    FileUploadComponent
+],
   templateUrl: './about-form.component.html',
   styleUrls: ['./about-form.component.scss'],
 })

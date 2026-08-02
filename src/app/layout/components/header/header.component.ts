@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { TokenService } from 'src/app/core/services/token.service';
 import { ThemeService } from 'src/app/core/services/theme.service';
+import { AuthService } from 'src/app/features/auth/services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -36,6 +37,7 @@ export class HeaderComponent {
   private readonly router = inject(Router);
   private readonly tokenService = inject(TokenService);
   private readonly themeService = inject(ThemeService);
+  private readonly authService = inject(AuthService);
   readonly theme = computed(() => this.themeService.adminTheme());
 
   constructor() {
@@ -53,7 +55,14 @@ export class HeaderComponent {
   }
 
   logout() {
-    this.tokenService.removeToken();
+    this.authService.logout(this.tokenService.getRefreshToken()).subscribe({
+      next: () => this.completeLogout(),
+      error: () => this.completeLogout(),
+    });
+  }
+
+  private completeLogout() {
+    this.tokenService.clearAuth();
     this.router.navigate(['/login']);
   }
 }
