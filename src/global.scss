@@ -137,6 +137,7 @@ html[data-public-theme="light"] .public-shell {
     linear-gradient(180deg, rgba(15, 23, 42, 0.025) 1px, transparent 1px),
     var(--lux-bg);
   background-size: auto, 72px 72px, 72px 72px, auto;
+  color: var(--lux-text);
 }
 
 html[data-public-theme="light"] .nav {
@@ -190,6 +191,88 @@ html[data-public-theme="light"] .hero__socials ion-button,
 html[data-public-theme="light"] .hero__scroll,
 html[data-public-theme="light"] .project__actions ion-button {
   --color: var(--lux-text);
+}
+
+html[data-public-theme="light"] .nav__links {
+  background: rgba(255, 255, 255, 0.94);
+  border-color: rgba(15, 23, 42, 0.12);
+}
+
+html[data-public-theme="light"] .public-shell :is(
+  .section-header h2,
+  .about-title,
+  .about-subtitle,
+  .project-content h3,
+  .website-preview h3,
+  .skill-card h3,
+  .skill-category,
+  .skill-name,
+  .experience-card h3,
+  .timeline-card h3,
+  .timeline-content h3,
+  .education-title h3,
+  .education-card h3,
+  .certificate-body h3,
+  .certificate-card h3,
+  .blog-body h3,
+  .blog-card h3,
+  .author,
+  .pill,
+  .tech-pill,
+  .hero__scroll,
+  .contact__info h3,
+  .detail__website-preview h2
+) {
+  color: var(--lux-text);
+}
+
+html[data-public-theme="light"] .public-shell .progress-value {
+  color: var(--lux-text);
+  -webkit-text-fill-color: currentColor;
+}
+
+html[data-public-theme="light"] .public-shell :is(
+  .project-card,
+  .website-preview,
+  .skill-card,
+  .timeline-content,
+  .education-card,
+  .certificate-card,
+  .blog-card,
+  .hero__meta span,
+  .hero__meta button,
+  .tech-pill,
+  .pill
+) {
+  border-color: rgba(15, 23, 42, 0.12);
+  background: rgba(255, 255, 255, 0.68);
+}
+
+html[data-public-theme="light"] .public-shell :is(
+  .website-preview__body,
+  .detail__website-preview-body
+) {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(255, 255, 255, 0.54));
+}
+
+html[data-public-theme="light"] .public-shell :is(
+  ion-input,
+  ion-textarea
+) {
+  --background: rgba(15, 23, 42, 0.045);
+  --color: var(--lux-text);
+  --placeholder-color: var(--lux-soft);
+  --highlight-color-focused: var(--lux-cyan);
+  color: var(--lux-text);
+  border-color: rgba(15, 23, 42, 0.14);
+}
+
+html[data-public-theme="light"] .public-shell :is(
+  ion-input.ion-focused,
+  ion-textarea.ion-focused
+) {
+  background: rgba(15, 23, 42, 0.065);
+  border-color: rgba(8, 145, 178, 0.38);
 }
 
 body.admin-route {

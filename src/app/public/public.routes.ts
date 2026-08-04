@@ -50,6 +50,14 @@ export const publicRoutes: Routes = [
       },
 
       {
+        path: 'experience/:id',
+        loadComponent: () =>
+          import('./pages/experience-detail/experience-detail.component').then(
+            (m) => m.ExperienceDetailComponent
+          ),
+      },
+
+      {
         path: 'contact',
         loadComponent: () =>
           import('./pages/contact/contact.component').then(

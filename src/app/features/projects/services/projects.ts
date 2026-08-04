@@ -5,6 +5,11 @@ import { BaseCrudService } from 'src/app/core/services/base/base-crud.service';
 import { environment } from 'src/environments/environment';
 import { Project } from '../models/project.models';
 
+export type ProjectPreview = Pick<
+  Project,
+  'previewTitle' | 'previewDescription' | 'previewImage' | 'favicon' | 'domain'
+>;
+
 @Injectable({
   providedIn: 'root',
 })
@@ -26,6 +31,12 @@ export class ProjectService extends BaseCrudService<Project> {
   getActive(): Observable<Project[]> {
     return this.http.get<Project[]>(
       `${environment.apiUrl}/api/v1/admin/projects/active`,
+    );
+  }
+
+  previewLiveUrl(url: string): Observable<unknown> {
+    return this.http.get<unknown>(
+      `${this.endpoint}/preview?url=${encodeURIComponent(url)}`,
     );
   }
 }

@@ -1,36 +1,192 @@
-<section id="about" class="about lux-section" aria-labelledby="about-title">
+<section
+  id="about"
+  class="about lux-section"
+  aria-labelledby="about-title"
+>
+
+  <div class="about-bg">
+    <span class="blob blob-1"></span>
+    <span class="blob blob-2"></span>
+    <span class="grid-overlay"></span>
+  </div>
+
   <div class="lux-container">
+
     @if (loading()) {
-      <div class="lux-state"><ion-spinner name="crescent"></ion-spinner></div>
+
+      <div class="lux-state">
+        <ion-spinner name="crescent"></ion-spinner>
+      </div>
+
     } @else if (error()) {
-      <div class="lux-state">About content could not be loaded.</div>
+
+      <div class="lux-state">
+        About content could not be loaded.
+      </div>
+
     } @else if (about(); as item) {
-      <div class="about__grid">
-        <div class="about__media">
-          <img [src]="imageUrl(item)" [alt]="item.heading" loading="lazy" decoding="async">
-        </div>
 
-        <div>
-          <p class="lux-kicker"><ion-icon name="sparkles-outline"></ion-icon>About</p>
-          <h2 id="about-title" class="lux-title">{{ item.heading }}</h2>
-          <p class="about__lead">{{ item.subHeading }}</p>
-          <p class="lux-subtitle">{{ item.description }}</p>
+      <div class="about-wrapper">
 
-          <div class="about__stats" aria-label="Portfolio statistics">
-            <article class="lux-card"><strong>{{ item.yearsOfExperience }}+</strong><span>Years</span></article>
-            <article class="lux-card"><strong>{{ item.totalProjects }}+</strong><span>Projects</span></article>
-            <article class="lux-card"><strong>{{ item.totalClients }}+</strong><span>Clients</span></article>
-            <article class="lux-card"><strong>{{ item.totalCertificates }}+</strong><span>Certificates</span></article>
+        <!-- LEFT -->
+
+        <div class="about-left">
+
+          <div class="image-card">
+
+            <img
+              [src]="imageUrl(item)"
+              [alt]="item.heading"
+              loading="lazy"
+              decoding="async"
+            />
+
+            <div class="image-overlay"></div>
+
           </div>
 
-          <ion-button class="lux-button primary" (click)="downloadResume(item.resumeUrl)">
-            <ion-icon slot="start" name="download-outline"></ion-icon>
-            Download Resume
-          </ion-button>
+          <div class="experience-card">
+
+            <h2>{{ item.yearsOfExperience }}+</h2>
+
+            <span>Years Experience</span>
+
+          </div>
+
         </div>
+
+        <!-- RIGHT -->
+
+        <div class="about-right">
+
+          <span class="section-tag">
+
+            <ion-icon name="sparkles-outline"></ion-icon>
+
+            ABOUT ME
+
+          </span>
+
+          <h2
+            id="about-title"
+            class="about-title"
+          >
+
+            {{ item.heading }}
+
+          </h2>
+
+          <p class="about-subtitle">
+
+            {{ item.subHeading }}
+
+          </p>
+
+          <p class="about-description">
+
+            {{ item.description }}
+
+          </p>
+
+          <!-- STATS -->
+
+          <div class="stats-grid">
+
+            <div class="stat-box">
+
+              <h3>{{ item.yearsOfExperience }}+</h3>
+
+              <span>Experience</span>
+
+            </div>
+
+            <div class="stat-box">
+
+              <h3>{{ item.totalProjects }}+</h3>
+
+              <span>Projects</span>
+
+            </div>
+
+            <div class="stat-box">
+
+              <h3>{{ item.totalClients }}+</h3>
+
+              <span>Clients</span>
+
+            </div>
+
+            <div class="stat-box">
+
+              <h3>{{ item.totalCertificates }}+</h3>
+
+              <span>Certificates</span>
+
+            </div>
+
+          </div>
+
+          <!-- Skills -->
+
+          <div class="skills">
+
+            <span>Angular</span>
+
+            <span>Ionic</span>
+
+            <span>React</span>
+
+            <span>Node.js</span>
+
+            <span>NestJS</span>
+
+            <span>MongoDB</span>
+
+            <span>MySQL</span>
+
+            <span>Express</span>
+
+            <span>REST API</span>
+
+            <span>AWS</span>
+
+          </div>
+
+          <!-- CTA -->
+
+          <div class="about-actions">
+
+            <ion-button
+              class="resume-btn lux-button primary"
+              (click)="downloadResume(item.resumeUrl)"
+            >
+
+              <ion-icon
+                slot="start"
+                name="download-outline"
+              >
+              </ion-icon>
+
+              Download Resume
+
+            </ion-button>
+
+          </div>
+
+        </div>
+
       </div>
+
     } @else {
-      <div class="lux-state">No active about record found.</div>
+
+      <div class="lux-state">
+
+        No active about record found.
+
+      </div>
+
     }
+
   </div>
+
 </section>

@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, Input, OnInit, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   FormBuilder,
   FormGroup,
@@ -19,6 +20,8 @@ import { ImageUploadComponent } from 'src/app/shared/components/image-upload/ima
 import { Project } from '../../models/project.models';
 import { ProjectService } from '../../services/projects';
 import { GalleryUploadComponent } from 'src/app/shared/components/gallery-upload/gallery-upload.component';
+import { catchError, debounceTime, distinctUntilChanged, finalize, of, switchMap } from 'rxjs';
+import { ProjectPreview } from '../../services/projects';
 
 @Component({
   selector: 'app-project-form',
@@ -38,6 +41,7 @@ export class ProjectFormComponent implements OnInit {
   private projectService = inject(ProjectService);
   private modalController = inject(ModalController);
   private toastController = inject(ToastController);
+  private destroyRef = inject(DestroyRef);
 
 
   @Input() project?: Project;
@@ -45,6 +49,9 @@ export class ProjectFormComponent implements OnInit {
   projectForm!: FormGroup;
 
   saving = false;
+  previewLoading = signal(false);
+  previewError = signal('');
+  livePreview = signal<ProjectPreview | null>(null);
 
   categories = [
     'Web Application',
@@ -146,6 +153,53 @@ export class ProjectFormComponent implements OnInit {
 
         }
 
+      });
+
+    this.livePreview.set(this.extractPreview(this.project));
+
+    this.projectForm
+      .get('liveDemoUrl')
+      ?.valueChanges.pipe(
+        debounceTime(700),
+        distinctUntilChanged(),
+        switchMap((value: string) => {
+          const url = value?.trim();
+
+          this.previewError.set('');
+
+          if (!url) {
+            this.livePreview.set(null);
+            this.previewLoading.set(false);
+            return of(null);
+          }
+
+          if (!this.isHttpUrl(url)) {
+            this.livePreview.set(null);
+            this.previewError.set('Enter a valid http or https URL.');
+            this.previewLoading.set(false);
+            return of(null);
+          }
+
+          this.previewLoading.set(true);
+
+          return this.projectService.previewLiveUrl(url).pipe(
+            catchError(() => {
+              this.livePreview.set(null);
+              this.previewError.set('Preview unavailable. The featured image will be used instead.');
+              return of(null);
+            }),
+            finalize(() => this.previewLoading.set(false)),
+          );
+        }),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe((response) => {
+        const preview = this.extractPreviewResponse(response);
+
+        if (preview) {
+          this.livePreview.set(preview);
+          this.previewError.set('');
+        }
       });
 
   }
@@ -253,6 +307,36 @@ export class ProjectFormComponent implements OnInit {
 
     this.modalController.dismiss();
 
+  }
+
+  private extractPreview(project?: Project): ProjectPreview | null {
+    if (!project?.previewTitle && !project?.previewImage && !project?.favicon) {
+      return null;
+    }
+
+    return {
+      previewTitle: project.previewTitle ?? '',
+      previewDescription: project.previewDescription ?? '',
+      previewImage: project.previewImage ?? '',
+      favicon: project.favicon ?? '',
+      domain: project.domain ?? '',
+    };
+  }
+
+  private extractPreviewResponse(response: unknown): ProjectPreview | null {
+    const root = response as Record<string, any> | null;
+    const preview = root?.['preview'] ?? root?.['data']?.['preview'];
+
+    return preview ?? null;
+  }
+
+  private isHttpUrl(value: string): boolean {
+    try {
+      const url = new URL(value);
+      return ['http:', 'https:'].includes(url.protocol);
+    } catch {
+      return false;
+    }
   }
 
 }

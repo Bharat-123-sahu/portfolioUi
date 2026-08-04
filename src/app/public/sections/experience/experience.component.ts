@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import {
   IonIcon,
   IonSpinner,
@@ -19,6 +20,7 @@ import { activeOnly, assetUrl, sortByDisplayOrder, unwrapCollection } from '../.
   standalone: true,
   imports: [
     DatePipe,
+    RouterLink,
     IonIcon,
     IonSpinner,
   ],

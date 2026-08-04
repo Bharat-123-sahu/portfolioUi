@@ -1,50 +1,179 @@
-<section id="skills" class="skills lux-section" aria-labelledby="skills-title">
+<section
+  id="skills"
+  class="skills lux-section"
+  aria-labelledby="skills-title"
+>
+
+  <div class="skills-bg">
+
+    <span class="blob blob-1"></span>
+
+    <span class="blob blob-2"></span>
+
+    <span class="grid-overlay"></span>
+
+  </div>
+
   <div class="lux-container">
-    <p class="lux-kicker"><ion-icon name="layers-outline"></ion-icon>Skills</p>
-    <h2 id="skills-title" class="lux-title">A refined toolkit for building fast, memorable interfaces.</h2>
-    <p class="lux-subtitle">Featured technologies grouped by category, rendered from active backend records.</p>
+
+    <div class="section-header">
+
+      <span class="section-tag">
+
+        <ion-icon name="layers-outline"></ion-icon>
+
+        MY SKILLS
+
+      </span>
+
+      <h2 id="skills-title">
+
+        Technologies I Use To Build
+
+        <span class="lux-gradient-text">
+          Modern Applications
+        </span>
+
+      </h2>
+
+      <p>
+
+        Modern frontend, scalable backend and cloud technologies
+        that I use to build fast, secure and production-ready
+        applications.
+
+      </p>
+
+    </div>
 
     @if (loading()) {
-      <div class="lux-state"><ion-spinner name="crescent"></ion-spinner></div>
-    } @else if (error()) {
-      <div class="lux-state">Skills could not be loaded.</div>
-    } @else if (skills().length) {
-      <div class="skills__filters" role="tablist" aria-label="Skill categories">
-        @for (category of categories(); track category) {
-          <ion-button
-            size="small"
-            class="lux-button"
-            [class.skills__filter--active]="activeCategory() === category"
-            fill="clear"
-            (click)="activeCategory.set(category)">
-            {{ category }}
-          </ion-button>
-        }
+
+      <div class="lux-state">
+
+        <ion-spinner name="crescent"></ion-spinner>
+
       </div>
 
-      <div class="lux-grid skills__grid">
-        @for (skill of filteredSkills(); track skill._id ?? skill.slug) {
-          <article class="skill lux-card">
-            <div class="skill__icon">
-              @if (skill.icon) {
-                <img [src]="skill.icon" [alt]="skill.name" loading="lazy">
-              } @else {
-                <ion-icon name="code-slash-outline"></ion-icon>
-              }
-            </div>
-            <div>
-              <h3>{{ skill.name }}</h3>
-              <span>{{ skill.category }}</span>
-            </div>
-            <div class="skill__bar" [attr.aria-label]="skill.name + ' proficiency ' + skill.percentage + '%'">
-              <i [style.width.%]="skill.percentage"></i>
-            </div>
-            <strong>{{ skill.percentage }}%</strong>
-          </article>
-        }
+    } @else if (error()) {
+
+      <div class="lux-state">
+
+        Skills could not be loaded.
+
       </div>
+
+    } @else if (skills().length) {
+
+      <!-- FILTER -->
+
+      <div
+        class="skills-filter"
+        role="tablist"
+      >
+
+        @for (category of categories(); track category) {
+
+          <ion-button
+
+            fill="clear"
+
+            class="filter-btn lux-button"
+
+            [class.active]="activeCategory()===category"
+
+            (click)="activeCategory.set(category)"
+          >
+
+            {{ category }}
+
+          </ion-button>
+
+        }
+
+      </div>
+
+      <!-- GRID -->
+
+      <div class="skills-grid">
+
+        @for (skill of filteredSkills(); track skill._id ?? skill.slug) {
+
+          <article class="skill-card">
+
+            <div class="skill-top">
+
+              <div class="skill-icon">
+
+                @if(skill.icon){
+
+                <img
+                  [src]="skill.icon"
+                  [alt]="skill.name"
+                >
+
+                }@else{
+
+                <ion-icon
+                  name="code-slash-outline"
+                >
+                </ion-icon>
+
+                }
+
+              </div>
+
+              <span class="skill-category">
+
+                {{ skill.category }}
+
+              </span>
+
+            </div>
+
+            <h3>
+
+              {{ skill.name }}
+
+            </h3>
+
+            <div class="progress-wrapper">
+
+              <div class="progress-track">
+
+                <div
+
+                  class="progress-fill"
+
+                  [style.width.%]="skill.percentage"
+
+                ></div>
+
+              </div>
+
+              <span class="progress-value">
+
+                {{ skill.percentage }}%
+
+              </span>
+
+            </div>
+
+          </article>
+
+        }
+
+      </div>
+
     } @else {
-      <div class="lux-state">No active skills found.</div>
+
+      <div class="lux-state">
+
+        No active skills found.
+
+      </div>
+
     }
+
   </div>
+
 </section>

@@ -1,27 +1,80 @@
 <section id="blogs" class="blog lux-section" aria-labelledby="blog-title">
+  <div class="blog-bg">
+    <span class="blob blob-1"></span>
+
+    <span class="blob blob-2"></span>
+  </div>
+
   <div class="lux-container">
-    <p class="lux-kicker"><ion-icon name="newspaper-outline"></ion-icon>Blog</p>
-    <h2 id="blog-title" class="lux-title">Clear thinking for ambitious frontend products.</h2>
-    <p class="lux-subtitle">Field notes on UX, frontend architecture, and polished product delivery.</p>
+    <div class="section-header">
+      <span class="section-tag">
+        <ion-icon name="newspaper-outline"></ion-icon>
+
+        BLOGS
+      </span>
+
+      <h2 id="blog-title" class="lux-title">
+        Articles, Tutorials &
+
+        <span class="lux-gradient-text"> Developer Insights </span>
+      </h2>
+
+      <p class="lux-subtitle">
+        Sharing practical experiences, frontend techniques, backend architecture
+        and modern software development practices.
+      </p>
+    </div>
 
     @if (loading()) {
-      <div class="lux-state"><ion-spinner name="crescent"></ion-spinner></div>
+      <div class="lux-state">
+        <ion-spinner name="crescent"></ion-spinner>
+      </div>
     } @else if (error()) {
       <div class="lux-state">Blogs could not be loaded.</div>
     } @else if (blogs().length) {
-      <div class="lux-grid blog__grid">
+      <div class="blog-grid">
         @for (post of blogs(); track post._id ?? post.slug) {
-          <article class="post lux-card" [routerLink]="['/blogs', post.slug]" tabindex="0">
-            <div class="lux-media">
-              <img [src]="imageUrl(post)" [alt]="post.title" loading="lazy" decoding="async">
+          <article
+            class="blog-card"
+            tabindex="0"
+            [routerLink]="['/blogs', post.slug]"
+          >
+            <div class="blog-image">
+              <img
+                [src]="imageUrl(post)"
+                [alt]="post.title"
+                loading="lazy"
+                decoding="async"
+              />
+
+              @if (post.isFeatured) {
+                <span class="featured-badge"> Featured </span>
+              }
             </div>
-            <div class="post__body">
-              <span class="lux-chip">{{ post.isFeatured ? 'Featured | ' : '' }}{{ post.category }}</span>
-              <h3>{{ post.title }}</h3>
-              <p>{{ post.shortDescription }}</p>
-              <div class="post-meta">
-                <span>{{ post.author }}</span>
-                <span><ion-icon name="time-outline"></ion-icon>{{ post.readingTime }} min</span>
+
+            <div class="blog-body">
+              <span class="blog-category">
+                {{ post.category }}
+              </span>
+
+              <h3>
+                {{ post.title }}
+              </h3>
+
+              <p>
+                {{ post.shortDescription }}
+              </p>
+
+              <div class="blog-footer">
+                <div class="author">
+                  {{ post.author }}
+                </div>
+
+                <div class="reading">
+                  <ion-icon name="time-outline"></ion-icon>
+
+                  {{ post.readingTime }} min
+                </div>
               </div>
             </div>
           </article>

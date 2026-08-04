@@ -1,30 +1,77 @@
-<section id="education" class="education lux-section" aria-labelledby="education-title">
+<section
+  id="education"
+  class="education lux-section"
+  aria-labelledby="education-title"
+>
   <div class="lux-container">
-    <p class="lux-kicker"><ion-icon name="school-outline"></ion-icon>Education</p>
-    <h2 id="education-title" class="lux-title">Academic foundations with a builder's bias for execution.</h2>
+    <div class="section-header">
+      <span class="section-badge">
+        <ion-icon name="school-outline"></ion-icon>
+        Education
+      </span>
+
+      <h2 id="education-title">Academic Journey</h2>
+
+      <p>
+        My educational background that built the foundation for software
+        engineering, problem solving and continuous learning.
+      </p>
+    </div>
 
     @if (loading()) {
-      <div class="lux-state"><ion-spinner name="crescent"></ion-spinner></div>
+      <div class="lux-state">
+        <ion-spinner name="crescent"></ion-spinner>
+      </div>
     } @else if (error()) {
       <div class="lux-state">Education could not be loaded.</div>
     } @else if (education().length) {
-      <div class="edu-grid">
+      <div class="education-grid">
         @for (item of education(); track item._id ?? item.instituteName) {
-          <article class="edu lux-card">
-            <div class="edu__logo">
-              @if (item.instituteLogo) {
-                <img [src]="logoUrl(item)" [alt]="item.instituteName" loading="lazy">
-              } @else {
-                <ion-icon name="school-outline"></ion-icon>
-              }
+          <article class="education-card">
+            <div class="education-top">
+              <div class="education-logo">
+                @if (item.instituteLogo) {
+                  <img
+                    [src]="logoUrl(item)"
+                    [alt]="item.instituteName"
+                    loading="lazy"
+                  />
+                } @else {
+                  <ion-icon name="school-outline"></ion-icon>
+                }
+              </div>
+
+              <div class="education-title">
+                <span class="education-year">
+                  {{ item.startYear }} - {{ item.endYear }}
+                </span>
+
+                <h3>{{ item.degree }}</h3>
+
+                <h4>{{ item.instituteName }}</h4>
+              </div>
             </div>
-            <div>
-              <span class="lux-chip">{{ item.startYear }} - {{ item.endYear }}</span>
-              <h3>{{ item.degree }}</h3>
-              <p class="edu__school">{{ item.instituteName }}</p>
-              <p><ion-icon name="location-outline"></ion-icon>{{ item.location }}</p>
-              <p>{{ item.fieldOfStudy }} | {{ item.grade }}</p>
-              <p>{{ item.description }}</p>
+
+            <div class="education-body">
+              <div class="info-row">
+                <ion-icon name="location-outline"></ion-icon>
+
+                <span>{{ item.location }}</span>
+              </div>
+
+              <div class="info-row">
+                <span class="pill">
+                  {{ item.fieldOfStudy }}
+                </span>
+
+                <span class="pill grade">
+                  {{ item.grade }}
+                </span>
+              </div>
+
+              <p class="education-description">
+                {{ item.description }}
+              </p>
             </div>
           </article>
         }

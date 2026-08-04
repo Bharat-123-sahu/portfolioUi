@@ -116,6 +116,64 @@
 
         </ion-item>
 
+        <div
+          class="link-preview-state"
+          *ngIf="previewLoading()">
+
+          <ion-spinner name="crescent"></ion-spinner>
+          <span>Generating website preview...</span>
+
+        </div>
+
+        <ion-note
+          color="warning"
+          *ngIf="previewError()">
+
+          {{ previewError() }}
+
+        </ion-note>
+
+        <article
+          class="admin-preview-card"
+          *ngIf="livePreview() as preview">
+
+          <div
+            class="admin-preview-card__image"
+            *ngIf="preview.previewImage">
+
+            <img
+              [src]="preview.previewImage"
+              [alt]="preview.previewTitle || preview.domain"
+              loading="lazy"
+              decoding="async">
+
+          </div>
+
+          <div class="admin-preview-card__body">
+
+            <div class="admin-preview-card__domain">
+
+              <img
+                *ngIf="preview.favicon"
+                [src]="preview.favicon"
+                [alt]="preview.domain"
+                loading="lazy"
+                decoding="async">
+
+              <span>{{ preview.domain }}</span>
+
+            </div>
+
+            <h3>{{ preview.previewTitle }}</h3>
+
+            <p *ngIf="preview.previewDescription">
+              {{ preview.previewDescription }}
+            </p>
+
+          </div>
+
+        </article>
+
         <ion-item>
 
           <ion-label position="stacked">

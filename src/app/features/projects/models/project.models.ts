@@ -22,6 +22,16 @@ export interface Project extends BaseModel {
 
   liveDemoUrl: string;
 
+  previewTitle?: string;
+
+  previewDescription?: string;
+
+  previewImage?: string;
+
+  favicon?: string;
+
+  domain?: string;
+
   playStoreUrl: string;
 
   appStoreUrl: string;

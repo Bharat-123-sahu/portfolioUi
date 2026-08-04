@@ -1,40 +1,105 @@
-<section id="experience" class="experience lux-section" aria-labelledby="experience-title">
+<section
+  id="experience"
+  class="experience lux-section"
+  aria-labelledby="experience-title"
+>
+  <div class="experience-bg">
+    <span class="blob blob-left"></span>
+    <span class="blob blob-right"></span>
+  </div>
+
   <div class="lux-container">
-    <p class="lux-kicker"><ion-icon name="business-outline"></ion-icon>Experience</p>
-    <h2 id="experience-title" class="lux-title">A timeline of product teams, launches, and technical ownership.</h2>
+    <div class="section-header">
+      <span class="section-tag">
+        <ion-icon name="business-outline"></ion-icon>
+
+        Experience
+      </span>
+
+      <h2 id="experience-title">Professional Journey</h2>
+
+      <p>
+        Building scalable products, solving real business problems and
+        delivering production-ready applications.
+      </p>
+    </div>
 
     @if (loading()) {
-      <div class="lux-state"><ion-spinner name="crescent"></ion-spinner></div>
+      <div class="lux-state">
+        <ion-spinner name="crescent"></ion-spinner>
+      </div>
     } @else if (error()) {
       <div class="lux-state">Experience could not be loaded.</div>
     } @else if (experiences().length) {
       <div class="timeline">
         @for (item of experiences(); track item._id ?? item.companyName) {
-          <article class="timeline__item lux-card">
-            <div class="timeline__logo">
-              @if (item.companyLogo) {
-                <img [src]="logoUrl(item)" [alt]="item.companyName" loading="lazy">
-              } @else {
-                <ion-icon name="business-outline"></ion-icon>
-              }
-            </div>
-            <div>
-              <span class="lux-chip">{{ item.employmentType }}</span>
-              <h3>{{ item.designation }}</h3>
-              <p class="timeline__company">{{ item.companyName }} | {{ item.location }}</p>
-              <p class="timeline__date">
-                <ion-icon name="calendar-outline"></ion-icon>
-                {{ item.startDate | date:'MMM y' }} -
-                {{ item.currentlyWorking ? 'Present' : (item.endDate | date:'MMM y') }}
-              </p>
-              <p>{{ item.description }}</p>
-              <div class="timeline__tech">
-                @for (tech of item.technologies; track tech) {
-                  <span class="lux-chip">{{ tech }}</span>
+          <a class="timeline-item" [routerLink]="['/experience', item._id]">
+            <div class="timeline-dot">
+              <div class="company-logo">
+                @if (item.companyLogo) {
+                  <img
+                    [src]="logoUrl(item)"
+                    [alt]="item.companyName"
+                    loading="lazy"
+                  />
+                } @else {
+                  <ion-icon name="business-outline"></ion-icon>
                 }
               </div>
             </div>
-          </article>
+
+            <div class="timeline-card">
+              <div class="timeline-top">
+                <span class="job-badge">
+                  {{ item.employmentType }}
+                </span>
+
+                <span class="timeline-date">
+                  <ion-icon name="calendar-outline"> </ion-icon>
+
+                  {{ item.startDate | date: "MMM yyyy" }}
+
+                  -
+
+                  {{
+                    item.currentlyWorking
+                      ? "Present"
+                      : (item.endDate | date: "MMM yyyy")
+                  }}
+                </span>
+              </div>
+
+              <h3>
+                {{ item.designation }}
+              </h3>
+
+              <div class="company-info">
+                <ion-icon name="business-outline"> </ion-icon>
+
+                <span>
+                  {{ item.companyName }}
+                </span>
+
+                <span class="separator"></span>
+
+                <span>
+                  {{ item.location }}
+                </span>
+              </div>
+
+              <p>
+                {{ item.description }}
+              </p>
+
+              <div class="tech-list">
+                @for (tech of item.technologies; track tech) {
+                  <span>
+                    {{ tech }}
+                  </span>
+                }
+              </div>
+            </div>
+          </a>
         }
       </div>
     } @else {

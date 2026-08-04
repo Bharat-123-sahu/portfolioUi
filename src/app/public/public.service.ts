@@ -37,6 +37,10 @@ export class PublicService {
     return this.http.get<Experience[]>(`${this.api}/experience`);
   }
 
+  getExperienceById(id: string) {
+    return this.http.get<Experience>(`${this.api}/experience/${encodeURIComponent(id)}`);
+  }
+
   getEducation() {
     return this.http.get<Education[]>(`${this.api}/education`);
   }

@@ -47,6 +47,14 @@ export class ProjectsComponent {
     return assetUrl(project.thumbnail || project.images?.[0]);
   }
 
+  hasPreview(project: Project): boolean {
+    return Boolean(project.previewImage || project.previewTitle || project.previewDescription);
+  }
+
+  previewImage(project: Project): string {
+    return assetUrl(project.previewImage);
+  }
+
   open(url?: string): void {
     if (url) window.open(assetUrl(url), '_blank', 'noopener,noreferrer');
   }

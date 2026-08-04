@@ -1,43 +1,150 @@
-<section id="projects" class="projects lux-section" aria-labelledby="projects-title">
+<section
+  id="projects"
+  class="projects lux-section"
+  aria-labelledby="projects-title"
+>
   <div class="lux-container">
-    <p class="lux-kicker"><ion-icon name="rocket-outline"></ion-icon>Projects</p>
-    <h2 id="projects-title" class="lux-title">Product-grade builds with cinematic polish.</h2>
-    <p class="lux-subtitle">Featured active projects, production links, source links, and technology stacks.</p>
+    <div class="section-header">
+      <span class="section-badge">
+        <ion-icon name="rocket-outline"></ion-icon>
+        Featured Projects
+      </span>
+
+      <h2 id="projects-title">Things I've Built</h2>
+
+      <p>
+        Production-ready applications focused on performance, scalability, user
+        experience and clean architecture.
+      </p>
+    </div>
 
     @if (loading()) {
-      <div class="lux-state"><ion-spinner name="crescent"></ion-spinner></div>
+      <div class="lux-state">
+        <ion-spinner name="crescent"></ion-spinner>
+      </div>
     } @else if (error()) {
       <div class="lux-state">Projects could not be loaded.</div>
     } @else if (projects().length) {
-      <div class="lux-grid projects__grid">
+      <div class="projects-grid">
         @for (project of projects(); track project._id ?? project.slug) {
-          <article class="project lux-card">
-            <div class="lux-media">
-              <img [src]="imageUrl(project)" [alt]="project.title" loading="lazy" decoding="async">
-            </div>
-            <div class="project__body">
-              <span class="lux-chip">{{ project.isFeatured ? 'Featured | ' : '' }}{{ project.category }}</span>
-              <h3>{{ project.title }}</h3>
-              <p>{{ project.shortDescription || project.description }}</p>
-              <div class="chips">
-                @for (tech of project.technologies.slice(0, 4); track tech) {
-                  <span class="lux-chip">{{ tech }}</span>
+          <article class="project-card">
+            @if (hasPreview(project)) {
+              <div class="website-preview">
+                @if (previewImage(project)) {
+                <div class="website-preview__image">
+                  <img
+                    [src]="previewImage(project)"
+                    [alt]="project.previewTitle || project.title"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                }
+
+                <div class="website-preview__body">
+                  <div class="website-preview__domain">
+                    @if (project.favicon) {
+                      <img
+                        [src]="project.favicon"
+                        [alt]="project.domain || project.title"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    }
+                    <span>{{ project.domain || project.liveDemoUrl }}</span>
+                  </div>
+
+                  <h3>{{ project.previewTitle || project.title }}</h3>
+
+                  <p>
+                    {{ project.previewDescription || project.shortDescription || project.description }}
+                  </p>
+
+                  <div class="website-preview__actions">
+                    @if (project.liveDemoUrl) {
+                      <ion-button class="lux-button primary" size="small" (click)="open(project.liveDemoUrl)">
+                        <ion-icon name="eye-outline" slot="start"></ion-icon>
+                        Live Demo
+                      </ion-button>
+                    }
+
+                    @if (project.githubUrl) {
+                      <ion-button class="lux-button ghost" size="small" fill="outline" (click)="open(project.githubUrl)">
+                        <ion-icon name="logo-github" slot="start"></ion-icon>
+                        GitHub
+                      </ion-button>
+                    }
+                  </div>
+                </div>
+
+                @if (project.isFeatured) {
+                  <span class="featured-badge"> Featured </span>
                 }
               </div>
-              <div class="project__actions">
-                @if (project.liveDemoUrl) {
-                  <ion-button fill="clear" aria-label="Open live demo" (click)="open(project.liveDemoUrl)">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </ion-button>
+            } @else {
+              <div class="project-image">
+                <img
+                  [src]="imageUrl(project)"
+                  [alt]="project.title"
+                  loading="lazy"
+                  decoding="async"
+                />
+
+                <div class="image-overlay"></div>
+
+                @if (project.isFeatured) {
+                  <span class="featured-badge"> Featured </span>
                 }
-                @if (project.githubUrl) {
-                  <ion-button fill="clear" aria-label="Open GitHub" (click)="open(project.githubUrl)">
-                    <ion-icon name="logo-github"></ion-icon>
-                  </ion-button>
+              </div>
+            }
+
+            <div class="project-content">
+              <span class="category-chip">
+                {{ project.category }}
+              </span>
+
+              <h3>
+                {{ project.title }}
+              </h3>
+
+              <p>
+                {{ project.shortDescription || project.description }}
+              </p>
+
+              <div class="tech-stack">
+                @for (tech of project.technologies.slice(0, 4); track tech) {
+                  <span class="tech-pill">
+                    {{ tech }}
+                  </span>
                 }
-                <ion-button fill="clear" aria-label="View project details" [routerLink]="['/projects', project.slug]">
-                  <ion-icon name="arrow-forward-outline"></ion-icon>
-                </ion-button>
+              </div>
+
+              <div class="project-footer">
+                <div class="project-actions">
+                  @if (!hasPreview(project) && project.liveDemoUrl) {
+                    <ion-button
+                      class="lux-button ghost"
+                      fill="clear"
+                      (click)="open(project.liveDemoUrl)"
+                    >
+                      <ion-icon name="eye-outline"></ion-icon>
+                    </ion-button>
+                  }
+
+                  @if (!hasPreview(project) && project.githubUrl) {
+                    <ion-button class="lux-button ghost" fill="clear" (click)="open(project.githubUrl)">
+                      <ion-icon name="logo-github"></ion-icon>
+                    </ion-button>
+                  }
+
+                  <ion-button
+                    class="lux-button ghost"
+                    fill="clear"
+                    [routerLink]="['/projects', project.slug]"
+                  >
+                    <ion-icon name="arrow-forward-outline"></ion-icon>
+                  </ion-button>
+                </div>
               </div>
             </div>
           </article>

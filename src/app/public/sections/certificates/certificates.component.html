@@ -1,36 +1,97 @@
-<section id="certificates" class="certificates lux-section" aria-labelledby="certificates-title">
+<section
+  id="certificates"
+  class="certificates lux-section"
+  aria-labelledby="certificates-title"
+>
+  <div class="certificates-bg">
+    <span class="blob blob-1"></span>
+
+    <span class="blob blob-2"></span>
+  </div>
+
   <div class="lux-container">
-    <p class="lux-kicker"><ion-icon name="ribbon-outline"></ion-icon>Certificates</p>
-    <h2 id="certificates-title" class="lux-title">Verified learning, sharpened through real delivery.</h2>
+    <div class="section-header">
+      <span class="section-tag">
+        <ion-icon name="ribbon-outline"></ion-icon>
+
+        CERTIFICATIONS
+      </span>
+
+      <h2 id="certificates-title" class="lux-title">
+        Verified Skills &
+
+        <span class="lux-gradient-text"> Professional Certifications </span>
+      </h2>
+
+      <p class="lux-subtitle">
+        Industry-recognized certifications validating technical expertise,
+        continuous learning and practical software engineering skills.
+      </p>
+    </div>
 
     @if (loading()) {
-      <div class="lux-state"><ion-spinner name="crescent"></ion-spinner></div>
+      <div class="lux-state">
+        <ion-spinner name="crescent"></ion-spinner>
+      </div>
     } @else if (error()) {
       <div class="lux-state">Certificates could not be loaded.</div>
     } @else if (certificates().length) {
-      <div class="lux-grid certificates__grid">
+      <div class="certificate-grid">
         @for (item of certificates(); track item._id ?? item.credentialId) {
-          <article class="certificate lux-card">
-            <div class="lux-media">
-              <img [src]="imageUrl(item)" [alt]="item.title" loading="lazy" decoding="async">
+          <article class="certificate-card">
+            <div class="certificate-image">
+              <img
+                [src]="imageUrl(item)"
+                [alt]="item.title"
+                loading="lazy"
+                decoding="async"
+              />
             </div>
-            <div class="certificate__body">
-              <span class="lux-chip">{{ item.issuer }}</span>
-              <h3>{{ item.title }}</h3>
-              <p>{{ item.description }}</p>
-              <p class="certificate__date">Issued {{ item.issueDate | date:'MMM y' }}</p>
-              <div class="lux-actions">
-                @if (item.credentialUrl) {
-                  <ion-button class="lux-button ghost" fill="outline" (click)="open(item.credentialUrl)">
-                    Verify
-                  </ion-button>
-                }
-                @if (item.certificateFile) {
-                  <ion-button class="lux-button primary" (click)="open(item.certificateFile)">
-                    <ion-icon slot="start" name="download-outline"></ion-icon>
-                    Download
-                  </ion-button>
-                }
+
+            <div class="certificate-body">
+              <span class="issuer">
+                {{ item.issuer }}
+              </span>
+
+              <h3>
+                {{ item.title }}
+              </h3>
+
+              <p>
+                {{ item.description }}
+              </p>
+
+              <div class="certificate-footer">
+                <div class="issued-date">
+                  <small>Issued</small>
+
+                  <strong>
+                    {{ item.issueDate | date: "MMM yyyy" }}
+                  </strong>
+                </div>
+
+                <div class="certificate-actions">
+                  @if (item.credentialUrl) {
+                    <ion-button
+                      fill="clear"
+                      class="verify-btn lux-button ghost"
+                      (click)="open(item.credentialUrl)"
+                    >
+                      Verify
+                    </ion-button>
+                  }
+
+                  @if (item.certificateFile) {
+                    <ion-button
+                      class="download-btn lux-button primary"
+                      (click)="open(item.certificateFile)"
+                    >
+                      <ion-icon slot="start" name="download-outline"></ion-icon>
+
+                      Download
+                    </ion-button>
+                  }
+                </div>
               </div>
             </div>
           </article>

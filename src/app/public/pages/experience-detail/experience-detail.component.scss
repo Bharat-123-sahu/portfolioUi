@@ -1,0 +1,33 @@
+.experience-logo {
+  display: grid;
+  min-height: 18rem;
+  place-items: center;
+  padding: clamp(2rem, 5vw, 4rem);
+}
+
+.experience-logo img {
+  width: min(16rem, 72%);
+  max-height: 12rem;
+  object-fit: contain;
+  filter: drop-shadow(0 22px 38px rgba(0, 0, 0, 0.35));
+}
+
+.experience-logo ion-icon {
+  color: var(--lux-cyan);
+  font-size: clamp(5rem, 14vw, 9rem);
+  opacity: 0.85;
+}
+
+.related-fallback {
+  display: grid;
+  min-height: 9rem;
+  place-items: center;
+  color: var(--lux-cyan);
+  font-size: 3rem;
+}
+
+@media (max-width: 760px) {
+  .experience-logo {
+    min-height: 13rem;
+  }
+}

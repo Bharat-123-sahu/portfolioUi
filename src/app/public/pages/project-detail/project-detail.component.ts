@@ -56,7 +56,11 @@ export class ProjectDetailComponent {
     const project = this.project();
     if (!project) return [];
 
-    return [...new Set([project.thumbnail, ...(project.images ?? [])].filter(Boolean))]
+    const images = this.hasPreview(project)
+      ? project.images ?? []
+      : [project.thumbnail, ...(project.images ?? [])];
+
+    return [...new Set(images.filter(Boolean))]
       .map((image) => assetUrl(image));
   });
 
@@ -128,7 +132,17 @@ export class ProjectDetailComponent {
   }
 
   projectImage(project: Project): string {
+    return this.hasPreview(project)
+      ? assetUrl(project.previewImage)
+      : assetUrl(project.thumbnail || project.images?.[0]);
+  }
+
+  fallbackImage(project: Project): string {
     return assetUrl(project.thumbnail || project.images?.[0]);
+  }
+
+  hasPreview(project: Project): boolean {
+    return Boolean(project.previewImage || project.previewTitle || project.previewDescription);
   }
 
   share(): void {
@@ -177,8 +191,8 @@ export class ProjectDetailComponent {
   }
 
   private updateSeo(project: Project): void {
-    const title = `${project.title} | Project`;
-    const description = project.shortDescription || project.description || 'Project case study and implementation details.';
+    const title = `${project.previewTitle || project.title} | Project`;
+    const description = project.previewDescription || project.shortDescription || project.description || 'Project case study and implementation details.';
     const image = this.projectImage(project);
 
     this.title.setTitle(title);

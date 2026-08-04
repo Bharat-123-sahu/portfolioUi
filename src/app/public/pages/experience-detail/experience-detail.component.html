@@ -1,0 +1,153 @@
+<section class="detail lux-section lux-aurora" aria-labelledby="experience-detail-title">
+  <div class="lux-container">
+    @if (loading()) {
+      <div class="lux-state detail__state">
+        <ion-spinner name="crescent"></ion-spinner>
+      </div>
+    } @else if (error()) {
+      <div class="lux-state detail__state">
+        <div>
+          <p class="lux-kicker"><ion-icon name="briefcase-outline"></ion-icon>Experience unavailable</p>
+          <h1>We could not load this experience.</h1>
+          <ion-button class="lux-button ghost" routerLink="/" fragment="experience">
+            <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+            Back to experience
+          </ion-button>
+        </div>
+      </div>
+    } @else if (experience(); as item) {
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a routerLink="/">Home</a>
+        <ion-icon name="arrow-forward-outline"></ion-icon>
+        <a routerLink="/" fragment="experience">Experience</a>
+        <ion-icon name="arrow-forward-outline"></ion-icon>
+        <span>{{ item.companyName }}</span>
+      </nav>
+
+      <header class="detail__hero lux-card">
+        <div class="detail__hero-copy">
+          <p class="lux-kicker"><ion-icon name="briefcase-outline"></ion-icon>{{ item.employmentType }}</p>
+          <h1 id="experience-detail-title" class="lux-title lux-gradient-text">{{ item.designation }}</h1>
+          <p class="lux-subtitle">{{ item.companyName }} | {{ item.location }}</p>
+
+          <div class="post-meta">
+            <span>
+              <ion-icon name="calendar-outline"></ion-icon>
+              {{ item.startDate | date: 'MMM y' }} -
+              {{ item.currentlyWorking ? 'Present' : (item.endDate | date: 'MMM y') }}
+            </span>
+            @if (item.location) {
+              <span><ion-icon name="location-outline"></ion-icon>{{ item.location }}</span>
+            }
+            @if (item.currentlyWorking) {
+              <span><ion-icon name="time-outline"></ion-icon>Current role</span>
+            }
+          </div>
+
+          <div class="detail__actions">
+            <ion-button class="lux-button primary" (click)="share()">
+              <ion-icon slot="start" name="share-social-outline"></ion-icon>
+              Share
+            </ion-button>
+            <ion-button class="lux-button ghost" (click)="copyLink()">
+              <ion-icon slot="start" name="copy-outline"></ion-icon>
+              {{ copied() ? 'Copied' : 'Copy Link' }}
+            </ion-button>
+          </div>
+        </div>
+
+        <div class="detail__hero-media experience-logo">
+          @if (item.companyLogo) {
+            <img [src]="logoUrl(item)" [alt]="item.companyName" decoding="async">
+          } @else {
+            <ion-icon name="business-outline"></ion-icon>
+          }
+        </div>
+      </header>
+
+      <div class="detail__layout">
+        <article class="detail__main">
+          <section class="detail__panel content-panel">
+            <p class="lux-kicker"><ion-icon name="sparkles-outline"></ion-icon>Role Overview</p>
+            @if (item.description) {
+              <div class="rich-content" [innerHTML]="item.description"></div>
+            } @else {
+              <div class="lux-state">No detailed experience content has been added yet.</div>
+            }
+          </section>
+
+          <section class="detail__panel">
+            <div class="detail__section-head">
+              <p class="lux-kicker"><ion-icon name="grid-outline"></ion-icon>Related Experience</p>
+            </div>
+            @if (related().length) {
+              <div class="related-grid">
+                @for (relatedItem of related(); track relatedItem._id ?? relatedItem.companyName) {
+                  <a class="related-card lux-card" [routerLink]="['/experience', relatedItem._id]">
+                    @if (relatedItem.companyLogo) {
+                      <img [src]="logoUrl(relatedItem)" [alt]="relatedItem.companyName" loading="lazy" decoding="async">
+                    } @else {
+                      <div class="related-fallback"><ion-icon name="business-outline"></ion-icon></div>
+                    }
+                    <span>{{ relatedItem.employmentType }}</span>
+                    <strong>{{ relatedItem.designation }}</strong>
+                  </a>
+                }
+              </div>
+            } @else {
+              <div class="lux-state">No related experience found.</div>
+            }
+          </section>
+
+          <nav class="detail-nav" aria-label="Experience navigation">
+            @if (previous(); as previousExperience) {
+              <a class="detail-nav__item lux-card" [routerLink]="['/experience', previousExperience._id]">
+                <ion-icon name="arrow-back-outline"></ion-icon>
+                <span>Previous</span>
+                <strong>{{ previousExperience.designation }}</strong>
+              </a>
+            }
+            @if (next(); as nextExperience) {
+              <a class="detail-nav__item detail-nav__item--next lux-card" [routerLink]="['/experience', nextExperience._id]">
+                <ion-icon name="arrow-forward-outline"></ion-icon>
+                <span>Next</span>
+                <strong>{{ nextExperience.designation }}</strong>
+              </a>
+            }
+          </nav>
+        </article>
+
+        <aside class="detail__sidebar" aria-label="Experience summary">
+          <div class="sidebar-card lux-card">
+            <p class="lux-kicker"><ion-icon name="link-outline"></ion-icon>Details</p>
+            <dl class="sidebar-list">
+              <div><dt>Company</dt><dd>{{ item.companyName }}</dd></div>
+              <div><dt>Period</dt><dd>{{ period(item) }}</dd></div>
+              @if (item.employmentType) {
+                <div><dt>Type</dt><dd>{{ item.employmentType }}</dd></div>
+              }
+              @if (item.location) {
+                <div><dt>Location</dt><dd>{{ item.location }}</dd></div>
+              }
+            </dl>
+          </div>
+
+          <div class="sidebar-card lux-card">
+            <p class="lux-kicker"><ion-icon name="grid-outline"></ion-icon>Technologies</p>
+            @if (item.technologies.length) {
+              <div class="chips">
+                @for (tech of item.technologies; track tech) {
+                  <span class="lux-chip">{{ tech }}</span>
+                }
+              </div>
+            } @else {
+              <p class="sidebar-muted">No technologies listed.</p>
+            }
+          </div>
+        </aside>
+      </div>
+    } @else {
+      <div class="lux-state detail__state">No experience details found.</div>
+    }
+  </div>
+</section>

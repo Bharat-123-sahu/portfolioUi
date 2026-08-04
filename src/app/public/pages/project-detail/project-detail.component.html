@@ -50,9 +50,26 @@
           </div>
         </div>
 
-        @if (projectImage(item)) {
+        @if (hasPreview(item)) {
+          <div class="detail__website-preview">
+            @if (projectImage(item)) {
+              <img [src]="projectImage(item)" [alt]="item.previewTitle || item.title" decoding="async">
+            }
+
+            <div class="detail__website-preview-body">
+              <div class="detail__website-domain">
+                @if (item.favicon) {
+                  <img [src]="item.favicon" [alt]="item.domain || item.title" loading="lazy" decoding="async">
+                }
+                <span>{{ item.domain || item.liveDemoUrl }}</span>
+              </div>
+              <h2>{{ item.previewTitle || item.title }}</h2>
+              <p>{{ item.previewDescription || item.shortDescription || item.description }}</p>
+            </div>
+          </div>
+        } @else if (fallbackImage(item)) {
           <div class="detail__hero-media">
-            <img [src]="projectImage(item)" [alt]="item.title" decoding="async">
+            <img [src]="fallbackImage(item)" [alt]="item.title" decoding="async">
           </div>
         }
       </header>
@@ -92,7 +109,9 @@
               <div class="related-grid">
                 @for (project of related(); track project._id ?? project.slug) {
                   <a class="related-card lux-card" [routerLink]="['/projects', project.slug]">
-                    <img [src]="projectImage(project)" [alt]="project.title" loading="lazy" decoding="async">
+                    @if (projectImage(project)) {
+                      <img [src]="projectImage(project)" [alt]="project.title" loading="lazy" decoding="async">
+                    }
                     <span>{{ project.category }}</span>
                     <strong>{{ project.title }}</strong>
                   </a>

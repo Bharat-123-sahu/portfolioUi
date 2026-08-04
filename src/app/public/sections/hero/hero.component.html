@@ -1,63 +1,169 @@
-<section id="home" class="hero lux-section lux-aurora" aria-labelledby="hero-title">
+<section
+  id="home"
+  class="hero lux-section lux-aurora"
+  aria-labelledby="hero-title"
+>
+  <div class="hero__bg">
+    <span class="blob blob--1"></span>
+    <span class="blob blob--2"></span>
+    <span class="blob blob--3"></span>
+  </div>
+
   <div class="lux-container hero__grid">
     @if (loading()) {
-      <div class="lux-state"><ion-spinner name="crescent"></ion-spinner></div>
+      <div class="lux-state">
+        <ion-spinner name="crescent"></ion-spinner>
+      </div>
     } @else if (error()) {
       <div class="lux-state">Hero content could not be loaded.</div>
     } @else if (hero(); as item) {
+      <!-- LEFT SIDE -->
+
       <div class="hero__copy">
-        <p class="lux-kicker">Premium Angular and Ionic Developer</p>
+        <span class="hero__badge">
+          <span class="hero__badge-dot"></span>
+          Available For Work
+        </span>
+
+        <p class="lux-kicker">FULL STACK DEVELOPER</p>
+
         <h1 id="hero-title" class="lux-title">
           {{ item.title }}
-          <span class="lux-gradient-text">{{ item.subtitle }}</span>
-        </h1>
-        <p class="lux-subtitle">{{ item.description }}</p>
 
-        <div class="hero__meta" aria-label="Contact highlights">
+          <br />
+
+          <span class="lux-gradient-text">
+            {{ item.subtitle }}
+          </span>
+        </h1>
+
+        <p class="lux-subtitle">
+          {{ item.description }}
+        </p>
+
+        <!-- CONTACT -->
+
+        <div class="hero__meta">
           @if (item.location) {
-            <span><ion-icon name="location-outline"></ion-icon>{{ item.location }}</span>
+            <span>
+              <ion-icon name="location-outline"></ion-icon>
+
+              {{ item.location }}
+            </span>
           }
+
           @if (item.email) {
-            <button type="button" (click)="mail(item.email)"><ion-icon name="mail-outline"></ion-icon>{{ item.email }}</button>
+            <button type="button" (click)="mail(item.email)">
+              <ion-icon name="mail-outline"></ion-icon>
+
+              {{ item.email }}
+            </button>
           }
+
           @if (item.phone) {
-            <button type="button" (click)="call(item.phone)"><ion-icon name="call-outline"></ion-icon>{{ item.phone }}</button>
+            <button type="button" (click)="call(item.phone)">
+              <ion-icon name="call-outline"></ion-icon>
+
+              {{ item.phone }}
+            </button>
           }
         </div>
+
+        <!-- BUTTONS -->
 
         <div class="lux-actions">
           <ion-button class="lux-button primary" (click)="open(item.resumeUrl)">
-            <ion-icon slot="start" name="download-outline"></ion-icon>
+            <ion-icon slot="start" name="download-outline"> </ion-icon>
+
             Download Resume
           </ion-button>
-          <ion-button class="lux-button ghost" fill="outline" (click)="scrollToContact()">
+
+          <ion-button
+            fill="outline"
+            class="lux-button ghost"
+            (click)="scrollToContact()"
+          >
             Hire Me
-            <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
+
+            <ion-icon slot="end" name="arrow-forward-outline"> </ion-icon>
           </ion-button>
         </div>
 
-        <div class="hero__socials" aria-label="Social links">
+        <!-- SOCIAL -->
+
+        <div class="hero__socials">
           @if (item.githubUrl) {
-            <ion-button fill="clear" aria-label="GitHub" (click)="open(item.githubUrl)">
-              <ion-icon name="logo-github"></ion-icon>
+            <ion-button fill="clear" (click)="open(item.githubUrl)">
+              <ion-icon name="logo-github"> </ion-icon>
             </ion-button>
           }
+
           @if (item.linkedinUrl) {
-            <ion-button fill="clear" aria-label="LinkedIn" (click)="open(item.linkedinUrl)">
-              <ion-icon name="logo-linkedin"></ion-icon>
+            <ion-button fill="clear" (click)="open(item.linkedinUrl)">
+              <ion-icon name="logo-linkedin"> </ion-icon>
             </ion-button>
           }
+
           @if (item.email) {
-            <ion-button fill="clear" aria-label="Email" (click)="mail(item.email)">
-              <ion-icon name="mail-outline"></ion-icon>
+            <ion-button fill="clear" (click)="mail(item.email)">
+              <ion-icon name="mail-outline"> </ion-icon>
             </ion-button>
           }
+        </div>
+
+        <!-- STATS -->
+
+        <div class="hero__stats">
+          <div class="stat">
+            <h3>1+</h3>
+
+            <p>Years Experience</p>
+          </div>
+
+          <div class="stat">
+            <h3>15+</h3>
+
+            <p>Projects</p>
+          </div>
+
+          <div class="stat">
+            <h3>100%</h3>
+
+            <p>Client Focus</p>
+          </div>
         </div>
       </div>
 
-      <div class="hero__portrait" aria-label="Profile image">
-        <div class="hero__ring">
-          <img [src]="imageUrl(item)" [alt]="item.title" loading="eager" decoding="async">
+      <!-- RIGHT SIDE -->
+
+      <div class="hero__portrait">
+        <div class="hero__card">
+          <div class="hero__ring">
+            <img
+              [src]="imageUrl(item)"
+              [alt]="item.title"
+              loading="eager"
+              decoding="async"
+            />
+          </div>
+
+          <div class="hero__tech">
+            <span>Angular</span>
+
+            <span>Ionic</span>
+
+            <span>Node.js</span>
+
+            <span>NestJS</span>
+
+            <span>MongoDB</span>
+
+            <span>MySQL</span>
+
+            <span>React</span>
+
+            <span>AWS</span>
+          </div>
         </div>
       </div>
     } @else {
@@ -65,7 +171,12 @@
     }
   </div>
 
-  <button class="hero__scroll" type="button" aria-label="Scroll to about section" (click)="scrollDown()">
-    <ion-icon name="chevron-down-outline"></ion-icon>
+  <button
+    class="hero__scroll"
+    type="button"
+    (click)="scrollDown()"
+    aria-label="Scroll"
+  >
+    <ion-icon name="chevron-down-outline"> </ion-icon>
   </button>
 </section>
