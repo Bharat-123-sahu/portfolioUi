@@ -26,6 +26,9 @@ export class AuthService {
   private readonly API = `${environment.apiUrl}/api/v1/admin/auth`;
 
   login(payload: LoginRequest): Observable<LoginResponse> {
+     console.log('🔥 API URL:', this.API);
+  console.log('🔥 LOGIN URL:', `${this.API}/login`);
+
     return this.http.post<LoginResponse>(`${this.API}/login`, payload);
   }
 
