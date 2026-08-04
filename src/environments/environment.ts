@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
+  production: true,
   apiUrl: 'https://portfolioapi-cavv.onrender.com',
   tokenKey: 'Bharat_sahu_123Bharat_sahu_123Bharat_sahu_123',
   adminSetupToken: 'Bharat_sahu_123Bharat_sahu_123Bharat_sahu_123',
