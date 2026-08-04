@@ -23,6 +23,13 @@ export interface ResetPasswordRequest {
   newPassword: string;
 }
 
+export interface SetupAdminRequest {
+  email: string;
+  password: string;
+  confirmPassword: string;
+  token?: string;
+}
+
 export interface ChangePasswordRequest {
   currentPassword: string;
   newPassword: string;

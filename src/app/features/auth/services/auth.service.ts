@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../../../environments/environment';
@@ -10,6 +10,7 @@ import {
   RefreshTokenRequest,
   RefreshTokenResponse,
   ResetPasswordRequest,
+  SetupAdminRequest,
   VerifyOtpRequest,
   VerifyOtpResponse,
 } from '../model/auth-flows.model';
@@ -43,6 +44,30 @@ export class AuthService {
 
   resetPassword(payload: ResetPasswordRequest): Observable<ApiResponse> {
     return this.http.post<ApiResponse>(`${this.API}/reset-password`, payload);
+  }
+
+  setupAdmin(
+    payload: SetupAdminRequest,
+    token: string,
+  ): Observable<ApiResponse> {
+    const requestPayload = {
+      ...payload,
+      token: token || undefined,
+    };
+
+    const params = token
+      ? new HttpParams().set('token', token)
+      : new HttpParams();
+
+      console.log('Setup Admin Request Payload:❤️', requestPayload);
+      console.log('Setup Admin Request Params:❤️', params,typeof params);
+    return this.http.post<ApiResponse>(
+      `${this.API}/setup-admin`,
+      requestPayload,
+      {
+        params,
+      },
+    );
   }
 
   changePassword(payload: ChangePasswordRequest): Observable<ApiResponse> {

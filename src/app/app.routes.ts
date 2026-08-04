@@ -3,10 +3,10 @@ import { authGuard } from './core/guards/auth-guard';
 import { publicRoutes } from './public/public.routes';
 
 export const routes: Routes = [
- {
-  path: '',
-  children: publicRoutes,
-},
+  {
+    path: '',
+    children: publicRoutes,
+  },
 
   {
     path: 'login',
@@ -16,9 +16,9 @@ export const routes: Routes = [
   {
     path: 'login/forgot-password',
     loadComponent: () =>
-      import(
-        './features/auth/pages/forgot-password/forgot-password.page'
-      ).then((m) => m.ForgotPasswordPage),
+      import('./features/auth/pages/forgot-password/forgot-password.page').then(
+        (m) => m.ForgotPasswordPage,
+      ),
   },
   {
     path: 'login/verify-otp',
@@ -32,6 +32,13 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/auth/pages/reset-password/reset-password.page').then(
         (m) => m.ResetPasswordPage,
+      ),
+  },
+  {
+    path: 'auth/setup-admin',
+    loadComponent: () =>
+      import('./features/auth/pages/setup-admin/setup-admin.page').then(
+        (m) => m.SetupAdminPage,
       ),
   },
 
@@ -129,9 +136,9 @@ export const routes: Routes = [
       {
         path: 'settings/change-password',
         loadComponent: () =>
-          import(
-            './features/auth/pages/change-password/change-password.page'
-          ).then((m) => m.ChangePasswordPage),
+          import('./features/auth/pages/change-password/change-password.page').then(
+            (m) => m.ChangePasswordPage,
+          ),
       },
       {
         path: 'settings',
@@ -150,9 +157,8 @@ export const routes: Routes = [
     ],
   },
 
- {
-  path: '**',
-  redirectTo: '',
-}
-
+  {
+    path: '**',
+    redirectTo: '',
+  },
 ];
