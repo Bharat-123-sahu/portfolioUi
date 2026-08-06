@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, Input, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   FormBuilder,
   FormGroup,
@@ -35,6 +36,7 @@ export class ExperienceFormComponent implements OnInit {
   private experienceService = inject(ExperienceService);
   private modalController = inject(ModalController);
   private toastController = inject(ToastController);
+  private destroyRef = inject(DestroyRef);
 
 
   @Input() experience?: Experience;
@@ -119,7 +121,8 @@ export class ExperienceFormComponent implements OnInit {
 
     this.experienceForm
       .get('currentlyWorking')
-      ?.valueChanges.subscribe(value => {
+      ?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(value => {
         const endDate = this.experienceForm.get('endDate');
 
         if (value) {

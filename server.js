@@ -1,9 +1,10 @@
 const fs = require('fs');
 const http = require('http');
+const https = require('https');
 const path = require('path');
 
 const port = Number(process.env.PORT || 8080);
-const apiTarget = new URL(process.env.API_TARGET || 'http://localhost:5000');
+const apiTarget = parseApiTarget(process.env.API_TARGET || 'http://localhost:5000');
 const publicDir = path.join(__dirname, 'www');
 
 const mimeTypes = {
@@ -22,11 +23,27 @@ const mimeTypes = {
   '.woff2': 'font/woff2',
 };
 
+function parseApiTarget(value) {
+  try {
+    const target = new URL(value);
+
+    if (!['http:', 'https:'].includes(target.protocol)) {
+      throw new Error('Unsupported API target protocol');
+    }
+
+    return target;
+  } catch {
+    return new URL('http://localhost:5000');
+  }
+}
+
 function proxyRequest(clientRequest, clientResponse) {
-  const targetRequest = http.request(
+  const transport = apiTarget.protocol === 'https:' ? https : http;
+  const targetRequest = transport.request(
     {
+      protocol: apiTarget.protocol,
       hostname: apiTarget.hostname,
-      port: apiTarget.port || 80,
+      port: apiTarget.port || (apiTarget.protocol === 'https:' ? 443 : 80),
       path: clientRequest.url,
       method: clientRequest.method,
       headers: {
@@ -94,5 +111,5 @@ http
     });
   })
   .listen(port, '0.0.0.0', () => {
-    console.log(`Portfolio UI listening on http://0.0.0.0:${port}`);
+    process.stdout.write(`Portfolio UI listening on http://0.0.0.0:${port}\n`);
   });

@@ -1,3 +1,10 @@
-<p>
-  storage-card works!
-</p>
+<article class="storage-card">
+  <header>
+    <span>{{ label }}</span>
+    <strong>{{ percentage | number: '1.0-0' }}%</strong>
+  </header>
+
+  <ion-progress-bar color="primary" [value]="percentage / 100"></ion-progress-bar>
+
+  <small>{{ used | number }} of {{ total | number }} used</small>
+</article>

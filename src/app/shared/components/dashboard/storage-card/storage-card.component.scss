@@ -1,0 +1,24 @@
+.storage-card {
+  display: grid;
+  gap: 0.9rem;
+  padding: 1rem;
+  border: 1px solid var(--admin-border);
+  border-radius: 1rem;
+  background: var(--admin-surface-strong);
+}
+
+.storage-card header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.storage-card span,
+.storage-card small {
+  color: var(--admin-muted);
+}
+
+.storage-card strong {
+  color: var(--admin-text);
+  font-size: 1.35rem;
+}

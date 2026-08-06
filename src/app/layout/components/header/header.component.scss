@@ -45,10 +45,20 @@ ion-button {
   .admin-header ion-toolbar {
     --padding-start: 0.8rem;
     --padding-end: 0.4rem;
+    --min-height: 3.8rem;
+  }
+
+  ion-title span {
+    font-size: 0.95rem;
+  }
+
+  ion-title small {
+    display: none;
   }
 
   ion-button {
     font-size: 0;
+    min-width: 2.5rem;
   }
 
   ion-button ion-icon {

@@ -29,3 +29,14 @@
     }
 
 }
+
+@media (max-width: 640px) {
+    .dashboard-container {
+        padding: 0;
+        gap: 16px;
+    }
+
+    .grid {
+        gap: 16px;
+    }
+}

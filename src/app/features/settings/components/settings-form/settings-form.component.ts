@@ -17,6 +17,9 @@ import { FileUploadComponent } from 'src/app/shared/components/file-upload/file-
 import { TechnologyChipsComponent } from 'src/app/shared/components/technology-chips/technology-chips.component';
 import { SettingsService } from '../../services/settings';
 import { ImageUploadComponent } from 'src/app/shared/components/image-upload/image-upload.component';
+import { PageHeaderComponent } from 'src/app/shared/components/page-header/page-header.component';
+import { EmptyStateComponent } from 'src/app/shared/components/empty-state/empty-state.component';
+import { LoadingComponent } from 'src/app/shared/components/loading/loading.component';
 
 @Component({
   selector: 'app-settings-form',
@@ -27,7 +30,10 @@ import { ImageUploadComponent } from 'src/app/shared/components/image-upload/ima
     IonicModule,
     ImageUploadComponent,
     FileUploadComponent,
-    TechnologyChipsComponent
+    TechnologyChipsComponent,
+    PageHeaderComponent,
+    EmptyStateComponent,
+    LoadingComponent,
   ],
   templateUrl: './settings-form.component.html',
   styleUrls: ['./settings-form.component.scss']
@@ -43,6 +49,8 @@ export class SettingsFormComponent implements OnInit {
   loading = false;
 
   saving = false;
+
+  errorMessage = '';
 
   settings?: PortfolioSettings;
 
@@ -184,6 +192,7 @@ export class SettingsFormComponent implements OnInit {
   loadSettings(): void {
 
     this.loading = true;
+    this.errorMessage = '';
 
     this.settingsService.getSettings().subscribe({
 
@@ -199,9 +208,18 @@ export class SettingsFormComponent implements OnInit {
 
       },
 
-      error: () => {
+      error: async () => {
 
         this.loading = false;
+        this.errorMessage = 'Unable to load settings. Please try again.';
+
+        const toast = await this.toastController.create({
+          message: this.errorMessage,
+          color: 'danger',
+          duration: 2500,
+        });
+
+        await toast.present();
 
       }
 

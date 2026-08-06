@@ -7,8 +7,8 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular/standalone';
 import { UploadService } from 'src/app/core/services/upload.service';
-import { environment } from 'src/environments/environment';
 import { HeroListComponent } from '../../components/hero-list/hero-list.component';
+import { assetUrl } from 'src/app/core/utils/url.util';
 
 @Component({
   selector: 'app-hero',
@@ -37,7 +37,6 @@ export class HeroPage implements OnInit {
   selectedFile?: File;
 
   uploading = false;
-  environment = environment;
 
   ngOnInit(): void {
     this.initializeForm();
@@ -96,9 +95,7 @@ export class HeroPage implements OnInit {
         });
       },
 
-      error: async (error) => {
-        console.error(error);
-
+      error: async () => {
         this.isSubmitting = false;
 
         const toast = await this.toastController.create({
@@ -143,5 +140,9 @@ export class HeroPage implements OnInit {
         this.uploading = false;
       },
     });
+  }
+
+  getImageUrl(path: string): string {
+    return assetUrl(path);
   }
 }

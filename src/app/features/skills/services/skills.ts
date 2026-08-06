@@ -1,6 +1,6 @@
 import { BaseCrudService } from 'src/app/core/services/base/base-crud.service';
 import { Skill } from '../models/skills.model';
-import { environment } from 'src/environments/environment';
+import { apiUrl } from 'src/app/core/utils/url.util';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class SkillsService extends BaseCrudService<Skill> {
-  protected override endpoint = `${environment.apiUrl}/api/v1/admin/skills`;
+  protected override endpoint = apiUrl('/api/v1/admin/skills');
 
   getFeatured(): Observable<Skill[]> {
     return this.http.get<Skill[]>(`${this.endpoint}?isFeatured=true`);

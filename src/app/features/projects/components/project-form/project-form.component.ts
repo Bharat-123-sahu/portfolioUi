@@ -141,7 +141,8 @@ export class ProjectFormComponent implements OnInit {
 
     this.projectForm
       .get('title')
-      ?.valueChanges.subscribe(value => {
+      ?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(value => {
 
         if (!this.project) {
 

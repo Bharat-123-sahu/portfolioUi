@@ -116,11 +116,17 @@ export class AboutListComponent implements OnInit {
 
       },
 
-      error: (err) => {
-
-        console.error(err);
+      error: async () => {
 
         this.loading = false;
+
+        const toast = await this.toastController.create({
+          message: 'Unable to load about records.',
+          color: 'danger',
+          duration: 2200,
+        });
+
+        await toast.present();
 
       }
 

@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, Input, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   FormBuilder,
   FormGroup,
@@ -35,6 +36,7 @@ export class SkillFormComponent implements OnInit {
   private skillService = inject(SkillsService);
   private modalController = inject(ModalController);
   private toastController = inject(ToastController);
+  private destroyRef = inject(DestroyRef);
 
 
   @Input() skill?: Skill;
@@ -61,7 +63,8 @@ export class SkillFormComponent implements OnInit {
 
     this.skillForm
       .get('name')
-      ?.valueChanges.subscribe(value => {
+      ?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(value => {
 
         if (!this.skill) {
 

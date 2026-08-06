@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { apiUrl } from 'src/app/core/utils/url.util';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ export class DashboardService {
 
 
   getAll(): Observable<any> {
-    return this.http.get(`${environment.apiUrl}/api/v1/admin/dashboard`).pipe(
+    return this.http.get(apiUrl('/api/v1/admin/dashboard')).pipe(
       map((response: any) => response?.data ?? response),
     );
   }

@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { environment } from '../../../../environments/environment';
+import { apiUrl } from 'src/app/core/utils/url.util';
 import {
   ApiResponse,
   ChangePasswordRequest,
@@ -21,14 +21,10 @@ import { LoginResponse } from '../model/login-response.model';
   providedIn: 'root',
 })
 export class AuthService {
-  private http = inject(HttpClient);
-
-  private readonly API = `${environment.apiUrl}/api/v1/admin/auth`;
+  private readonly http = inject(HttpClient);
+  private readonly API = apiUrl('/api/v1/admin/auth');
 
   login(payload: LoginRequest): Observable<LoginResponse> {
-     console.log('🔥 API URL:', this.API);
-  console.log('🔥 LOGIN URL:', `${this.API}/login`);
-
     return this.http.post<LoginResponse>(`${this.API}/login`, payload);
   }
 
@@ -53,23 +49,17 @@ export class AuthService {
     payload: SetupAdminRequest,
     token: string,
   ): Observable<ApiResponse> {
-    const requestPayload = {
-      ...payload,
-      token: token || undefined,
-    };
-
     const params = token
       ? new HttpParams().set('token', token)
       : new HttpParams();
 
-      console.log('Setup Admin Request Payload:❤️', requestPayload);
-      console.log('Setup Admin Request Params:❤️', params,typeof params);
     return this.http.post<ApiResponse>(
       `${this.API}/setup-admin`,
-      requestPayload,
       {
-        params,
+        ...payload,
+        token: token || undefined,
       },
+      { params },
     );
   }
 

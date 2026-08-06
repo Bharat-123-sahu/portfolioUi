@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { IonicModule, ToastController } from '@ionic/angular';
 
 import { UploadService } from 'src/app/core/services/upload.service';
-import { environment } from 'src/environments/environment';
+import { assetUrl } from 'src/app/core/utils/url.util';
 
 @Component({
   selector: 'app-file-upload',
@@ -32,8 +32,6 @@ export class FileUploadComponent {
 
   uploading = false;
 
-  apiUrl = environment.apiUrl;
-
   onFileSelected(event: Event): void {
 
     const input = event.target as HTMLInputElement;
@@ -43,6 +41,12 @@ export class FileUploadComponent {
     }
 
     const file = input.files[0];
+
+    if (!this.isAllowedFile(file)) {
+      this.showError('Selected file type is not allowed or exceeds 5 MB.');
+      input.value = '';
+      return;
+    }
 
     this.uploading = true;
 
@@ -65,18 +69,9 @@ export class FileUploadComponent {
         error: async () => {
 
           this.uploading = false;
+          input.value = '';
 
-          const toast = await this.toastController.create({
-
-            message: 'File upload failed.',
-
-            color: 'danger',
-
-            duration: 2000,
-
-          });
-
-          await toast.present();
+          await this.showError('File upload failed.');
 
         }
 
@@ -94,6 +89,31 @@ export class FileUploadComponent {
 
     return this.fileUrl.split('/').pop() ?? '';
 
+  }
+
+  getFileUrl(): string {
+    return assetUrl(this.fileUrl);
+  }
+
+  private isAllowedFile(file: File): boolean {
+    const accepted = this.accept
+      .split(',')
+      .map((type) => type.trim().toLowerCase())
+      .filter(Boolean);
+    const extension = `.${file.name.split('.').pop()?.toLowerCase() ?? ''}`;
+
+    return file.size <= 5 * 1024 * 1024
+      && (!accepted.length || accepted.includes(extension) || accepted.includes(file.type.toLowerCase()));
+  }
+
+  private async showError(message: string): Promise<void> {
+    const toast = await this.toastController.create({
+      message,
+      color: 'danger',
+      duration: 2200,
+    });
+
+    await toast.present();
   }
 
 }

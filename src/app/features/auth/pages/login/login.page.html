@@ -59,11 +59,19 @@
             </ion-text>
           </div>
 
+          <ion-text
+            *ngIf="errorMessage"
+            color="danger"
+            class="login-error">
+            {{ errorMessage }}
+          </ion-text>
+
           <ion-button
             expand="block"
-            type="submit">
+            type="submit"
+            [disabled]="loading">
 
-            Login
+            {{ loading ? 'Signing in...' : 'Login' }}
 
           </ion-button>
 

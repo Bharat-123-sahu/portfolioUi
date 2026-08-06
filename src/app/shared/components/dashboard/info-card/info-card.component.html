@@ -1,3 +1,8 @@
-<p>
-  info-card works!
-</p>
+<article class="info-card">
+  <ion-icon [name]="icon"></ion-icon>
+  <div>
+    <span>{{ title }}</span>
+    <strong>{{ value }}</strong>
+    <small *ngIf="subtitle">{{ subtitle }}</small>
+  </div>
+</article>

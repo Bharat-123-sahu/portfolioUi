@@ -16,7 +16,7 @@ import { EmptyStateComponent } from 'src/app/shared/components/empty-state/empty
 import { DataTableComponent } from 'src/app/shared/components/data-table/data-table.component';
 import { Blog } from '../../models/blog.models';
 import { BlogService } from '../../services/blog';
-import { BlogFormComponent } from '../blog-form/blob-form.component';
+import { BlogFormComponent } from '../blog-form/blog-form.component';
 
 @Component({
   selector: 'app-blog-list',

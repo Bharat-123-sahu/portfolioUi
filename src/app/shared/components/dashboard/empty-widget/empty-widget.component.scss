@@ -1,0 +1,21 @@
+.empty-widget {
+  display: grid;
+  min-height: 12rem;
+  place-items: center;
+  gap: 0.45rem;
+  padding: 1.5rem;
+  border: 1px dashed var(--admin-border);
+  border-radius: 1rem;
+  color: var(--admin-muted);
+  text-align: center;
+}
+
+.empty-widget ion-icon {
+  color: var(--admin-clear-button);
+  font-size: 2.2rem;
+}
+
+.empty-widget strong {
+  color: var(--admin-text);
+  font-size: 1rem;
+}

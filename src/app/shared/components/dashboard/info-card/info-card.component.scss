@@ -1,0 +1,33 @@
+.info-card {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  min-width: 0;
+  padding: 1rem;
+  border: 1px solid var(--admin-border);
+  border-radius: 1rem;
+  background: var(--admin-surface-strong);
+}
+
+.info-card ion-icon {
+  flex: 0 0 auto;
+  color: var(--admin-clear-button);
+  font-size: 1.7rem;
+}
+
+.info-card div {
+  min-width: 0;
+}
+
+.info-card span,
+.info-card small {
+  display: block;
+  color: var(--admin-muted);
+}
+
+.info-card strong {
+  display: block;
+  color: var(--admin-text);
+  font-size: 1.35rem;
+  overflow-wrap: anywhere;
+}

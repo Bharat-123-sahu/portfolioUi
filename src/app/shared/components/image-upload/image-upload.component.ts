@@ -11,8 +11,8 @@ import {
 
 import { IonicModule, ToastController } from '@ionic/angular';
 
-import { environment } from 'src/environments/environment';
 import { UploadService } from 'src/app/core/services/upload.service';
+import { assetUrl } from 'src/app/core/utils/url.util';
 
 @Component({
   selector: 'app-image-upload',
@@ -39,13 +39,7 @@ export class ImageUploadComponent {
   uploading = false;
 
   get previewUrl(): string {
-    if (!this.imageUrl) return '';
-
-    if (this.imageUrl.startsWith('http')) {
-      return this.imageUrl;
-    }
-
-    return environment.apiUrl + this.imageUrl;
+    return assetUrl(this.imageUrl);
   }
 
   openFilePicker() {

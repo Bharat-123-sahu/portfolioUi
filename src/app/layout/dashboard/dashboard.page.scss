@@ -1,11 +1,30 @@
 .dashboard-layout {
   display: flex;
   height: calc(100vh - 56px);
+  min-width: 0;
 }
 
 .dashboard-content {
   flex: 1;
+  min-width: 0;
   padding: 24px;
   overflow-y: auto;
   background: #f5f7fb;
+}
+
+@media (max-width: 760px) {
+  .dashboard-layout {
+    flex-direction: column;
+    height: calc(100vh - 68px);
+  }
+
+  .dashboard-content {
+    padding: 14px;
+  }
+}
+
+@media (max-width: 420px) {
+  .dashboard-content {
+    padding: 10px;
+  }
 }

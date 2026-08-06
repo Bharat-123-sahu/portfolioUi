@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 
-import { environment } from 'src/environments/environment';
+import { assetUrl } from 'src/app/core/utils/url.util';
 import { TableColumn } from '../../models/table-column.model';
 
 @Component({
@@ -33,8 +33,6 @@ export class DataTableComponent {
 
   @Output() delete = new EventEmitter<any>();
 
-  readonly apiUrl = environment.apiUrl;
-
   onEdit(row: any): void {
     this.edit.emit(row);
   }
@@ -60,7 +58,7 @@ export class DataTableComponent {
       return path;
     }
 
-    return `${this.apiUrl}${path}`;
+    return assetUrl(path, 'assets/images/no-image.png');
   }
 
   getBadgeColor(value: any): string {

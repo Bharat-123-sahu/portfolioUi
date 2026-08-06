@@ -1,3 +1,59 @@
-<p>
-  gallery-upload works!
-</p>
+<div class="gallery-upload">
+  <div class="gallery-upload__header">
+    <ion-label>{{ label }}</ion-label>
+
+    <input
+      #fileInput
+      hidden
+      multiple
+      type="file"
+      accept="image/jpeg,image/png,image/webp"
+      (change)="onFileSelected($event)">
+
+    <ion-button
+      fill="outline"
+      size="small"
+      type="button"
+      [disabled]="uploading"
+      (click)="fileInput.click()">
+      <ion-icon slot="start" name="cloud-upload-outline"></ion-icon>
+      {{ uploading ? 'Uploading...' : 'Add Images' }}
+    </ion-button>
+  </div>
+
+  <ion-spinner
+    *ngIf="uploading"
+    name="crescent">
+  </ion-spinner>
+
+  <div
+    class="gallery-upload__grid"
+    *ngIf="images.length; else emptyGallery">
+    <article
+      class="gallery-upload__item"
+      *ngFor="let image of images; let index = index; trackBy: trackByImage">
+      <img
+        [src]="getImageUrl(image)"
+        alt="Gallery image"
+        loading="lazy"
+        decoding="async">
+
+      <ion-button
+        aria-label="Remove image"
+        color="danger"
+        fill="clear"
+        size="small"
+        type="button"
+        (click)="removeImage(index)">
+        <ion-icon slot="icon-only" name="close-circle"></ion-icon>
+      </ion-button>
+    </article>
+  </div>
+
+  <ng-template #emptyGallery>
+    <div class="gallery-upload__empty">
+      <ion-icon name="image-outline"></ion-icon>
+      <span>No gallery images selected</span>
+    </div>
+  </ng-template>
+</div>

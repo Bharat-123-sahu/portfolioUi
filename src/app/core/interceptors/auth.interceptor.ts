@@ -7,9 +7,11 @@ import {
 
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, switchMap, throwError } from 'rxjs';
+import { Observable, catchError, finalize, shareReplay, switchMap, throwError } from 'rxjs';
 import { AuthService } from 'src/app/features/auth/services/auth.service';
 import { TokenService } from '../services/token.service';
+
+let refreshRequest$: Observable<any> | null = null;
 
 export const authInterceptor: HttpInterceptorFn = (
   req: HttpRequest<unknown>,
@@ -49,7 +51,14 @@ export const authInterceptor: HttpInterceptorFn = (
           return throwError(() => error);
         }
 
-        return authService.refreshToken({ refreshToken }).pipe(
+        refreshRequest$ ??= authService.refreshToken({ refreshToken }).pipe(
+          shareReplay({ bufferSize: 1, refCount: false }),
+          finalize(() => {
+            refreshRequest$ = null;
+          }),
+        );
+
+        return refreshRequest$.pipe(
           switchMap((response) => {
             const accessToken = response.data?.accessToken;
             const nextRefreshToken = response.data?.refreshToken;

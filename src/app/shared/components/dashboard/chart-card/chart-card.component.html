@@ -1,3 +1,7 @@
-<p>
-  chart-card works!
-</p>
+<article class="chart-card">
+  <header>
+    <span>{{ title }}</span>
+    <strong>{{ percentage | number: '1.0-0' }}%</strong>
+  </header>
+  <ion-progress-bar [color]="color" [value]="percentage / 100"></ion-progress-bar>
+</article>

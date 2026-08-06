@@ -1,492 +1,261 @@
 <ion-content class="ion-padding">
-
   <form
+    class="settings-form"
     [formGroup]="settingsForm"
     (ngSubmit)="save()">
 
-    <!-- Loading -->
-
-    <ion-card *ngIf="loading">
-
-      <ion-card-content class="ion-text-center">
-
-        <ion-spinner></ion-spinner>
-
-        <p>Loading Settings...</p>
-
-      </ion-card-content>
-
-    </ion-card>
-
-    <ng-container *ngIf="!loading">
-
-      <!-- Branding -->
-
-      <ion-card>
-
-        <ion-card-header>
-          <ion-card-title>Branding</ion-card-title>
-        </ion-card-header>
-
-        <ion-card-content>
-
-          <app-image-upload
-            folder="settings/logo"
-            [imageUrl]="settingsForm.get('logo')?.value"
-            (imageUploaded)="settingsForm.patchValue({ logo: $event })">
-          </app-image-upload>
-
-       
-
-        </ion-card-content>
-
- <ion-card-content>
-           <app-image-upload
-            folder="settings/favicon"
-            [imageUrl]="settingsForm.get('favicon')?.value"
-            (imageUploaded)="settingsForm.patchValue({ favicon: $event })">
-          </app-image-upload>
-</ion-card-content>
-      </ion-card>
-
-      <!-- Site Information -->
-
-      <ion-card>
-
-        <ion-card-header>
-          <ion-card-title>Site Information</ion-card-title>
-        </ion-card-header>
-
-        <ion-card-content>
-
-          <ion-item>
-            <ion-label position="stacked">
-              Site Title
-            </ion-label>
-
-            <ion-input
-              formControlName="siteTitle">
-            </ion-input>
-          </ion-item>
-
-          <ion-item>
-            <ion-label position="stacked">
-              Site Description
-            </ion-label>
-
-            <ion-textarea
-              rows="4"
-              formControlName="siteDescription">
-            </ion-textarea>
-          </ion-item>
-
-          <ion-item>
-            <ion-label position="stacked">
-              Author
-            </ion-label>
-
-            <ion-input
-              formControlName="siteAuthor">
-            </ion-input>
-          </ion-item>
-
-          <app-technology-chips
-            [technologies]="settingsForm.get('siteKeywords')?.value"
-            (technologiesChange)="settingsForm.patchValue({ siteKeywords: $event })">
-          </app-technology-chips>
-
-        </ion-card-content>
-
-      </ion-card>
-
-      <!-- Theme -->
-
-      <ion-card>
-
-        <ion-card-header>
-          <ion-card-title>Theme</ion-card-title>
-        </ion-card-header>
-
-        <ion-card-content>
-
-          <ion-item>
-
-            <ion-label position="stacked">
-              Primary Color
-            </ion-label>
-
-            <ion-input
-              type="color"
-              formControlName="primaryColor">
-            </ion-input>
-
-          </ion-item>
-
-          <ion-item>
-
-            <ion-label position="stacked">
-              Secondary Color
-            </ion-label>
-
-            <ion-input
-              type="color"
-              formControlName="secondaryColor">
-            </ion-input>
-
-          </ion-item>
-
-          <ion-item>
-
-            <ion-label position="stacked">
-              Accent Color
-            </ion-label>
-
-            <ion-input
-              type="color"
-              formControlName="accentColor">
-            </ion-input>
-
-          </ion-item>
-
-        </ion-card-content>
-
-      </ion-card>
-
-      <!-- Defaults -->
-
-      <ion-card>
-
-        <ion-card-header>
-          <ion-card-title>Default Assets</ion-card-title>
-        </ion-card-header>
-
-        <ion-card-content>
-
-          <app-file-upload
-            folder="resume"
-            accept=".pdf"
-            [fileUrl]="settingsForm.get('defaultResume')?.value"
-            (fileUploaded)="settingsForm.patchValue({ defaultResume: $event })">
-          </app-file-upload>
-
-        </ion-card-content>
-
-      </ion-card>
-
-      <!-- Contact -->
-
-      <ion-card>
-
-        <ion-card-header>
-          <ion-card-title>Contact</ion-card-title>
-        </ion-card-header>
-
-        <ion-card-content>
-
-          <ion-item>
-
-            <ion-label position="stacked">
-              Contact Email
-            </ion-label>
-
-            <ion-input
-              type="email"
-              formControlName="contactEmail">
-            </ion-input>
-
-          </ion-item>
-
-          <ion-item>
-
-            <ion-label position="stacked">
-              Support Email
-            </ion-label>
-
-            <ion-input
-              type="email"
-              formControlName="supportEmail">
-            </ion-input>
-
-          </ion-item>
-
-          <ion-item>
-
-            <ion-label position="stacked">
-              Phone
-            </ion-label>
-
-            <ion-input
-              formControlName="phone">
-            </ion-input>
-
-          </ion-item>
-
-        </ion-card-content>
-
-      </ion-card>
-
-      <!-- Address -->
-
-      <ion-card>
-
-        <ion-card-header>
-          <ion-card-title>Address</ion-card-title>
-        </ion-card-header>
-
-        <ion-card-content>
-
-          <ion-item>
-
-            <ion-label position="stacked">
-              Address
-            </ion-label>
-
-            <ion-textarea
-              rows="3"
-              formControlName="address">
-            </ion-textarea>
-
-          </ion-item>
-
-          <ion-item>
-
-            <ion-label position="stacked">
-              City
-            </ion-label>
-
-            <ion-input
-              formControlName="city">
-            </ion-input>
-
-          </ion-item>
-
-          <ion-item>
-
-            <ion-label position="stacked">
-              State
-            </ion-label>
-
-            <ion-input
-              formControlName="state">
-            </ion-input>
-
-          </ion-item>
-
-          <ion-item>
-
-            <ion-label position="stacked">
-              Country
-            </ion-label>
-
-            <ion-input
-              formControlName="country">
-            </ion-input>
-
-          </ion-item>
-
-          <ion-item>
-
-            <ion-label position="stacked">
-              Postal Code
-            </ion-label>
-
-            <ion-input
-              formControlName="postalCode">
-            </ion-input>
-
-          </ion-item>
-
-        </ion-card-content>
-
-      </ion-card>
-
-      <!-- SEO -->
-
-      <ion-card>
-
-        <ion-card-header>
-          <ion-card-title>SEO</ion-card-title>
-        </ion-card-header>
-
-        <ion-card-content>
-
-          <ion-item>
-
-            <ion-label position="stacked">
-              Meta Title
-            </ion-label>
-
-            <ion-input
-              formControlName="metaTitle">
-            </ion-input>
-
-          </ion-item>
-
-          <ion-item>
-
-            <ion-label position="stacked">
-              Meta Description
-            </ion-label>
-
-            <ion-textarea
-              rows="4"
-              formControlName="metaDescription">
-            </ion-textarea>
-
-          </ion-item>
-
-          <app-technology-chips
-            [technologies]="settingsForm.get('metaKeywords')?.value"
-            (technologiesChange)="settingsForm.patchValue({ metaKeywords: $event })">
-          </app-technology-chips>
-
-        </ion-card-content>
-
-      </ion-card>
-
-      <!-- Analytics -->
-
-      <ion-card>
-
-        <ion-card-header>
-          <ion-card-title>
-            Analytics
-          </ion-card-title>
-        </ion-card-header>
-
-        <ion-card-content>
-
-          <ion-item>
-
-            <ion-label position="stacked">
-              Google Analytics ID
-            </ion-label>
-
-            <ion-input
-              formControlName="googleAnalyticsId">
-            </ion-input>
-
-          </ion-item>
-
-          <ion-item>
-
-            <ion-label position="stacked">
-              Google Tag Manager ID
-            </ion-label>
-
-            <ion-input
-              formControlName="googleTagManagerId">
-            </ion-input>
-
-          </ion-item>
-
-        </ion-card-content>
-
-      </ion-card>
-
-      <!-- Features -->
-
-      <ion-card>
-
-        <ion-card-header>
-          <ion-card-title>
-            Feature Settings
-          </ion-card-title>
-        </ion-card-header>
-
-        <ion-card-content>
-
-          <ion-item>
-
-            <ion-label>
-              Enable Blog
-            </ion-label>
-
-            <ion-toggle
-              slot="end"
-              formControlName="enableBlog">
-            </ion-toggle>
-
-          </ion-item>
-
-          <ion-item>
-
-            <ion-label>
-              Enable Projects
-            </ion-label>
-
-            <ion-toggle
-              slot="end"
-              formControlName="enableProjects">
-            </ion-toggle>
-
-          </ion-item>
-
-          <ion-item>
-
-            <ion-label>
-              Enable Contact Form
-            </ion-label>
-
-            <ion-toggle
-              slot="end"
-              formControlName="enableContactForm">
-            </ion-toggle>
-
-          </ion-item>
-
-          <ion-item>
-
-            <ion-label>
-              Maintenance Mode
-            </ion-label>
-
-            <ion-toggle
-              slot="end"
-              formControlName="maintenanceMode">
-            </ion-toggle>
-
-          </ion-item>
-
-          <ion-item>
-
-            <ion-label>
-              Active
-            </ion-label>
-
-            <ion-toggle
-              slot="end"
-              formControlName="isActive">
-            </ion-toggle>
-
-          </ion-item>
-
-        </ion-card-content>
-
-      </ion-card>
-
-      <!-- Actions -->
+    <app-page-header
+      title="Settings"
+      subtitle="Manage branding, SEO, contact details, and feature switches"
+      [showButton]="false">
+    </app-page-header>
+
+    <app-loading
+      *ngIf="loading"
+      message="Loading settings..."
+      [rows]="6">
+    </app-loading>
+
+    <app-empty-state
+      *ngIf="!loading && errorMessage"
+      icon="alert-circle-outline"
+      color="danger"
+      title="Settings unavailable"
+      [message]="errorMessage"
+      actionText="Retry"
+      (action)="loadSettings()">
+    </app-empty-state>
+
+    <ng-container *ngIf="!loading && !errorMessage">
+      <section class="settings-grid settings-grid--media">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Logo</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <app-image-upload
+              folder="settings/logo"
+              label="Site Logo"
+              [imageUrl]="settingsForm.get('logo')?.value"
+              (imageUploaded)="settingsForm.patchValue({ logo: $event })">
+            </app-image-upload>
+          </ion-card-content>
+        </ion-card>
+
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Favicon</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <app-image-upload
+              folder="settings/favicon"
+              label="Favicon"
+              [imageUrl]="settingsForm.get('favicon')?.value"
+              (imageUploaded)="settingsForm.patchValue({ favicon: $event })">
+            </app-image-upload>
+          </ion-card-content>
+        </ion-card>
+      </section>
+
+      <section class="settings-grid">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Site Information</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-item>
+              <ion-label position="stacked">Site Title</ion-label>
+              <ion-input formControlName="siteTitle"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Site Description</ion-label>
+              <ion-textarea rows="4" formControlName="siteDescription"></ion-textarea>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Author</ion-label>
+              <ion-input formControlName="siteAuthor"></ion-input>
+            </ion-item>
+
+            <app-technology-chips
+              [technologies]="settingsForm.get('siteKeywords')?.value"
+              (technologiesChange)="settingsForm.patchValue({ siteKeywords: $event })">
+            </app-technology-chips>
+          </ion-card-content>
+        </ion-card>
+
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Theme</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <div class="color-grid">
+              <ion-item>
+                <ion-label position="stacked">Primary</ion-label>
+                <ion-input type="color" formControlName="primaryColor"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="stacked">Secondary</ion-label>
+                <ion-input type="color" formControlName="secondaryColor"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="stacked">Accent</ion-label>
+                <ion-input type="color" formControlName="accentColor"></ion-input>
+              </ion-item>
+            </div>
+
+            <app-file-upload
+              folder="resume"
+              label="Default Resume"
+              accept=".pdf"
+              [fileUrl]="settingsForm.get('defaultResume')?.value"
+              (fileUploaded)="settingsForm.patchValue({ defaultResume: $event })">
+            </app-file-upload>
+          </ion-card-content>
+        </ion-card>
+      </section>
+
+      <section class="settings-grid">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Contact</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-item>
+              <ion-label position="stacked">Contact Email</ion-label>
+              <ion-input type="email" formControlName="contactEmail"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Support Email</ion-label>
+              <ion-input type="email" formControlName="supportEmail"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Phone</ion-label>
+              <ion-input type="tel" formControlName="phone"></ion-input>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Address</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-item>
+              <ion-label position="stacked">Address</ion-label>
+              <ion-textarea rows="3" formControlName="address"></ion-textarea>
+            </ion-item>
+
+            <div class="field-grid">
+              <ion-item>
+                <ion-label position="stacked">City</ion-label>
+                <ion-input formControlName="city"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="stacked">State</ion-label>
+                <ion-input formControlName="state"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="stacked">Country</ion-label>
+                <ion-input formControlName="country"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="stacked">Postal Code</ion-label>
+                <ion-input formControlName="postalCode"></ion-input>
+              </ion-item>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </section>
+
+      <section class="settings-grid">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>SEO</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-item>
+              <ion-label position="stacked">Meta Title</ion-label>
+              <ion-input formControlName="metaTitle"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Meta Description</ion-label>
+              <ion-textarea rows="4" formControlName="metaDescription"></ion-textarea>
+            </ion-item>
+
+            <app-technology-chips
+              [technologies]="settingsForm.get('metaKeywords')?.value"
+              (technologiesChange)="settingsForm.patchValue({ metaKeywords: $event })">
+            </app-technology-chips>
+          </ion-card-content>
+        </ion-card>
+
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Analytics and Features</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-item>
+              <ion-label position="stacked">Google Analytics ID</ion-label>
+              <ion-input formControlName="googleAnalyticsId"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Google Tag Manager ID</ion-label>
+              <ion-input formControlName="googleTagManagerId"></ion-input>
+            </ion-item>
+
+            <div class="toggle-list">
+              <ion-item>
+                <ion-label>Enable Blog</ion-label>
+                <ion-toggle slot="end" formControlName="enableBlog"></ion-toggle>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>Enable Projects</ion-label>
+                <ion-toggle slot="end" formControlName="enableProjects"></ion-toggle>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>Enable Contact Form</ion-label>
+                <ion-toggle slot="end" formControlName="enableContactForm"></ion-toggle>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>Maintenance Mode</ion-label>
+                <ion-toggle slot="end" formControlName="maintenanceMode"></ion-toggle>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>Active</ion-label>
+                <ion-toggle slot="end" formControlName="isActive"></ion-toggle>
+              </ion-item>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </section>
 
       <div class="form-actions">
-
         <ion-button
-          expand="block"
           type="submit"
           [disabled]="settingsForm.invalid || saving">
-
           <ion-spinner
             *ngIf="saving"
-            slot="start">
+            slot="start"
+            name="crescent">
           </ion-spinner>
-
-          Save Settings
-
+          {{ saving ? 'Saving...' : 'Save Settings' }}
         </ion-button>
-
       </div>
-
     </ng-container>
-
   </form>
-
 </ion-content>

@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { IonicModule, ToastController } from '@ionic/angular';
+import { firstValueFrom } from 'rxjs';
 
-import { environment } from 'src/environments/environment';
 import { UploadService } from 'src/app/core/services/upload.service';
+import { assetUrl } from 'src/app/core/utils/url.util';
 
 @Component({
   selector: 'app-gallery-upload',
@@ -30,8 +31,6 @@ export class GalleryUploadComponent {
 
   uploading = false;
 
-  apiUrl = environment.apiUrl;
-
   async onFileSelected(event: Event): Promise<void> {
 
     const input = event.target as HTMLInputElement;
@@ -40,17 +39,24 @@ export class GalleryUploadComponent {
       return;
     }
 
-    this.uploading = true;
-
     const files = Array.from(input.files);
+    const invalidFile = files.find((file) => !this.isValidImage(file));
+
+    if (invalidFile) {
+      await this.showError('Only JPG, PNG and WEBP images up to 2 MB are allowed.');
+      input.value = '';
+      return;
+    }
+
+    this.uploading = true;
 
     for (const file of files) {
 
       try {
 
-        const response = await this.uploadService
-          .upload(file, this.folder)
-          .toPromise();
+        const response = await firstValueFrom(
+          this.uploadService.upload(file, this.folder),
+        );
 
         if (response) {
 
@@ -64,18 +70,7 @@ export class GalleryUploadComponent {
         }
 
       } catch {
-
-        const toast = await this.toastController.create({
-
-          message: 'Image upload failed.',
-
-          color: 'danger',
-
-          duration: 2000,
-
-        });
-
-        await toast.present();
+        await this.showError('Image upload failed.');
 
       }
 
@@ -99,16 +94,27 @@ export class GalleryUploadComponent {
 
   getImageUrl(image: string): string {
 
-    if (!image) {
-      return '';
-    }
+    return assetUrl(image);
 
-    if (image.startsWith('http')) {
-      return image;
-    }
+  }
 
-    return `${this.apiUrl}${image}`;
+  trackByImage(index: number, image: string): string {
+    return `${image}-${index}`;
+  }
 
+  private isValidImage(file: File): boolean {
+    return ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'].includes(file.type)
+      && file.size <= 2 * 1024 * 1024;
+  }
+
+  private async showError(message: string): Promise<void> {
+    const toast = await this.toastController.create({
+      message,
+      color: 'danger',
+      duration: 2200,
+    });
+
+    await toast.present();
   }
 
 }

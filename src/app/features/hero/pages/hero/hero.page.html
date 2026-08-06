@@ -73,7 +73,7 @@
           *ngIf="heroForm.get('profileImage')?.value">
 
           <img
-            [src]="environment.apiUrl + heroForm.get('profileImage')?.value"
+            [src]="getImageUrl(heroForm.get('profileImage')?.value)"
             alt="Profile Image">
 
         </div>

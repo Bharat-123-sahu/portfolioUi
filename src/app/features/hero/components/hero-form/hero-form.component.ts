@@ -16,8 +16,8 @@ import {
 import { Hero } from '../../models/hero.model';
 import { HeroService } from '../../services/hero.service';
 import { UploadService } from 'src/app/core/services/upload.service';
-import { environment } from 'src/environments/environment';
 import { FileUploadComponent } from "src/app/shared/components/file-upload/file-upload.component";
+import { assetUrl } from 'src/app/core/utils/url.util';
 
 @Component({
   selector: 'app-hero-form',
@@ -47,8 +47,6 @@ export class HeroFormComponent implements OnInit {
   uploading = false;
 
   selectedFile?: File;
-
-  environment = environment;
 
   ngOnInit(): void {
     this.initializeForm();
@@ -231,5 +229,9 @@ uploadImage(): void {
 
   close(): void {
     this.modalController.dismiss();
+  }
+
+  getImageUrl(path: string): string {
+    return assetUrl(path);
   }
 }

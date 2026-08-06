@@ -38,7 +38,9 @@
 
       <tr *ngFor="let row of loading ? [] : data">
 
-        <td *ngFor="let column of columns">
+        <td
+          *ngFor="let column of columns"
+          [attr.data-label]="column.label">
 
           <ng-container [ngSwitch]="column.type">
 
@@ -80,7 +82,10 @@
 
         </td>
 
-        <td *ngIf="showActions" class="action-buttons">
+        <td
+          *ngIf="showActions"
+          class="action-buttons"
+          data-label="Actions">
 
           <ion-button
             fill="clear"

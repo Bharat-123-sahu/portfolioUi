@@ -19,8 +19,8 @@ import { Hero } from '../../models/hero.model';
 import { HeroService } from '../../services/hero.service';
 import { HeroFormComponent } from '../hero-form/hero-form.component';
 
-import { environment } from 'src/environments/environment';
 import { TableColumn } from 'src/app/shared/models/table-column.model';
+import { assetUrl } from 'src/app/core/utils/url.util';
 
 
 @Component({
@@ -76,8 +76,6 @@ paginatedHeroes: Hero[] = [];
 
 totalPages = 0;
 
-  environment = environment;
-
   constructor() {
     addIcons({
       addOutline,
@@ -111,10 +109,16 @@ totalPages = 0;
 this.updatePagination();
       },
 
-      error: (error) => {
+      error: async () => {
         this.loading = false;
 
-        console.error(error);
+        const toast = await this.toastController.create({
+          message: 'Unable to load Hero data.',
+          color: 'danger',
+          duration: 2200,
+        });
+
+        await toast.present();
       },
     });
   }
@@ -275,5 +279,9 @@ nextPage(): void {
 
   }
 
+}
+
+getImageUrl(path?: string): string {
+  return assetUrl(path);
 }
 }

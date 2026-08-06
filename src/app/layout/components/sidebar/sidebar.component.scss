@@ -119,7 +119,32 @@
 
 @media (max-width: 640px) {
   :host {
-    width: 4.75rem;
-    min-width: 4.75rem;
+    width: 100%;
+    min-width: 0;
+    height: auto;
+  }
+
+  .admin-sidebar {
+    min-height: 0;
+    overflow: hidden;
+    border-right: 0;
+    border-bottom: 1px solid var(--admin-border);
+  }
+
+  .sidebar-brand {
+    display: none;
+  }
+
+  .sidebar-menu {
+    display: flex;
+    gap: 0.35rem;
+    padding: 0.45rem 0.55rem;
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+
+  .sidebar-menu ion-item {
+    flex: 0 0 3.25rem;
+    margin: 0;
   }
 }

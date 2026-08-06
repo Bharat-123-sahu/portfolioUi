@@ -1,3 +1,22 @@
-<p>
-  recent-activities works!
-</p>
+<article class="dashboard-card">
+  <header>
+    <h3>Recent Activities</h3>
+  </header>
+
+  <div
+    class="activity"
+    *ngFor="let activity of activities">
+    <ion-icon [name]="activity.icon || 'time-outline'"></ion-icon>
+    <div>
+      <strong>{{ activity.title }}</strong>
+      <span>{{ activity.subtitle }}</span>
+      <small *ngIf="activity.createdAt">{{ activity.createdAt | date: 'mediumDate' }}</small>
+    </div>
+  </div>
+
+  <div
+    class="empty"
+    *ngIf="!activities.length">
+    No recent activity.
+  </div>
+</article>

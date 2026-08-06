@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { environment } from '../../../environments/environment';
+import { apiUrl } from '../utils/url.util';
 
 export interface UploadResponse {
   success: boolean;
@@ -17,7 +17,7 @@ export class UploadService {
 
   private http = inject(HttpClient);
 
-  private apiUrl = `${environment.apiUrl}/api/v1/admin/upload`;
+  private apiUrl = apiUrl('/api/v1/admin/upload');
 
   upload(file: File, folder: string): Observable<UploadResponse> {
 

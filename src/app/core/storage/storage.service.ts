@@ -5,7 +5,11 @@ import { Injectable } from '@angular/core';
 })
 export class StorageService {
   set(key: string, value: unknown): void {
-    localStorage.setItem(key, JSON.stringify(value));
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+    } catch {
+      localStorage.removeItem(key);
+    }
   }
 
   get<T>(key: string): T | null {
@@ -15,7 +19,12 @@ export class StorageService {
       return null;
     }
 
-    return JSON.parse(data) as T;
+    try {
+      return JSON.parse(data) as T;
+    } catch {
+      localStorage.removeItem(key);
+      return null;
+    }
   }
 
   remove(key: string): void {

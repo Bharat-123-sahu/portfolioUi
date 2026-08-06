@@ -1,7 +1,7 @@
-import { environment } from '../../../environments/environment';
+import { apiBaseUrl } from '../utils/url.util';
 
 export const API = {
-  BASE_URL: environment.apiUrl,
+  BASE_URL: apiBaseUrl(),
 
   AUTH: {
     LOGIN: '/auth/login',

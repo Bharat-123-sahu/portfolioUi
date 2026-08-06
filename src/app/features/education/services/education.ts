@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 
 import { BaseCrudService } from 'src/app/core/services/base/base-crud.service';
 import { Education } from '../models/education.model';
-import { environment } from 'src/environments/environment';
+import { apiUrl } from 'src/app/core/utils/url.util';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +11,7 @@ import { environment } from 'src/environments/environment';
 export class EducationService extends BaseCrudService<Education> {
 
   protected override endpoint =
-       `${environment.apiUrl}/api/v1/admin/education`;
+       apiUrl('/api/v1/admin/education');
  
 
   /**
@@ -19,7 +19,7 @@ export class EducationService extends BaseCrudService<Education> {
    */
   getActive(): Observable<Education[]> {
     return this.http.get<Education[]>(
-      `${environment.apiUrl}/api/v1/admin/education/active`,
+      apiUrl('/api/v1/admin/education/active'),
     );
   }
 

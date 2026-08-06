@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
-import { BlogListComponent } from '../../components/blog-list/blob-list.component';
+import { BlogListComponent } from '../../components/blog-list/blog-list.component';
 
 @Component({
   selector: 'app-blog-page',

@@ -83,7 +83,7 @@
 
           <img
   *ngIf="hero.profileImage"
-  [src]="environment.apiUrl + hero.profileImage"
+  [src]="getImageUrl(hero.profileImage)"
   class="hero-image">
 
         </ion-col>

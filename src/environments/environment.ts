@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://portfolioapi-cavv.onrender.com',
+  // apiUrl: 'https://portfolioapi-cavv.onrender.com',
+  apiUrl: 'http://localhost:5000',
   tokenKey: 'Bharat_sahu_123Bharat_sahu_123Bharat_sahu_123',
   adminSetupToken: 'Bharat_sahu_123Bharat_sahu_123Bharat_sahu_123',
 };

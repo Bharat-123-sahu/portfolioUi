@@ -1,0 +1,25 @@
+.chart-card {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--admin-border);
+  border-radius: 1rem;
+  background: var(--admin-surface-strong);
+}
+
+.chart-card header {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chart-card span {
+  color: var(--admin-muted);
+  font-weight: 700;
+}
+
+.chart-card strong {
+  color: var(--admin-text);
+  font-size: 1.25rem;
+}

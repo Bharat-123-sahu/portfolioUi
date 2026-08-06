@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, Input, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   FormBuilder,
   FormGroup,
@@ -23,6 +24,7 @@ export class SocialLinkFormComponent implements OnInit {
   private socialLinkService = inject(SocialLinkService);
   private modalController = inject(ModalController);
   private toastController = inject(ToastController);
+  private destroyRef = inject(DestroyRef);
 
   SOCIAL_PLATFORMS = [
     {
@@ -98,7 +100,7 @@ export class SocialLinkFormComponent implements OnInit {
     {
       value: 'devto',
       label: 'Dev.to',
-      icon: 'logo-dev',
+      icon: 'code-slash',
       color: '#0A0A0A',
     },
 
@@ -145,9 +147,12 @@ export class SocialLinkFormComponent implements OnInit {
     });
 
     if (!this.socialLink) {
-      this.form.get('platform')?.valueChanges.subscribe((platform) => {
-        this.updatePlatform(platform);
-      });
+      this.form
+        .get('platform')
+        ?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe((platform) => {
+          this.updatePlatform(platform);
+        });
     }
   }
 

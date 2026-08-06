@@ -1,4 +1,5 @@
 import { environment } from 'src/environments/environment';
+import { assetUrl as buildAssetUrl } from '../core/utils/url.util';
 
 type ApiRecord = Record<string, unknown>;
 
@@ -35,15 +36,5 @@ export function sortByDisplayOrder<T extends { displayOrder?: number }>(items: T
 }
 
 export function assetUrl(path?: string): string {
-  if (!path) {
-    return '';
-  }
-
-  if (/^(https?:|data:|blob:|mailto:|tel:)/i.test(path)) {
-    return path;
-  }
-
-  const apiUrl = environment.apiUrl?.replace(/\/$/, '') ?? '';
-  const assetPath = path.startsWith('/') ? path : `/${path}`;
-  return `${apiUrl}${assetPath}`;
+  return buildAssetUrl(path);
 }

@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, DestroyRef, computed, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -18,7 +19,6 @@ import {
   matchFieldsValidator,
   strongPasswordValidator,
 } from '../../utils/password-strength.util';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-setup-admin',
@@ -43,7 +43,7 @@ export class SetupAdminPage {
   private readonly router = inject(Router);
   private readonly authService = inject(AuthService);
   private readonly feedback = inject(UiFeedbackService);
-  environment = environment;
+  private readonly destroyRef = inject(DestroyRef);
   readonly token = this.route.snapshot.queryParamMap.get('token') || '';
   readonly passwordValue = signal('');
   readonly strength = computed(() => getPasswordStrength(this.passwordValue()));
@@ -63,13 +63,21 @@ export class SetupAdminPage {
   );
 
   constructor() {
-    this.form.controls.password.valueChanges.subscribe((value) => {
-      this.passwordValue.set(value || '');
-    });
+    this.form.controls.password.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((value) => {
+        this.passwordValue.set(value || '');
+      });
   }
 
   submit(): void {
     this.serverError = '';
+
+    if (!this.token) {
+      this.serverError = 'Setup link is missing or invalid.';
+      this.feedback.error(this.serverError);
+      return;
+    }
 
     if (this.form.invalid || this.loading) {
       this.form.markAllAsTouched();
@@ -88,9 +96,9 @@ export class SetupAdminPage {
           email,
           password,
           confirmPassword,
-          token: environment.adminSetupToken,
+          token: this.token,
         },
-        environment.adminSetupToken,
+        this.token,
       )
       .subscribe({
         next: async (response) => {

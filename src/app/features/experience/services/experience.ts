@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 
 import { BaseCrudService } from 'src/app/core/services/base/base-crud.service';
 import { Experience } from '../models/experience.model';
-import { environment } from 'src/environments/environment';
+import { apiUrl } from 'src/app/core/utils/url.util';
 
 @Injectable({
   providedIn: 'root',
@@ -11,14 +11,14 @@ import { environment } from 'src/environments/environment';
 export class ExperienceService extends BaseCrudService<Experience> {
 
   protected override endpoint =
-      `${environment.apiUrl}/api/v1/admin/experience`;
+      apiUrl('/api/v1/admin/experience');
 
   /**
    * Get current experience
    */
   getCurrent(): Observable<Experience[]> {
     return this.http.get<Experience[]>(
-      `${environment.apiUrl}/api/v1/admin/experience/current`,
+      apiUrl('/api/v1/admin/experience/current'),
     );
   }
 
@@ -27,7 +27,7 @@ export class ExperienceService extends BaseCrudService<Experience> {
    */
   getActive(): Observable<Experience[]> {
     return this.http.get<Experience[]>(
-      `${environment.apiUrl}/api/v1/admin/experience/active`,
+      apiUrl('/api/v1/admin/experience/active'),
     );
   }
 
